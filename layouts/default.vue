@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <v-container>
+      <v-container class="container">
         <nuxt />
       </v-container>
     </v-main>
@@ -42,5 +42,7 @@ export default {
 }
 </script>
 <style>
-
+.container{
+  padding: 0;
+}
 </style>

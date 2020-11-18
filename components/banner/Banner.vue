@@ -1,60 +1,28 @@
-
 <template>
-  <v-carousel
-    cycle
-    height="150"
+  <v-carousel cycle
+              height="auto"
+              show-arrows-on-hover
+              hide-delimiter-background>
 
-    hide-delimiters
-    show-arrows
-  >
     <v-carousel-item
-      v-for="(slide, i) in banners"
+      v-for="(item,i) in bannersUrl"
       :key="i"
-    >
-      <v-sheet
-        :color="colors[i]"
-        height="100%"
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="display-3">
-            {{ slide }} Slide
-          </div>
-        </v-row>
-      </v-sheet>
-    </v-carousel-item>
+      :src="item"
+    ></v-carousel-item>
   </v-carousel>
 </template>
 
 <script>
+import { FILES_URL } from '~/constants'
 export default {
-name: "Banner",
-  data () {
-    return {
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
-      banners: [
-        'First',
-        'Second',
-        'Third',
-        'Fourth',
-        'Fifth',
-      ],
+  name: 'Banner',
+  props: { banners: Array },
+  computed: {
+    bannersUrl: function() {
+      return this.banners.map(value => FILES_URL + value)
     }
-  },
+  }
 }
 </script>
-
 <style scoped>
-
-
-
 </style>
