@@ -48,7 +48,7 @@ export default {
   grid-column: 1;
   grid-row: 1;
   direction: rtl;
-  z-index: 33;
+  z-index: 1;
   color: #808080;
   max-lines: 1;
   overflow: hidden;
@@ -56,7 +56,7 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  max-width: 6.2vh;
+  max-width: 11.9vw;
   border-top-left-radius: 2px;
   border-bottom-right-radius: 2px;
   height: max-content;
