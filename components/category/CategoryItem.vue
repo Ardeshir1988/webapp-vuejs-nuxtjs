@@ -1,0 +1,38 @@
+<template>
+  <v-sheet class="category" width="auto" max-width="auto" outlined rounded>
+    <v-img class="img-category" height="auto" :src="imageUrl">
+      <div class="name-category">
+        {{ category.name }}
+      </div>
+    </v-img>
+  </v-sheet>
+</template>
+
+<script>
+import { FILES_URL } from '@/constants'
+
+export default {
+  name: 'CategoryItem',
+  props: { category: Object },
+  computed: {
+    imageUrl: function() {
+      return FILES_URL + this.category.picture
+    }
+  }
+}
+</script>
+
+<style scoped>
+.img-category{
+  display: flex;
+  align-items: baseline;
+  text-align: center;
+}
+.name-category {
+  font-size: 10pt;
+  align-items: center;
+}
+.category{
+  text-align: center;
+}
+</style>
