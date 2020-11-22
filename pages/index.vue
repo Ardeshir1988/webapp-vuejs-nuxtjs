@@ -24,6 +24,7 @@
                       section-icon="storefront-24px.svg"
                       section-link-url="" />
     <HorizontalProductList :new-products="homepage.offProducts" />
+    <div class="null-div"></div>
   </div>
 
 </template>
@@ -66,5 +67,8 @@ export default {
 .section-separator {
   margin-top: 1vh;
   margin-bottom: 1vh;
+}
+.null-div{
+  height: 1vh;
 }
 </style>

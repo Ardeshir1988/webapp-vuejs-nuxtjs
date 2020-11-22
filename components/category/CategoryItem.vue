@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="category" width="auto" max-width="auto" outlined rounded>
+  <v-sheet class="category" width="auto" max-width="119" outlined rounded>
     <v-img class="img-category" height="auto" :src="imageUrl">
       <div class="name-category">
         {{ category.name }}

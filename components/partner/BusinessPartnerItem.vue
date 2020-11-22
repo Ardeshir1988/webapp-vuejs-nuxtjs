@@ -1,6 +1,6 @@
 <template>
   <v-sheet width="119" outlined rounded>
-    <v-img contain class="img-businessPartner" height="110" :src="imageUrl">
+    <v-img class="img-businessPartner" height="119" :src="imageUrl">
     </v-img>
   </v-sheet>
 </template>
