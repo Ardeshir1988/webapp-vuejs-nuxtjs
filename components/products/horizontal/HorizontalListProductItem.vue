@@ -7,17 +7,34 @@
     <div class="productName">{{ product.name }}</div>
     <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
     <v-divider></v-divider>
-    <div class="cart-operation">
-      <v-btn class="btn-add-product"
-             color="white"
-             depressed
 
-        v-on:click="addProduct($props.product)">
+    <v-btn v-if="quantity()<=0" class="btn-add-product"
+           color="white"
+           depressed
+           v-on:click="increaseProduct($props.product)">
       <v-img class="cart-icon"
              contain
              src="/cart_grocery_store_green-24px.svg"
              alt="" />
-      </v-btn>
+    </v-btn>
+    <div class="cart-operation" v-if="quantity()>0">
+      <v-row no-gutters>
+        <v-btn class="btn-decrease" depressed x-small height="26" color="primary"
+               v-on:click="decreaseProduct($props.product)">
+          <v-icon size="20" color="white">
+            mdi-minus
+          </v-icon>
+        </v-btn>
+        <div class="cart-quantity">
+          {{ quantity() }}
+        </div>
+        <v-btn v-on:click="increaseProduct($props.product)"
+               class="btn-increase" depressed x-small height="26" color="primary">
+          <v-icon size="20" color="white">
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </v-row>
     </div>
   </v-sheet>
 </template>
@@ -38,10 +55,13 @@ export default {
     engDigitToPersianPrice: function(val) {
       return PersianUtil.makePersianPrice(val)
     },
-    addProduct: async function(product) {
+    increaseProduct: async function(product) {
       await this.$store.dispatch('cart/increase_product', product)
     },
-    quantity:function(){
+    decreaseProduct:async function(product){
+      await this.$store.dispatch('cart/decrease_product', product)
+    },
+    quantity: function() {
       return this.$store.getters['cart/getProductCartQuantity'](this.product.id)
     }
   }
@@ -85,7 +105,7 @@ export default {
 }
 
 .cart-operation {
-
+  height: 32px;
 }
 
 .cart-icon {
@@ -123,8 +143,25 @@ export default {
   margin-right: 0.5vh;
   margin-left: 0.5vh;
 }
-.btn-add-product{
-  max-height: 30px;
+
+.btn-add-product {
+  max-height: 32px;
   width: 100%;
+}
+
+.btn-increase {
+  margin-top: 2px;
+  margin-right: 2px;
+  margin-bottom: 2px;
+}
+
+.btn-decrease {
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-bottom: 2px;
+}
+
+.cart-quantity{
+  margin: auto;
 }
 </style>
