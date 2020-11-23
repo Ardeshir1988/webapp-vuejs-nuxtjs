@@ -13,7 +13,7 @@ export const actions = {
       id: product.id,
       name: product.name,
       measure: product.measure,
-      picture: product.picture,
+      picture:product.pictures,
       price: product.price,
       discountPrice: product.discountPrice,
       stepDiscountPrice: product.stepDiscountPrice,
@@ -78,5 +78,8 @@ export const getters = {
       else
         return state.cartProducts[cartProductIndex].quantity
     }
+  },
+  getCartProducts: (state) => {
+    return state.cartProducts
   }
 }
