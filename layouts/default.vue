@@ -15,14 +15,14 @@
 
       <v-btn to="/cart">
         <v-badge
+          v-if="cartCount>0"
           bordered
           overlap
           color="pink"
-          content="6">
-
-        <v-icon>mdi-cart</v-icon>
-
+          :content="cartCount">
+          <v-icon>mdi-cart</v-icon>
         </v-badge>
+        <v-icon v-if="cartCount<=0">mdi-cart</v-icon>
       </v-btn>
 
       <v-btn to="/search">
@@ -36,13 +36,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-
-
+  async mounted() {
+    await this.$store.dispatch('cart/init_cart')
+  },
+  computed: {
+    ...mapGetters({ cartCount: 'cart/cartProductsCount' }),
+  }
 }
 </script>
 <style>
-.container{
+.container {
   padding: 0;
 }
 </style>
