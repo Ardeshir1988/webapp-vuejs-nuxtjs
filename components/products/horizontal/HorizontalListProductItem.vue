@@ -8,7 +8,16 @@
     <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
     <v-divider></v-divider>
     <div class="cart-operation">
-      <v-img class="cart-icon" contain src="/cart_grocery_store_green-24px.svg" alt="" />
+      <v-btn class="btn-add-product"
+             color="white"
+             depressed
+
+        v-on:click="addProduct($props.product)">
+      <v-img class="cart-icon"
+             contain
+             src="/cart_grocery_store_green-24px.svg"
+             alt="" />
+      </v-btn>
     </div>
   </v-sheet>
 </template>
@@ -28,6 +37,12 @@ export default {
   methods: {
     engDigitToPersianPrice: function(val) {
       return PersianUtil.makePersianPrice(val)
+    },
+    addProduct: async function(product) {
+      await this.$store.dispatch('cart/increase_product', product)
+    },
+    quantity:function(){
+      return this.$store.getters['cart/getProductCartQuantity'](this.product.id)
     }
   }
 }
@@ -77,7 +92,9 @@ export default {
   margin-left: auto;
   margin-right: auto;
   height: 24px;
+  max-height: 24px;
   width: 24px;
+  max-width: 24px;
   margin-top: 0.2vh;
   margin-bottom: 0.2vh;
 }
@@ -105,5 +122,9 @@ export default {
   -webkit-box-orient: vertical;
   margin-right: 0.5vh;
   margin-left: 0.5vh;
+}
+.btn-add-product{
+  max-height: 30px;
+  width: 100%;
 }
 </style>

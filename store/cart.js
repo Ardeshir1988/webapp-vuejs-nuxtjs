@@ -53,12 +53,11 @@ export const actions = {
   },
   async init_cart({ commit }) {
     let cart = await this.$localForage.getItem('cart')
-    if (cart == null){
+    if (cart == null) {
       const initCart = []
       commit('UPDATE_CART', initCart)
       await this.$localForage.setItem('cart', initCart)
-    }
-    else
+    } else
       commit('UPDATE_CART', cart)
   }
 }
@@ -68,5 +67,16 @@ export const getters = {
     if (state.cartProducts.length === 0)
       return '0'
     return state.cartProducts.map(cp => cp.quantity).reduce((previousValue, currentValue) => previousValue + currentValue)
+  },
+  getProductCartQuantity: (state) => (productId) => {
+    if (state.cartProducts.length === 0)
+      return 0
+    else {
+      const cartProductIndex = state.cartProducts.map(p => p.id).indexOf(productId)
+      if (cartProductIndex === -1)
+        return 0
+      else
+        return state.cartProducts[cartProductIndex].quantity
+    }
   }
 }
