@@ -3,10 +3,10 @@
     <div class="cart-product-info">
       <div class="cart-product-img">
         <div class="measureAndImg">
-          <p class="measure">{{cartProduct.measure}}</p>
+          <p class="measure">{{engDigitToPersianDigit(cartProduct.measure)}}</p>
           <v-img class="product-img" contain :src="imageUrl" />
         </div>
-        <v-sheet class="in-stock-status">
+        <v-sheet class="accent in-stock-status">
           موجود
         </v-sheet>
       </div>
@@ -16,7 +16,7 @@
         </div>
         <v-chip
           class="ma-1" small :color="showChip" text-color="white">
-          %{{cartProduct.discountPercent}}
+          %{{engDigitToPersianDigit(cartProduct.discountPercent)}}
         </v-chip>
         <div :class="showPrice">
           {{this.engDigitToPersianPrice(cartProduct.price)}}
@@ -35,7 +35,7 @@
       </v-btn>
       <v-divider></v-divider>
       <div class="cart-quantity">
-        {{quantity()}}
+        {{engDigitToPersianDigit(quantity())}}
       </div>
       <v-divider></v-divider>
       <v-btn v-on:click="increaseProduct($props.cartProduct)" class="btn-increase" block small depressed color="white">
@@ -44,7 +44,7 @@
         </v-icon>
       </v-btn>
     </div>
-    <div class="cart-status-color"></div>
+    <div class="cart-status-color accent"></div>
   </v-sheet>
 </template>
 
@@ -74,6 +74,9 @@ export default {
     engDigitToPersianPrice: function(val) {
       return PersianUtil.makePersianPrice(val)
     },
+    engDigitToPersianDigit: function(val) {
+      return PersianUtil.covertEngDigitToPersianDigit(val)
+    },
     increaseProduct: async function(cartProduct) {
       await this.$store.dispatch('cart/increase_product', cartProduct)
     },
@@ -89,7 +92,6 @@ export default {
 
 <style scoped>
 .cart-status-color {
-  background-color: greenyellow;
   width: 8px;
   border-bottom-right-radius: 2px;
   border-top-right-radius: 2px;
@@ -113,7 +115,7 @@ export default {
 }
 
 .product-cart-sheet {
-  margin: 5px;
+  margin: 8px;
   height: 145px;
   max-height: 145px;
   display: flex;
@@ -163,11 +165,13 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  max-width: 9.9vw;
+  max-width: fit-content;
+  min-width: 9.9vw;
   border-top-left-radius: 3px;
   border-bottom-right-radius: 5px;
   height: max-content;
   font-size: 8pt;
+  text-align: center;
 }
 
 .measureAndImg {
@@ -186,6 +190,7 @@ export default {
   margin-right: 3px;
   margin-bottom: 3px;
   max-lines: 2;
+  font-family: 'IranSansMobileBold', sans-serif;
 }
 
 .price {

@@ -13,7 +13,11 @@
             </v-col>
           </v-row>
           <v-divider class="divider"></v-divider>
-          <v-btn class="btn-buy" depressed height="40" color="accent">ادامه خرید</v-btn>
+          <v-btn class="btn-buy" depressed height="40" color="accent">
+          <div>
+            ادامه خرید
+          </div>
+          </v-btn>
         </v-col>
       </v-row>
     </div>
@@ -65,6 +69,7 @@ export default {
   margin: auto;
   width: 94%;
   font-size: 1em;
+  font-family: 'IranSansMobileBold', sans-serif;
 }
 
 .column {
