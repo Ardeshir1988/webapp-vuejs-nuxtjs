@@ -1,7 +1,7 @@
 <template>
   <v-sheet class="product" width="115" outlined rounded>
     <div class="measureAndImg">
-      <p class="measure">{{ product.measure }}</p>
+      <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
       <v-img class="img-product" contain height="100" :src="imageUrl" />
     </div>
     <div class="productName">{{ product.name }}</div>
@@ -18,7 +18,7 @@
              alt="" />
     </v-btn>
     <div class="cart-operation" v-if="quantity()>0">
-      <v-row no-gutters>
+      <v-row class="row-cart-operation" no-gutters>
         <v-btn class="btn-decrease" depressed x-small height="26" color="primary"
                v-on:click="decreaseProduct($props.product)">
           <v-icon size="20" color="white">
@@ -26,7 +26,7 @@
           </v-icon>
         </v-btn>
         <div class="cart-quantity">
-          {{ quantity() }}
+          {{ engDigitToPersianDigit(quantity()) }}
         </div>
         <v-btn v-on:click="increaseProduct($props.product)"
                class="btn-increase" depressed x-small height="26" color="primary">
@@ -54,6 +54,9 @@ export default {
   methods: {
     engDigitToPersianPrice: function(val) {
       return PersianUtil.makePersianPrice(val)
+    },
+    engDigitToPersianDigit: function(val) {
+      return PersianUtil.covertEngDigitToPersianDigit(val)
     },
     increaseProduct: async function(product) {
       await this.$store.dispatch('cart/increase_product', product)
@@ -96,6 +99,7 @@ export default {
   border-bottom-right-radius: 2px;
   height: max-content;
   font-size: 8pt;
+  text-align: center;
 }
 
 .measureAndImg {
@@ -106,6 +110,7 @@ export default {
 
 .cart-operation {
   height: 32px;
+  text-align: center;
 }
 
 .cart-icon {
@@ -150,18 +155,18 @@ export default {
 }
 
 .btn-increase {
-  margin-top: 2px;
-  margin-right: 2px;
-  margin-bottom: 2px;
+  margin: auto;
 }
 
 .btn-decrease {
-  margin-top: 2px;
-  margin-left: 2px;
-  margin-bottom: 2px;
+  margin: auto;
 }
 
 .cart-quantity{
   margin: auto;
+}
+.row-cart-operation{
+  height: 32px;
+  vertical-align: center;
 }
 </style>
