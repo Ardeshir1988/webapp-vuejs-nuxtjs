@@ -6,19 +6,19 @@
           <p class="measure">{{cartProduct.measure}}</p>
           <v-img class="product-img" contain :src="imageUrl" />
         </div>
-        <v-chip class="ma-1" small color="green" text-color="white">
+        <v-sheet class="in-stock-status">
           موجود
-        </v-chip>
+        </v-sheet>
       </div>
       <div class="cart-product-data">
         <div class="product-name">
           {{cartProduct.name}}
         </div>
         <v-chip
-          class="ma-1" small color="warning" text-color="white">
-          {{cartProduct.discountPercent}}
+          class="ma-1" small :color="showChip" text-color="white">
+          %{{cartProduct.discountPercent}}
         </v-chip>
-        <div class="price">
+        <div :class="showPrice">
           {{this.engDigitToPersianPrice(cartProduct.price)}}
         </div>
         <div class="discount-price">
@@ -58,6 +58,16 @@ export default {
   computed: {
     imageUrl: function() {
       return FILES_URL + this.cartProduct.picture
+    },
+    showPrice:function(){
+      if (this.cartProduct.discountPercent>0)
+        return 'price';
+      else return 'inactive-price'
+    },
+    showChip:function(){
+      if (this.cartProduct.discountPercent>0)
+        return 'warning';
+      else return 'white'
     }
   },
   methods: {
@@ -80,9 +90,9 @@ export default {
 <style scoped>
 .cart-status-color {
   background-color: greenyellow;
-  width: 5px;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
+  width: 8px;
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
 }
 
 .cart-operation {
@@ -136,7 +146,7 @@ export default {
 
 .product-img {
   margin: 5px;
-  height: 95px;
+  height: 98px;
   grid-column: 1;
   grid-row: 2;
 }
@@ -153,9 +163,9 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  max-width: 8.9vw;
-  border-top-left-radius: 2px;
-  border-bottom-right-radius: 2px;
+  max-width: 9.9vw;
+  border-top-left-radius: 3px;
+  border-bottom-right-radius: 5px;
   height: max-content;
   font-size: 8pt;
 }
@@ -168,19 +178,42 @@ export default {
 
 .product-name {
   direction: rtl;
-  font-size: 12pt;
-  margin: 3px;
+  font-size: 1em;
+  line-height: 1.5em;
+  max-height: 2.5rem;
+  min-height: 2.5rem;
+  margin-top: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
   max-lines: 2;
 }
 
 .price {
   text-decoration: line-through;
-  font-size: 11pt;
+  font-size: 1em;
+  line-height: 1.25em;
+  margin-top: 5px;
   margin-right: 3px;
 }
-
+.inactive-price {
+  text-decoration: line-through;
+  font-size: 1em;
+  color: white;
+  line-height: 1.25em;
+  margin-top: 5px;
+  margin-right: 3px;
+}
 .discount-price {
-  margin: 3px;
-  font-size: 12pt;
+  margin-top: 7px;
+  margin-right: 3px;
+  font-size: 1.1em;
+  line-height: 1.25em;
+}
+.in-stock-status{
+  margin: auto;
+  color: white;
+  border-radius:5px;
+  width: 80%;
+  background-color: #00c853;
 }
 </style>
