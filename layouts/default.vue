@@ -19,7 +19,7 @@
           bordered
           overlap
           color="pink"
-          :content="cartCount">
+          :content="engDigitToPersianDigit(cartCount)">
           <v-icon>mdi-cart</v-icon>
         </v-badge>
         <v-icon v-if="cartCount<=0">mdi-cart</v-icon>
@@ -37,18 +37,28 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import PersianUtil from '@/utils/PersianUtil'
 
 export default {
   async mounted() {
     await this.$store.dispatch('cart/init_cart')
   },
   computed: {
-    ...mapGetters({ cartCount: 'cart/cartProductsCount' }),
+    ...mapGetters({ cartCount: 'cart/cartProductsCount' })
+  },
+  methods: {
+    engDigitToPersianDigit: function(val) {
+      return PersianUtil.covertEngDigitToPersianDigit(val)
+    }
   }
 }
 </script>
 <style>
 .container {
   padding: 0;
+}
+
+div, p {
+  font-family: 'IranSansMobileMedium', sans-serif;
 }
 </style>
