@@ -1,5 +1,5 @@
 <template>
-  <v-sheet width="119" outlined rounded>
+  <v-sheet class="businessPartner" outlined rounded>
     <v-img class="img-businessPartner" height="119" :src="imageUrl">
     </v-img>
   </v-sheet>
@@ -25,7 +25,10 @@ export default {
   align-items: baseline;
   text-align: center;
 }
-
+.businessPartner{
+  text-align: center;
+  width: 32vw;
+}
 .name-businessPartner {
   font-size: 10pt;
   align-items: center;
