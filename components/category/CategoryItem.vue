@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="category" width="auto" max-width="119" outlined rounded>
+  <v-sheet @click="gotoCategoryProduct" class="category" outlined rounded>
     <v-img class="img-category" height="auto" :src="imageUrl">
       <div class="name-category">
         {{ category.name }}
@@ -18,6 +18,11 @@ export default {
     imageUrl: function() {
       return FILES_URL + this.category.picture
     }
+  },
+  methods:{
+    gotoCategoryProduct(){
+      this.$router.push('/category/'+this.category.name+'?id='+this.category.id)
+    }
   }
 }
 </script>
@@ -34,5 +39,6 @@ export default {
 }
 .category{
   text-align: center;
+  width: 32vw;
 }
 </style>
