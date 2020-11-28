@@ -4,7 +4,7 @@ function makePersianPrice(input) {
   const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
   return input
     .toString()
-    .replace(/\d/g, x => farsiDigits[x])+'تومان'
+    .replace(/\d/g, x => farsiDigits[x])+' تومان'
 }
 
 function covertEngDigitToPersianDigit(input) {
