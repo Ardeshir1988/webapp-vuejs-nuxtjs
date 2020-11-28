@@ -6,8 +6,11 @@ export default ($axios) => ({
   homepage() {
     return $axios.get('/home-page')
   },
-  all() {
-    return $axios.get(`${resource}`)
+  getProductsByCategoryIdAndTypeId(categoryId, typeId) {
+    return $axios.get(`${resource}/category/${categoryId}?typeId=${typeId}`)
+  },
+  getTypesByCategoryId(categoryId) {
+    return $axios.get(`${resource}/category/${categoryId}/type`)
   },
 
   show(id) {
