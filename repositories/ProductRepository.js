@@ -12,9 +12,12 @@ export default ($axios) => ({
   getTypesByCategoryId(categoryId) {
     return $axios.get(`${resource}/category/${categoryId}/type`)
   },
+  getSimilarProductsByProductId(productId) {
+    return $axios.get(`${resource}/similar/${productId}`)
+  },
 
-  show(id) {
-    return $axios.get(`${resource}/${id}`)
+  getProductById(productId) {
+    return $axios.get(`${resource}/${productId}`)
   },
 
   create(payload) {
