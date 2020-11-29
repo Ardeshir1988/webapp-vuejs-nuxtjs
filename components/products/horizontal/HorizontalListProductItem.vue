@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="product" width="115" outlined rounded>
-    <div class="measureAndImg">
+    <div class="measureAndImg" @click="gotoProduct">
       <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
       <v-img class="img-product" contain height="100" :src="imageUrl" />
     </div>
@@ -61,11 +61,14 @@ export default {
     increaseProduct: async function(product) {
       await this.$store.dispatch('cart/increase_product', product)
     },
-    decreaseProduct:async function(product){
+    decreaseProduct: async function(product) {
       await this.$store.dispatch('cart/decrease_product', product)
     },
     quantity: function() {
       return this.$store.getters['cart/getProductCartQuantity'](this.product.id)
+    },
+    gotoProduct() {
+      this.$router.push('/product/' + this.product.id)
     }
   }
 }
@@ -162,10 +165,11 @@ export default {
   margin: auto;
 }
 
-.cart-quantity{
+.cart-quantity {
   margin: auto;
 }
-.row-cart-operation{
+
+.row-cart-operation {
   height: 32px;
   vertical-align: center;
 }

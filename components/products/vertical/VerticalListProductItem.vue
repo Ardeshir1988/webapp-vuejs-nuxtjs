@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="product" outlined rounded>
-    <div class="measureAndImg">
+    <div class="measureAndImg" @click="gotoProduct">
       <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
       <v-img class="img-product" contain height="140" :src="imageUrl" />
     </div>
@@ -65,6 +65,9 @@ export default {
     },
     quantity: function() {
       return this.$store.getters['cart/getProductCartQuantity'](this.product.id)
+    },
+    gotoProduct() {
+      this.$router.push('/product/' + this.product.id)
     }
   }
 }

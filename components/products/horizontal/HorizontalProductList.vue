@@ -1,6 +1,6 @@
 <template>
   <div class="horizontal-list">
-    <div v-for="product in newProducts">
+    <div v-for="product in products">
       <HorizontalProductItem :product="product" :key="product.id" />
     </div>
   </div>
@@ -11,7 +11,7 @@ import HorizontalProductItem from '@/components/products/horizontal/HorizontalLi
 export default {
   name: 'HorizontalProductList',
   components: { HorizontalProductItem },
-  props: { newProducts: Array }
+  props: { products: Array }
 }
 </script>
 
