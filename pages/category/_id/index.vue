@@ -4,7 +4,11 @@
       <VerticalProductList :products="products" />
     </div>
     <div class="types-container">
-      <HorizontalTypeList :type-list="types" />
+      <div class="horizontal-type-list">
+        <div v-for="type in types">
+          <v-btn outlined depressed :class="changeActivation(type.id)" :value="type.id" @click="changeSelectedType(type.id)">{{ type.name }}</v-btn>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,8 +24,11 @@ export default {
     return {
       products: [],
       types: [],
-      selectedType: { id: 'ALL', name: 'همه' }
+      selectedType: { id: 'ALL'}
     }
+  },
+  watch: {
+    selectedType: '$fetch'
   },
   async fetch() {
     const productList = await this.$repositories.product.getProductsByCategoryIdAndTypeId(this.$route.query.id, this.selectedType.id)
@@ -32,10 +39,21 @@ export default {
       // Handle error here
     }
     if (typeList.status === 200 && typeList.data) {
-      typeList.data.unshift(this.selectedType)
+      typeList.data.unshift({ id: 'ALL', name: 'همه' })
       this.types = typeList.data
     } else {
       // Handle error here
+    }
+  },
+  methods: {
+    changeActivation(typeId) {
+      if (typeId === this.selectedType.id)
+        return 'btn-active'
+      else
+        return 'btn-type'
+    },
+    changeSelectedType(typeId) {
+      this.selectedType = { id: typeId }
     }
   }
 }
@@ -49,12 +67,36 @@ export default {
   display: flex;
   width: 100%;
   z-index: 7;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
   background-color: white;
 }
 
 .products-container {
   margin-bottom: 6vh;
+}
+
+.horizontal-type-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.horizontal-type-list {
+  flex-direction: row-reverse;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  display: flex;
+  overflow-x: auto;
+}
+
+.btn-type {
+  margin: 0.25vh 0.5vh 0.25vh 0.5vh;
+  border-color: gainsboro;
+
+}
+
+.btn-active {
+  margin: 0.25vh 0.5vh 0.25vh 0.5vh;
+  border-color: #8629FD;
+  color: #8629FD;
 }
 </style>

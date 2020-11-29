@@ -7,20 +7,19 @@
     <div class="productName">{{ product.name }}</div>
     <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
     <v-divider></v-divider>
-
-    <v-btn v-if="quantity()<=0" class="btn-add-product"
-           color="white"
-           depressed
-           v-on:click="increaseProduct($props.product)">
-      <v-img class="cart-icon"
-             contain
-             src="/cart_grocery_store_green-24px.svg"
-             alt="" />
-    </v-btn>
+    <div v-if="quantity()<=0" class="btn-add-product">
+      <v-btn color="white" depressed height="41" width="100%"
+             v-on:click="increaseProduct($props.product)">
+        <v-img class="cart-icon"
+               contain
+               src="/cart_grocery_store_green-24px.svg"
+               alt="" />
+      </v-btn>
+    </div>
     <div class="cart-operation" v-if="quantity()>0">
       <v-row class="row-cart-operation" no-gutters>
-        <v-btn class="btn-decrease" depressed x-small height="26" color="primary"
-               v-on:click="decreaseProduct($props.product)">
+        <v-btn v-on:click="decreaseProduct($props.product)"
+               class="btn-decrease" depressed x-small height="31" color="primary">
           <v-icon size="20" color="white">
             mdi-minus
           </v-icon>
@@ -29,7 +28,7 @@
           {{ engDigitToPersianDigit(quantity()) }}
         </div>
         <v-btn v-on:click="increaseProduct($props.product)"
-               class="btn-increase" depressed x-small height="26" color="primary">
+               class="btn-increase" depressed x-small height="31" color="primary">
           <v-icon size="20" color="white">
             mdi-plus
           </v-icon>
@@ -61,7 +60,7 @@ export default {
     increaseProduct: async function(product) {
       await this.$store.dispatch('cart/increase_product', product)
     },
-    decreaseProduct:async function(product){
+    decreaseProduct: async function(product) {
       await this.$store.dispatch('cart/decrease_product', product)
     },
     quantity: function() {
@@ -110,7 +109,7 @@ export default {
 }
 
 .cart-operation {
-  height: 32px;
+  height: 41px;
   text-align: center;
 }
 
@@ -151,8 +150,9 @@ export default {
 }
 
 .btn-add-product {
-  max-height: 32px;
+  height: 41px;
   width: 100%;
+  text-align: center;
 }
 
 .btn-increase {
@@ -163,11 +163,14 @@ export default {
   margin: auto;
 }
 
-.cart-quantity{
+.cart-quantity {
   margin: auto;
+  width: 21px;
+  font-size: 1em;
 }
-.row-cart-operation{
-  height: 32px;
+
+.row-cart-operation {
+  height: 41px;
   vertical-align: center;
 }
 </style>
