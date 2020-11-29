@@ -7,7 +7,7 @@ export default ($axios) => ({
     return $axios.get('/home-page')
   },
   getProductsByCategoryIdAndTypeId(categoryId, typeId) {
-    return $axios.get(`${resource}/category/${categoryId}?typeId=${typeId}`)
+    return $axios.get(`${resource}/category/${categoryId}?type-id=${typeId}`)
   },
   getTypesByCategoryId(categoryId) {
     return $axios.get(`${resource}/category/${categoryId}/type`)
