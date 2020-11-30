@@ -9,6 +9,9 @@
       color="primary"
       app
       grow>
+      <v-btn :disabled="isDisable" icon @click="back">
+        <v-icon size="24">mdi-arrow-left</v-icon>
+      </v-btn>
       <v-btn to="/account">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -40,6 +43,11 @@ import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
 
 export default {
+  data() {
+    return {
+      isDisable: true
+    }
+  },
   async mounted() {
     await this.$store.dispatch('cart/init_cart')
   },
@@ -49,6 +57,18 @@ export default {
   methods: {
     engDigitToPersianDigit: function(val) {
       return PersianUtil.covertEngDigitToPersianDigit(val)
+    },
+    back() {
+      this.$router.go(-1)
+    }
+  },
+  watch:{
+    '$route' (to, from){
+      this.isDisable =
+        !(this.$route.path !== '/' &&
+        this.$route.path !== '/cart' &&
+        this.$route.path !== '/search' &&
+        this.$route.path !== '/account')
     }
   }
 }
