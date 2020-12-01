@@ -23,7 +23,6 @@ export default {
 }
 
 .vertical-product_item {
-  margin-right: auto;
-  margin-left: auto;
+
 }
 </style>
