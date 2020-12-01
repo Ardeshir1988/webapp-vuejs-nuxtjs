@@ -6,7 +6,9 @@
     <div class="types-container">
       <div class="horizontal-type-list">
         <div v-for="type in types">
-          <v-btn outlined depressed :class="changeActivation(type.id)" :value="type.id" @click="changeSelectedType(type.id)">{{ type.name }}</v-btn>
+          <v-btn outlined depressed :class="changeActivation(type.id)" :value="type.id"
+                 @click="changeSelectedType(type.id)">{{ type.name }}
+          </v-btn>
         </div>
       </div>
     </div>
@@ -20,18 +22,30 @@ import HorizontalTypeList from '@/components/type/HorizontalTypeList'
 export default {
   name: 'index.vue',
   components: { HorizontalTypeList, VerticalProductList },
+  created () {
+    if (process.client) {
+      window.addEventListener('scroll', this.handleScroll);
+    }
+  },
+  destroyed () {
+    if (process.client) {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+  },
   data() {
     return {
       products: [],
       types: [],
-      selectedType: { id: 'ALL'}
+      selectedType: { id: 'ALL' },
+      page: 0,
+      scrollPosition:0
     }
   },
   watch: {
     selectedType: '$fetch'
   },
   async fetch() {
-    const productList = await this.$repositories.product.getProductsByCategoryIdAndTypeId(this.$route.query.id, this.selectedType.id)
+    const productList = await this.$repositories.product.getProductsByCategoryIdAndTypeId(this.$route.query.id, this.selectedType.id, this.page)
     const typeList = await this.$repositories.product.getTypesByCategoryId(this.$route.query.id)
     if (productList.status === 200 && productList.data) {
       this.products = productList.data
@@ -46,6 +60,27 @@ export default {
     }
   },
   methods: {
+    handleScroll () {
+      if (window.scrollY - this.scrollPosition>1500 ) {
+        console.log('----GET DATA-------' + window.scrollY+'----Page---'+this.page)
+        this.scrollPosition = window.scrollY
+        this.getDataPage()
+      }
+    },
+    getDataPage() {
+      this.page++
+      this.$repositories.product.getProductsByCategoryIdAndTypeId(this.$route.query.id, this.selectedType.id, this.page)
+        .then((response) => {
+          if (response.data.length > 1) {
+            response.data.forEach((item) => this.products.push(item))
+
+          } else {
+
+          }
+        }).catch((err) => {
+        console.log(err)
+      })
+    },
     changeActivation(typeId) {
       if (typeId === this.selectedType.id)
         return 'btn-active'
@@ -53,6 +88,12 @@ export default {
         return 'btn-type'
     },
     changeSelectedType(typeId) {
+      this.page = 0
+      this.scrollPosition = 0
+      scrollTo(0,0)
+      if (process.client) {
+        window.addEventListener('scroll', this.handleScroll);
+      }
       this.selectedType = { id: typeId }
     }
   }
