@@ -2,37 +2,36 @@
   <v-app>
     <v-main>
       <v-container class="container">
-        <nuxt />
+        <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'] }" />
       </v-container>
     </v-main>
     <v-bottom-navigation
       color="primary"
+      horizontal
       app
       grow>
-      <v-btn :disabled="isDisable" icon @click="back">
-        <v-icon size="24">mdi-arrow-left</v-icon>
+      <v-btn min-width="55" icon :disabled="isDisable" @click="back">
+        <v-icon style="margin: auto">mdi-arrow-left</v-icon>
       </v-btn>
-      <v-btn to="/account">
-        <v-icon>mdi-menu</v-icon>
+      <v-btn min-width="55" icon to="/account">
+        <v-icon style="margin: auto">mdi-menu</v-icon>
       </v-btn>
-
-      <v-btn to="/cart">
+      <v-btn min-width="55" icon to="/cart">
         <v-badge
           v-if="cartCount>0"
           bordered
           overlap
           color="pink"
           :content="engDigitToPersianDigit(cartCount)">
-          <v-icon>mdi-cart</v-icon>
+          <v-icon style="margin: auto">mdi-cart</v-icon>
         </v-badge>
         <v-icon v-if="cartCount<=0">mdi-cart</v-icon>
       </v-btn>
-
-      <v-btn to="/search">
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn min-width="55" icon to="/search">
+        <v-icon style="margin: auto">mdi-magnify</v-icon>
       </v-btn>
-      <v-btn to="/">
-        <v-icon>mdi-home</v-icon>
+      <v-btn min-width="55" icon to="/">
+        <v-icon style="margin: auto">mdi-home</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app>
@@ -43,6 +42,9 @@ import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
 
 export default {
+  created() {
+    this.isDisable = this.isRootURL()
+  },
   data() {
     return {
       isDisable: true
@@ -60,15 +62,17 @@ export default {
     },
     back() {
       this.$router.go(-1)
-    }
-  },
-  watch:{
-    '$route' (to, from){
-      this.isDisable =
-        !(this.$route.path !== '/' &&
+    },
+    isRootURL() {
+      return !(this.$route.path !== '/' &&
         this.$route.path !== '/cart' &&
         this.$route.path !== '/search' &&
         this.$route.path !== '/account')
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.isDisable = this.isRootURL()
     }
   }
 }
