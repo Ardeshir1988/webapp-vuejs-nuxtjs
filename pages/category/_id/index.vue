@@ -69,6 +69,7 @@ export default {
   z-index: 7;
   justify-content: flex-end;
   background-color: white;
+  padding-top: 3px;
 }
 
 .products-container {
