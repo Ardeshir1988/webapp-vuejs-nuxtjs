@@ -24,7 +24,7 @@
     <SectionSeparator class="section-separator"
                       section-name="محصولات مشابه"
                       section-icon="/layers-24px.svg"
-                      section-link-url="" />
+                      :section-link-url="'/products?type=similar&product='+product.id" />
     <HorizontalProductList class="similar-products" :products="similarProducts" />
     <div class="btn-container">
       <v-btn v-if="quantity()<=0" class="btn-add-product"
@@ -87,7 +87,7 @@ export default {
       // Handle error here
     }
 
-    const productsResponse = await this.$repositories.product.getSimilarProductsByProductId(this.$route.params.id)
+    const productsResponse = await this.$repositories.product.getSimilarProductsByProductId(this.$route.params.id,11,0)
     if (productsResponse.status === 200 && productsResponse.data) {
       this.similarProducts = productsResponse.data
     } else {
