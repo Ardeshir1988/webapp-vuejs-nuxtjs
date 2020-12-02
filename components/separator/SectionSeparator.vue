@@ -3,7 +3,9 @@
     <v-col>
       <v-row justify="end" no-gutters>
         <v-col>
+          <nuxt-link :to="sectionLinkUrl">
           <div class="section-link-text">مشاهده همه</div>
+          </nuxt-link>
         </v-col>
         <v-col>
           <v-row justify="end" no-gutters>
