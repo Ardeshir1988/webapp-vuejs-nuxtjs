@@ -10,17 +10,18 @@
             single-line
             filled
             dense
-            rounded>
+            rounded
+            v-model="keyword">
           </v-text-field>
         </v-col>
         <v-col class="search-btn">
-          <v-btn icon>
+          <v-btn icon @click="getProductsByKeyword()">
             <v-icon color="primary">mdi-magnify</v-icon>
           </v-btn>
         </v-col>
       </v-row>
     </div>
-    <!--    <VerticalProductList :products="" />-->
+        <VerticalProductList class="product-list" :products="products" />
   </div>
 </template>
 
@@ -29,7 +30,62 @@ import VerticalProductList from '@/components/products/vertical/VerticalProductL
 
 export default {
   name: 'index.vue',
-  components: { VerticalProductList }
+  components: { VerticalProductList },
+  created() {
+    if (process.client) {
+      window.addEventListener('scroll', this.handleScroll)
+    }
+  },
+  destroyed() {
+    if (process.client) {
+      window.removeEventListener('scroll', this.handleScroll)
+    }
+  },
+  methods: {
+    handleScroll() {
+      if (window.scrollY - this.scrollPosition > 1500) {
+        this.scrollPosition = window.scrollY
+        this.loadMoreProducts()
+      }
+    },
+    loadMoreProducts() {
+      this.$repositories.product.searchProducts(this.keyword, 30, this.page)
+        .then((response) => {
+          if (response.data.length > 1) {
+            response.data.forEach((item) => this.products.push(item))
+            this.page++
+          } else {
+
+          }
+        }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getProductsByKeyword() {
+      this.products = []
+      this.page = 0
+      this.scrollPosition= 0
+      this.$repositories.product.searchProducts(this.keyword, 30, this.page)
+        .then((response) => {
+          if (response.data.length > 1) {
+            response.data.forEach((item) => this.products.push(item))
+            this.page++
+          } else {
+
+          }
+        }).catch((err) => {
+        console.log(err)
+      })
+    }
+  },
+  data() {
+    return {
+      products: [],
+      page: 0,
+      scrollPosition: 0,
+      keyword: ''
+    }
+  }
 }
 </script>
 
@@ -53,11 +109,13 @@ export default {
   max-width: 89vw;
   padding: 0;
   margin: 1.5vh;
-
 }
 
 .search-btn {
   margin: auto;
   text-align: center;
+}
+.product-list{
+  margin-top: 9.5vh;
 }
 </style>
