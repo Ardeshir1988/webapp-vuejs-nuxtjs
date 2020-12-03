@@ -88,8 +88,8 @@ export default {
 }
 
 .product {
-  margin: 0.8vh;
-  width: 47vw;
+  margin: 0.6vh;
+  width: 47.3vw;
 }
 
 .measure {
