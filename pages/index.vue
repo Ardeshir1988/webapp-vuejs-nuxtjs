@@ -4,7 +4,7 @@
     <SectionSeparator class="section-separator"
                       section-name="محصولات جدید"
                       section-icon="storefront-24px.svg"
-                      section-link-url="/products?type=new-products" />
+                      section-link-url="/products/new" />
     <HorizontalProductList :products="homepage.newProducts" />
     <SectionSeparator class="section-separator"
                       section-name="دسته بندی محصولات"
@@ -22,7 +22,7 @@
     <SectionSeparator class="section-separator"
                       section-name="حراج"
                       section-icon="storefront-24px.svg"
-                      section-link-url="/products?type=off-products" />
+                      section-link-url="/products/off" />
     <HorizontalProductList :products="homepage.offProducts" />
     <div class="null-div"></div>
   </div>

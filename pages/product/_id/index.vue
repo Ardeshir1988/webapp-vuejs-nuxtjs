@@ -24,7 +24,7 @@
     <SectionSeparator class="section-separator"
                       section-name="محصولات مشابه"
                       section-icon="/layers-24px.svg"
-                      :section-link-url="'/products?type=similar&product='+product.id" />
+                      :section-link-url="'/products/similar/'+product.id" />
     <HorizontalProductList class="similar-products" :products="similarProducts" />
     <div class="btn-container">
       <v-btn v-if="quantity()<=0" class="btn-add-product"

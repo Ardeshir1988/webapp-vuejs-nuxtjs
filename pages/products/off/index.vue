@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header class="fix-header" :title="title" />
+    <Header class="fix-header" title="حراج" />
     <VerticalProductList class="product-list" :products="products" />
   </div>
 </template>
@@ -12,6 +12,13 @@ import VerticalProductList from '~/components/products/vertical/VerticalProductL
 export default {
   name: 'index',
   components: { VerticalProductList, Header },
+  data() {
+    return {
+      products: [],
+      page: 0,
+      scrollPosition: 0
+    }
+  },
   created() {
     if (process.client) {
       window.addEventListener('scroll', this.handleScroll)
@@ -31,7 +38,7 @@ export default {
     },
     getDataPage() {
       this.page++
-      this.getQuery(this.$route.query.type,this.$route.query.product, this.page)
+      this.$repositories.product.getOffProducts(30, this.page)
         .then((response) => {
           if (response.data.length > 1) {
             response.data.forEach((item) => this.products.push(item))
@@ -42,36 +49,12 @@ export default {
         }).catch((err) => {
         console.log(err)
       })
-    },
-    getQuery(type,productId) {
-      if (type === "similar"){
-        this.title = 'محصولات مشابه'
-        return this.$repositories.product.getSimilarProductsByProductId(productId, 30, this.page)
-      }
-      if (type === "new-products"){
-        this.title = 'محصولات جدید'
-        return this.$repositories.product.getNewProducts(30, this.page)
-      }
-      if (type === "off-products"){
-        this.title = 'محصولات حراج'
-        return this.$repositories.product.getOffProducts(30, this.page)
-      }
     }
-  },
-  data() {
-    return {
-      title: '',
-      products: [],
-      page: 0,
-      scrollPosition: 0
-    }
-  },
-  watch: {
-    '$route.query': '$fetch'
   },
   async fetch() {
-    const productList = await this.getQuery(this.$route.query.type,this.$route.query.product, this.page)
+    const productList = await this.$repositories.product.getOffProducts(30, 0)
     if (productList.status === 200 && productList.data) {
+      console.log('fetch---------' + productList.data.length)
       this.products = productList.data
     } else {
       // Handle error here
@@ -94,7 +77,8 @@ export default {
   background-color: white;
   elevation: higher;
 }
-.product-list{
+
+.product-list {
   margin-top: 6.5vh;
 }
 </style>
