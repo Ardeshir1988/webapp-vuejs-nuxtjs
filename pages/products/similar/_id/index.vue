@@ -20,7 +20,6 @@ export default {
     }
   },
   created() {
-    console.log('create------------' + this.$route.params.id)
     if (process.client) {
       window.addEventListener('scroll', this.handleScroll)
     }

@@ -52,7 +52,6 @@ export default {
     }
   },
   async fetch() {
-    console.log('-------------new-producr-fwrchhhhhhhhh')
     const productList = await this.$repositories.product.getNewProducts(30, 0)
     if (productList.status === 200 && productList.data) {
       this.products = productList.data
