@@ -5,7 +5,14 @@
       <v-img class="img-product" contain height="140" :src="imageUrl" />
     </div>
     <div class="productName">{{ product.name }}</div>
-    <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
+    <v-row no-gutters>
+      <v-col>
+        <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
+      </v-col>
+      <v-col v-if="product.discountPercent>0" cols="3">
+        <div class="discount-percent"> %{{ engDigitToPersianDigit(product.discountPercent) }}</div>
+      </v-col>
+    </v-row>
     <v-divider></v-divider>
     <div v-if="quantity()<=0" class="btn-add-product">
       <v-btn color="white" depressed height="41" width="100%"
@@ -130,7 +137,7 @@ export default {
 .productName {
   direction: rtl;
   color: #808080;
-  font-size: 9pt;
+  font-size: 0.9em;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -142,7 +149,7 @@ export default {
 .productPrice {
   direction: rtl;
   color: #808080;
-  font-size: 9pt;
+  font-size: 1.1em;
   overflow: hidden;
   display: -webkit-box;
   text-align: left;
@@ -175,5 +182,13 @@ export default {
 .row-cart-operation {
   height: 41px;
   vertical-align: center;
+}
+.discount-percent {
+  background-color: #FF6672;
+  border-radius: 5px;
+  color: white;
+  font-size: 0.9em;
+  text-align: center;
+  margin-right: 3px;
 }
 </style>
