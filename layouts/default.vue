@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <v-container class="container">
-        <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'] }" />
+        <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'],max: '3' }" />
       </v-container>
     </v-main>
     <v-bottom-navigation
