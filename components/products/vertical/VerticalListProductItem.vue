@@ -6,26 +6,34 @@
     </div>
     <div class="productName">{{ product.name }}</div>
     <v-row no-gutters>
-      <v-col>
-        <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
+      <v-col class="empty-price">
+        <div class="productPrice" v-if="product.stock>0">{{ this.engDigitToPersianPrice(product.price) }}</div>
       </v-col>
       <v-col v-if="product.discountPercent>0" cols="3">
-        <div class="discount-percent"> %{{ engDigitToPersianDigit(product.discountPercent) }}</div>
+        <div class="discount-percent" v-if="product.stock>0"> %{{ engDigitToPersianDigit(product.discountPercent) }}</div>
       </v-col>
     </v-row>
     <v-divider></v-divider>
-    <div v-if="quantity()<=0" class="btn-add-product">
+    <div v-if="product.stock<1" class="btn-add-product">
+      <v-btn color="white" depressed height="41" width="100%" @click="setInStockNotification">
+        <v-img class="cart-icon"
+               contain
+               src="/notifications-24px.svg"
+               alt="" />
+      </v-btn>
+    </div>
+    <div v-if="quantity()<=0 && product.stock>0" class="btn-add-product">
       <v-btn color="white" depressed height="41" width="100%"
-             v-on:click="increaseProduct($props.product)">
+             v-on:click="increaseProduct(product)">
         <v-img class="cart-icon"
                contain
                src="/cart_grocery_store_green-24px.svg"
                alt="" />
       </v-btn>
     </div>
-    <div class="cart-operation" v-if="quantity()>0">
+    <div class="cart-operation" v-if="quantity()>0 && product.stock>0">
       <v-row class="row-cart-operation" no-gutters>
-        <v-btn v-on:click="decreaseProduct($props.product)"
+        <v-btn v-on:click="decreaseProduct(product)"
                class="btn-decrease" depressed x-small height="31" color="primary">
           <v-icon size="20" color="white">
             mdi-minus
@@ -34,7 +42,7 @@
         <div class="cart-quantity">
           {{ engDigitToPersianDigit(quantity()) }}
         </div>
-        <v-btn v-on:click="increaseProduct($props.product)"
+        <v-btn v-on:click="increaseProduct(product)"
                class="btn-increase" depressed x-small height="31" color="primary">
           <v-icon size="20" color="white">
             mdi-plus
@@ -75,6 +83,9 @@ export default {
     },
     gotoProduct() {
       this.$router.push('/product/' + this.product.id)
+    },
+    setInStockNotification(){
+      console.log(this.product)
     }
   }
 }
@@ -190,5 +201,8 @@ export default {
   font-size: 0.9em;
   text-align: center;
   margin-right: 3px;
+}
+.empty-price{
+  min-height: 26px;
 }
 </style>

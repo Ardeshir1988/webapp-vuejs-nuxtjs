@@ -6,17 +6,25 @@
     </div>
     <div class="productName">{{ product.name }}</div>
     <v-row no-gutters>
-      <v-col>
-        <div class="productPrice">{{ this.engDigitToPersianPrice(product.price) }}</div>
+      <v-col class="empty-price">
+        <div class="productPrice" v-if="product.stock>0">{{ this.engDigitToPersianPrice(product.price) }}</div>
       </v-col>
       <v-col v-if="product.discountPercent>0"  cols="3">
-        <div class="discount-percent"> %{{ engDigitToPersianDigit(product.discountPercent) }}</div>
+        <div class="discount-percent" v-if="product.stock>0"> %{{ engDigitToPersianDigit(product.discountPercent) }}</div>
       </v-col>
     </v-row>
 
     <v-divider></v-divider>
-
-    <v-btn v-if="quantity()<=0" class="btn-add-product"
+    <v-btn v-if="product.stock<1" class="btn-add-product"
+           color="white"
+           depressed
+           v-on:click="setInStockNotification">
+      <v-img class="cart-icon"
+             contain
+             src="/notifications-24px.svg"
+             alt="" />
+    </v-btn>
+    <v-btn v-if="quantity()<=0 && product.stock>0" class="btn-add-product"
            color="white"
            depressed
            v-on:click="increaseProduct($props.product)">
@@ -25,7 +33,7 @@
              src="/cart_grocery_store_green-24px.svg"
              alt="" />
     </v-btn>
-    <div class="cart-operation" v-if="quantity()>0">
+    <div class="cart-operation" v-if="quantity()>0 && product.stock>0">
       <v-row class="row-cart-operation" no-gutters>
         <v-btn class="btn-decrease" depressed x-small height="26" color="primary"
                v-on:click="decreaseProduct($props.product)">
@@ -77,6 +85,9 @@ export default {
     },
     gotoProduct() {
       this.$router.push('/product/' + this.product.id)
+    },
+    setInStockNotification(){
+      console.log(this.product)
     }
   }
 }
@@ -190,5 +201,8 @@ export default {
   color: white;
   font-size: 0.72em;
   text-align: center;
+}
+.empty-price{
+  min-height: 20px;
 }
 </style>
