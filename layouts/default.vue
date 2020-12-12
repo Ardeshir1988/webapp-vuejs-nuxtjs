@@ -5,6 +5,7 @@
         <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'],max: '3' }" />
       </v-container>
     </v-main>
+    <Snackbar> </Snackbar>
     <v-bottom-navigation
       color="primary"
       horizontal
@@ -35,13 +36,17 @@
       </v-btn>
     </v-bottom-navigation>
   </v-app>
+
+</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
+import Snackbar from '@/components/snackbar/Snackbar'
 
 export default {
+  components: { Snackbar },
   created() {
     this.isDisable = this.isRootURL()
   },
