@@ -1,8 +1,11 @@
 <template>
+  <div>
   <div class="header-container">
     <div class="header-name-page">
       {{ title }}
     </div>
+  </div>
+    <v-divider></v-divider>
   </div>
 </template>
 
@@ -23,7 +26,7 @@ export default {
   display: grid;
   grid-template-rows: 0 2fr;
   grid-template-columns: 1fr;
-  height: 6vh;
+  height: 5.5vh;
 }
 
 .header-name-page {
@@ -31,5 +34,6 @@ export default {
   grid-row: 2;
   text-align: center;
   font-size: 1em;
+  margin: auto;
 }
 </style>
