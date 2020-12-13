@@ -67,7 +67,6 @@ export default {
   position: fixed;
   position: -webkit-sticky;
   top: 0;
-  display: flex;
   width: 100%;
   z-index: 7;
   justify-content: center;
