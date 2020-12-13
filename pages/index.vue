@@ -51,15 +51,21 @@ export default {
     Logo,
     VuetifyLogo
   },
-  async fetch({ store }) {
-    await store.dispatch('product/get_home_page')
+  data() {
+    return {
+      homepage: {}
+    }
   },
-  computed: {
-    ...mapState({
-      homepage: (state) => {
-        return state.product.homePage
-      }
-    })
+  async asyncData ({$repositories}) {
+    let responseData = await $repositories.product.homepage()
+    if (responseData.status !== 200)
+      this.showSnackbar()
+    return { homepage: responseData.data }
+  },
+  methods:{
+    showSnackbar (msg) {
+      this.$notifier.showMessage({ content: msg, color: 'black' })
+    }
   }
 }
 </script>
