@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="account-option" outlined rounded>
-    <v-img class="img-option" :src="op.iconName"></v-img>
+    <v-img class="img-option" :class="op.disable === true ? 'img-disable':''" :src="op.iconName"></v-img>
     <div class="name-option">{{op.name}}</div>
   </v-sheet>
 </template>
@@ -17,6 +17,9 @@ export default {
   width: 24px;
   height: 24px;
   margin: 3.5vh auto auto;
+}
+.img-disable{
+  filter: grayscale(0.9) opacity(0.3) ;
 }
 
 .name-option {
