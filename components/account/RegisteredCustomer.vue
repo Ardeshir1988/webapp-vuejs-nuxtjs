@@ -6,10 +6,10 @@
       </v-col>
       <v-col>
         <div style="direction: rtl;margin: 1vw">
-          <div class="customer-info">نام کاربر</div>
-          <div class="customer-info">0912</div>
+          <div class="customer-info">{{ name }}</div>
+          <div class="customer-info">{{ engDigitToPersianDigit(customerInfo.mobile) }}</div>
           <v-btn rounded depressed class="btn">
-            <v-icon size="24" class="icon-btn" color="secondary" >mdi-pencil</v-icon>
+            <v-icon size="24" class="icon-btn" color="secondary">mdi-pencil</v-icon>
           </v-btn>
         </div>
       </v-col>
@@ -23,7 +23,7 @@
           اعتبار کاربر
         </v-col>
         <v-col style="text-align: left">
-          21500 تومان
+          {{ engDigitToPersianPrice(customerInfo.balance) }}
         </v-col>
       </v-row>
     </v-sheet>
@@ -31,30 +31,51 @@
 </template>
 
 <script>
+import PersianUtil from '@/utils/PersianUtil'
+
 export default {
-  name: 'RegisteredCustomer'
+  name: 'RegisteredCustomer',
+  props: { customerInfo: Object },
+  data() {
+    return {
+      name: this.customerInfo.name == null ? '' : this.customerInfo.name
+    }
+  },
+  methods: {
+    engDigitToPersianPrice: function(val) {
+      return PersianUtil.makePersianPrice(val)
+    },
+    engDigitToPersianDigit: function(val) {
+      return PersianUtil.covertEngDigitToPersianDigit(val)
+    }
+  }
 }
 </script>
 
 <style scoped>
-.row{
+.row {
   margin: 1.5vh;
 }
-.account-card{
+
+.account-card {
 
 }
-.customer-container{
-  height: 34vh;
+
+.customer-container {
+  height: 32vh;
   margin: 2vh 1.6vw 1.6vw;
 }
-.btn{
+
+.btn {
   background-color: #E6E6E6;
 }
-.customer-info{
+
+.customer-info {
   margin: 1vh;
   font-size: 1em;
 }
-.row-customer-balance{
+
+.row-customer-balance {
   direction: rtl;
 }
 </style>

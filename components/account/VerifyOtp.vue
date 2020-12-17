@@ -1,10 +1,10 @@
 <template>
   <v-sheet class="verify-otp" rounded outlined>
     <div class="desc">
-      کد تایید به شماره 09122877481 ارسال شد
+      کد تایید به شماره {{this.mobile}} ارسال شد
     </div>
     <v-text-field type="number" v-model="otp" class="centered-input otp" />
-    <v-btn @click="sendOtp" class="primary btn">ورود</v-btn>
+    <v-btn :loading="getLocalLoading" @click="sendOtp" class="primary btn">ورود</v-btn>
     <v-row no-gutters>
       <v-col>
         <v-btn rounded depressed class="btn-resend">
@@ -12,7 +12,7 @@
         </v-btn>
       </v-col>
       <v-col>
-        <v-btn rounded depressed class="btn-resend">
+        <v-btn @click="editNumber" rounded depressed class="btn-resend">
           تصحیح شماره
         </v-btn>
       </v-col>
@@ -28,9 +28,18 @@ export default {
       otp:'',
     }
   },
+  props:{mobile:String,loading:Boolean},
+  computed:{
+    getLocalLoading(){
+      return this.loading
+    }
+  },
   methods: {
     sendOtp () {
       this.$emit('sendotp', this.otp)
+    },
+    editNumber(){
+      this.$emit('changemobile')
     }
   }
 }

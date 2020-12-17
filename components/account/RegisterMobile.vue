@@ -7,45 +7,54 @@
       class="input-mobile"
       outlined
       type="number"
-      placeholder="0912 xxx xx xx"
+      placeholder="0912 XXX XX XX"
       v-model="mobile"
-      prepend-inner-icon="mdi-phone"/>
-    <v-btn @click="sendOtp"  class="primary btn-register">دریافت کد تایید</v-btn>
+      prepend-inner-icon="mdi-phone" />
+    <v-btn :loading="getLocalLoading" @click="sendOtp" class="primary btn-register">دریافت کد تایید</v-btn>
   </v-sheet>
 </template>
 
 <script>
 export default {
   name: 'RegisterMobile',
-  data(){
-    return{
-      mobile:''
+  props: { loading: Boolean },
+  data() {
+    return {
+      mobile: '',
     }
   },
-    methods: {
-      sendOtp () {
-        this.$emit('regmobile', this.mobile)
-      }
+  computed:{
+    getLocalLoading(){
+      return this.loading
+    }
+  },
+  methods: {
+    sendOtp() {
+      this.$emit('regmobile', this.mobile)
+    }
   }
 }
 </script>
 
 <style scoped>
-.register-mobile{
+.register-mobile {
   margin: 1.6vw;
   text-align: center;
   height: 36vh;
 }
+
 .btn-register {
   margin: 1vh;
   color: white;
   font-size: 0.9em;
   width: 38vw;
 }
-.input-mobile{
-  margin: 1.5vh;
+
+.input-mobile {
+  margin: 1.5vh 9.5vh;
 }
-.desc{
+
+.desc {
   font-size: 1em;
   margin: 1.5vh;
 }

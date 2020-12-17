@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import AccountOption from '@/components/acount/AccountOption'
+import AccountOption from '@/components/account/AccountOption'
 
 export default {
   name: 'AccountGridOptions',
