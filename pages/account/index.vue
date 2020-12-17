@@ -2,20 +2,20 @@
   <div>
     <Header class="header" title="حساب کاربری" />
     <Register :login="login" v-if="register" class="register-container" />
-    <RegisterMobile v-if="registerMobile" @regmobile="sendOtpMobile" />
-    <VerifyOtp v-if="otp" @sendotp="verifyOtp" />
-    <RegisteredCustomer v-if="customer" />
+    <RegisterMobile :loading="loading" v-if="registerMobile" @regmobile="sendMobileDto" />
+    <VerifyOtp v-if="otp" @changemobile="changeMobile" @sendotp="verifyOtp" :mobile="mobile" />
+    <RegisteredCustomer :customer-info="customer" v-if="isCustomer" />
     <AccountGridOptions class="account-grid-options" />
   </div>
 </template>
 
 <script>
-import AccountGridOptions from '@/components/acount/AccountGridOptions'
-import Register from '@/components/acount/Register'
+import AccountGridOptions from '@/components/account/AccountGridOptions'
+import Register from '@/components/account/Register'
 import Header from '@/components/header/Header'
-import RegisterMobile from '@/components/acount/RegisterMobile'
-import VerifyOtp from '@/components/acount/VerifyOtp'
-import RegisteredCustomer from '@/components/acount/RegisteredCustomer'
+import RegisterMobile from '@/components/account/RegisterMobile'
+import VerifyOtp from '@/components/account/VerifyOtp'
+import RegisteredCustomer from '@/components/account/RegisteredCustomer'
 
 export default {
   name: 'index.vue',
@@ -25,7 +25,10 @@ export default {
       register: true,
       registerMobile: false,
       otp: false,
-      customer: false
+      isCustomer: false,
+      loading: false,
+      mobile: '',
+      customer: {}
     }
   },
   methods: {
@@ -33,16 +36,73 @@ export default {
       this.register = false
       this.registerMobile = true
     },
-    sendOtpMobile(mobile) {
-      this.registerMobile = false
-      this.otp = true
-      console.log(mobile)
-    },
-    verifyOtp(otp) {
-      this.otp = false
-      this.customer = true
-      console.log(otp)
+    async verifyOtp(otp) {
+      this.loading = true
+      const res = await this.$repositories.register.sendOtp({ otp: otp })
+      if (res !== false) {
+        this.$cookies.set('token', res.data.token)
+        this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
+        const resCustomer = await this.$repositories.customer.getCustomerProfile()
+        if (resCustomer !== false) {
+          this.customer = resCustomer.data
+          this.loading = false
+          this.otp = false
+          this.isCustomer = true
+        }
+      }
     }
+    ,
+    async sendMobileDto(mobile) {
+      this.loading = true
+      this.mobile = mobile
+      const res = await this.$repositories.register.registerMobile({
+        mobile: mobile,
+        device: this.$ua.deviceType() + '-' + this.$ua.browser(),
+        version: '1'
+      })
+      if (res !== false) {
+        this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
+        this.registerMobile = false
+        this.otp = true
+      } else {
+        this.loading = false
+      }
+    }
+    ,
+    changeMobile() {
+      this.registerMobile = true
+      this.otp = false
+    }
+  },
+  async asyncData({ $repositories, $cookies }) {
+    if ($cookies.get('token') !== undefined) {
+      let responseData = await $repositories.customer.getCustomerProfile()
+      if (responseData !== false)
+        return {
+          customer: {
+            name: responseData.data.name,
+            mobile: responseData.data.mobile,
+            balance: responseData.data.balance
+          },
+          otp: false,
+          registerMobile: false,
+          register: false,
+          isCustomer: true
+        }
+      else
+        return {}
+    } else {
+      return {
+        customer: {},
+        otp: false,
+        registerMobile: false,
+        register: true,
+        isCustomer: false
+      }
+    }
+  },
+  activated() {
+    $nuxt.refresh()
   }
 }
 </script>

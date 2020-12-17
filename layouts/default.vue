@@ -37,7 +37,6 @@
     </v-bottom-navigation>
   </v-app>
 
-</div>
 </template>
 
 <script>
