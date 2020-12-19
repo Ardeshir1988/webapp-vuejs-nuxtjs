@@ -1,42 +1,54 @@
 <template>
   <div>
-    <div class="measureAndImg">
-      <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
-      <v-img class="img-product" contain :src="imageUrl" />
-    </div>
-    <div class="product-name">{{ product.name }}</div>
-    <div v-if="product.discountPercent>0" class="product-price-before-discount">
-      {{ this.engDigitToPersianPrice(product.price) }}
-    </div>
-    <v-row no-gutters>
-      <v-col style="padding-top: 0; padding-bottom: 0">
-        <div class="product-price">{{ this.engDigitToPersianPrice(product.discountPrice) }}</div>
-      </v-col>
-      <v-col class="discount-chip-div">
-        <div v-if="product.discountPercent>0" class="discount-chip">
-          %{{ engDigitToPersianDigit(product.discountPercent) }}
-        </div>
-      </v-col>
-    </v-row>
-    <div :class="selectDivider(quantity())"></div>
-    <p class="detail-title">توضیحات</p>
-    <div class="detail-content">{{ product.details }}</div>
-    <SectionSeparator class="section-separator"
-                      section-name="محصولات مشابه"
-                      section-icon="/layers-24px.svg"
-                      :section-link-url="'/products/similar/'+product.id" />
-    <HorizontalProductList class="similar-products" :products="similarProducts" />
-    <div class="btn-container">
-      <v-btn v-if="quantity()<=0" class="btn-add-product"
-             color="white"
-             depressed
-             v-on:click="increaseProduct(product)">
-        <v-img class="cart-icon"
-               contain
-               src="/cart_grocery_store_green-24px.svg"
-               alt="" />
-      </v-btn>
-        <v-row class="row-cart-operation"  v-if="quantity()>0" no-gutters>
+    <RefreshUtil v-if="reload" />
+    <div v-if="!reload">
+      <div class="measureAndImg">
+        <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
+        <v-img class="img-product" contain :src="imageUrl" />
+      </div>
+      <div class="product-name">{{ product.name }}</div>
+      <div v-if="product.discountPercent>0 && product.stock>0" class="product-price-before-discount">
+        {{ this.engDigitToPersianPrice(product.price) }}
+      </div>
+      <v-row no-gutters>
+        <v-col style="padding-top: 0; padding-bottom: 0">
+          <div class="product-price" v-if="product.stock>0">{{ this.engDigitToPersianPrice(product.discountPrice) }}
+          </div>
+        </v-col>
+        <v-col class="discount-chip-div">
+          <div v-if="product.discountPercent>0 && product.stock>0" class="discount-chip">
+            %{{ engDigitToPersianDigit(product.discountPercent) }}
+          </div>
+        </v-col>
+      </v-row>
+      <div :class="selectDivider(quantity())"></div>
+      <p class="detail-title">توضیحات</p>
+      <div class="detail-content">{{ product.details }}</div>
+      <SectionSeparator class="section-separator"
+                        section-name="محصولات مشابه"
+                        section-icon="/layers-24px.svg"
+                        :section-link-url="'/products/similar/'+product.id" />
+      <HorizontalProductList class="similar-products" :products="similarProducts" />
+      <div class="btn-container">
+        <v-btn v-if="product.stock<1" class="btn-add-product"
+               color="white"
+               depressed
+               v-on:click="setInStockNotification">
+          <v-img class="cart-icon"
+                 contain
+                 src="/notifications-24px.svg"
+                 alt="" />
+        </v-btn>
+        <v-btn v-if="quantity()<=0 && product.stock>0" class="btn-add-product"
+               color="white"
+               depressed
+               v-on:click="increaseProduct(product)">
+          <v-img class="cart-icon"
+                 contain
+                 src="/cart_grocery_store_green-24px.svg"
+                 alt="" />
+        </v-btn>
+        <v-row class="row-cart-operation" v-if="quantity()>0 && product.stock>0" no-gutters>
           <v-btn class="btn-decrease" depressed color="primary"
                  v-on:click="decreaseProduct(product)">
             <v-icon size="20" color="white">
@@ -55,6 +67,7 @@
         </v-row>
       </div>
     </div>
+  </div>
 
 </template>
 
@@ -63,14 +76,16 @@ import PersianUtil from '@/utils/PersianUtil'
 import { FILES_URL } from '@/constants'
 import SectionSeparator from '@/components/separator/SectionSeparator'
 import HorizontalProductList from '@/components/products/horizontal/HorizontalProductList'
+import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
   name: 'index',
-  components: { HorizontalProductList, SectionSeparator },
+  components: { RefreshUtil, HorizontalProductList, SectionSeparator },
   data() {
     return {
       product: {},
-      similarProducts: []
+      similarProducts: [],
+      reload: false
     }
   },
   computed: {
@@ -81,17 +96,17 @@ export default {
   },
   async fetch() {
     const productResponse = await this.$repositories.product.getProductById(this.$route.params.id)
-    if (productResponse.status === 200 && productResponse.data) {
+    if (productResponse !== false) {
       this.product = productResponse.data
     } else {
-      // Handle error here
+      this.reload = true
     }
 
-    const productsResponse = await this.$repositories.product.getSimilarProductsByProductId(this.$route.params.id,11,0)
-    if (productsResponse.status === 200 && productsResponse.data) {
+    const productsResponse = await this.$repositories.product.getSimilarProductsByProductId(this.$route.params.id, 11, 0)
+    if (productResponse !== false) {
       this.similarProducts = productsResponse.data
     } else {
-      // Handle error here
+      this.reload = true
     }
   },
   methods: {
@@ -110,11 +125,14 @@ export default {
     quantity: function() {
       return this.$store.getters['cart/getProductCartQuantity'](this.product.id)
     },
-    selectDivider(qty){
-      if (qty>0)
+    selectDivider(qty) {
+      if (qty > 0)
         return 'product-divider-added'
       else
         return 'product-divider'
+    },
+    setInStockNotification() {
+      console.log(this.product)
     }
   }
 }
@@ -187,6 +205,7 @@ export default {
   height: 0.6vh;
   background-color: #8629FD;
 }
+
 .discount-chip-div {
   padding-top: 0;
   padding-bottom: 0;
@@ -245,6 +264,7 @@ export default {
   margin: 1.5vh;
   font-family: 'IranSansMobileBold', sans-serif;
 }
+
 .cart-icon {
   height: 24px;
   max-height: 24px;
@@ -252,6 +272,7 @@ export default {
   max-width: 24px;
   margin: 0.2vh auto;
 }
+
 .btn-increase {
   margin: 1vh auto;
 }
@@ -275,7 +296,7 @@ export default {
   vertical-align: center;
 }
 
-.similar-products{
+.similar-products {
   margin-bottom: 8vh;
 }
 </style>
