@@ -1,51 +1,73 @@
 <template>
-  <v-sheet class="product-cart-sheet" rounded outlined>
-    <div class="cart-product-info">
-      <div class="cart-product-img">
-        <div class="measureAndImg">
-          <p class="measure">{{engDigitToPersianDigit(cartProduct.measure)}}</p>
-          <v-img class="product-img" contain :src="imageUrl" />
+  <div>
+    <v-sheet class="product-cart-sheet" rounded outlined>
+      <div class="cart-product-info">
+        <div class="cart-product-img">
+          <div class="measureAndImg">
+            <p class="measure">{{ engDigitToPersianDigit(cartProduct.measure) }}</p>
+            <v-img class="product-img" contain :src="imageUrl" />
+          </div>
+          <v-sheet class="in-stock-status" :color="productStatus.color">
+            {{ engDigitToPersianDigit(productStatus.stockMsg) }}
+          </v-sheet>
         </div>
-        <v-sheet class="accent in-stock-status">
-          موجود
-        </v-sheet>
+        <div class="cart-product-data">
+          <div class="product-name">
+            {{ cartProduct.name }}
+          </div>
+          <v-chip v-if="productStatus.remove"
+                  class="ma-1" small :color="showChip" text-color="white">
+            %{{ engDigitToPersianDigit(cartProduct.discountPercent) }}
+          </v-chip>
+          <div :class="showPrice" v-if="productStatus.remove">
+            {{ this.engDigitToPersianPrice(cartProduct.price) }}
+          </div>
+          <div class="discount-price" v-if="productStatus.remove">
+            {{ this.engDigitToPersianPrice(cartProduct.discountPrice) }}
+          </div>
+          <div class="period-stock" v-if="productStatus.period">
+            ساعت مجاز سفارش این محصول
+          </div>
+        </div>
       </div>
-      <div class="cart-product-data">
-        <div class="product-name">
-          {{cartProduct.name}}
+      <v-divider vertical></v-divider>
+      <div class="cart-operation">
+        <v-btn icon :disabled="productStatus.minus" v-on:click="decreaseProduct($props.cartProduct)"
+               class="btn-decrease" block small depressed
+               color="white">
+          <v-icon size="22" color="black">
+            mdi-minus
+          </v-icon>
+        </v-btn>
+        <v-divider></v-divider>
+        <div v-if="productStatus.remove" class="cart-quantity">
+          {{ engDigitToPersianDigit(quantity()) }}
         </div>
-        <v-chip
-          class="ma-1" small :color="showChip" text-color="white">
-          %{{engDigitToPersianDigit(cartProduct.discountPercent)}}
-        </v-chip>
-        <div :class="showPrice">
-          {{this.engDigitToPersianPrice(cartProduct.price)}}
+        <div v-if="!productStatus.remove" class="cart-quantity">
+          <v-btn icon v-on:click="deleteProduct($props.cartProduct)" class="btn-increase" block small depressed
+                 color="white">
+            <v-icon size="24" color="warning">
+              mdi-delete-sweep
+            </v-icon>
+          </v-btn>
         </div>
-        <div class="discount-price">
-          {{this.engDigitToPersianPrice(cartProduct.discountPrice)}}
-        </div>
+        <v-divider></v-divider>
+        <v-btn icon :disabled="productStatus.plus" v-on:click="increaseProduct($props.cartProduct)" class="btn-increase"
+               block small depressed
+               color="white">
+          <v-icon size="22" color="black">
+            mdi-plus
+          </v-icon>
+        </v-btn>
       </div>
-    </div>
-    <v-divider vertical></v-divider>
-    <div class="cart-operation">
-      <v-btn v-on:click="decreaseProduct($props.cartProduct)" class="btn-decrease"  block small depressed color="white">
-        <v-icon size="20" color="black">
-          mdi-minus
-        </v-icon>
+      <div class="cart-status-color" :class="productStatus.color"></div>
+    </v-sheet>
+    <nuxt-link style="text-decoration: none; color: inherit;" :to="'/products/similar/'+cartProduct.id">
+      <v-btn v-if="cartProduct.quantity > cartProduct.stock && productStatus.period"
+             rounded depressed class="btn-similar-products">محصولات مشابه
       </v-btn>
-      <v-divider></v-divider>
-      <div class="cart-quantity">
-        {{engDigitToPersianDigit(quantity())}}
-      </div>
-      <v-divider></v-divider>
-      <v-btn v-on:click="increaseProduct($props.cartProduct)" class="btn-increase" block small depressed color="white">
-        <v-icon size="20" color="black">
-          mdi-plus
-        </v-icon>
-      </v-btn>
-    </div>
-    <div class="cart-status-color accent"></div>
-  </v-sheet>
+    </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -59,15 +81,55 @@ export default {
     imageUrl: function() {
       return FILES_URL + this.cartProduct.picture
     },
-    showPrice:function(){
-      if (this.cartProduct.discountPercent>0)
-        return 'price';
+    showPrice: function() {
+      if (this.cartProduct.discountPercent > 0)
+        return 'price'
       else return 'inactive-price'
     },
-    showChip:function(){
-      if (this.cartProduct.discountPercent>0)
-        return 'warning';
+    showChip: function() {
+      if (this.cartProduct.discountPercent > 0)
+        return 'warning'
       else return 'white'
+    },
+    productStatus: function() {
+      if (this.cartProduct.inStockPeriod !== undefined &&
+        this.cartProduct.inStockPeriod != null) {
+        return {
+          color: 'warning',
+          stockMsg: this.cartProduct.inStockPeriod,
+          period: true,
+          plus: true,
+          minus: true,
+          remove: false
+        }
+      } else if (this.cartProduct.stock === 0) {
+        return {
+          color: 'warning',
+          stockMsg: 'ناموجود',
+          period: false,
+          plus: true,
+          minus: true,
+          remove: false
+        }
+      } else if (this.cartProduct.quantity > this.cartProduct.stock) {
+        return {
+          color: 'caution',
+          stockMsg: 'تعداد '.concat(PersianUtil.covertEngDigitToPersianDigit(this.cartProduct.stock).concat(' موجود')),
+          plus: true,
+          minus: false,
+          period: false,
+          remove: true
+        }
+      } else {
+        return {
+          color: 'accent',
+          stockMsg: 'موجود',
+          plus: false,
+          minus: false,
+          period: false,
+          remove: true
+        }
+      }
     }
   },
   methods: {
@@ -79,12 +141,17 @@ export default {
     },
     increaseProduct: async function(cartProduct) {
       await this.$store.dispatch('cart/increase_product', cartProduct)
+      await this.$store.dispatch('cart/update_cart')
     },
-    decreaseProduct:async function(cartProduct){
+    decreaseProduct: async function(cartProduct) {
       await this.$store.dispatch('cart/decrease_product', cartProduct)
+      await this.$store.dispatch('cart/update_cart')
     },
     quantity: function() {
       return this.$store.getters['cart/getProductCartQuantity'](this.cartProduct.id)
+    },
+    deleteProduct: async function(cartProduct) {
+      await this.$store.dispatch('cart/delete_product', cartProduct.id)
     }
   }
 }
@@ -115,7 +182,7 @@ export default {
 }
 
 .product-cart-sheet {
-  margin: 8px;
+  margin: 2vw;
   height: 145px;
   max-height: 145px;
   display: flex;
@@ -134,6 +201,7 @@ export default {
   margin: auto;
   padding-top: 8px;
   padding-bottom: 8px;
+  direction: rtl;
 }
 
 .cart-product-data {
@@ -187,7 +255,7 @@ export default {
   max-height: 2.5rem;
   min-height: 2.5rem;
   margin-top: 3px;
-  margin-right: 3px;
+  margin-right: 1vw;
   margin-bottom: 3px;
   max-lines: 2;
   font-family: 'IranSansMobileBold', sans-serif;
@@ -200,6 +268,7 @@ export default {
   margin-top: 5px;
   margin-right: 3px;
 }
+
 .inactive-price {
   text-decoration: line-through;
   font-size: 1em;
@@ -208,17 +277,39 @@ export default {
   margin-top: 5px;
   margin-right: 3px;
 }
+
 .discount-price {
   margin-top: 7px;
   margin-right: 3px;
   font-size: 1.1em;
   line-height: 1.25em;
 }
-.in-stock-status{
+
+.in-stock-status {
   margin: auto;
+  margin-top: 1vh;
   color: white;
-  border-radius:5px;
-  width: 80%;
+  border-radius: 5px;
+  width: 95%;
   background-color: #00c853;
+  font-size: 0.8em;
+}
+
+.btn-similar-products {
+  margin-left: 2vw;
+  text-align: center;
+  background-color: #E6E6E6;
+  border-radius: 5px;
+  font-size: 0.85em;
+  color: #808080;
+  height: 5vh;
+  vertical-align: center;
+  width: 38vw;
+}
+
+.period-stock {
+  font-size: 0.8em;
+  margin-top: 18.5vw;
+  margin-right: 1vw;
 }
 </style>
