@@ -15,10 +15,8 @@
           <div class="divider"></div>
           <div v-if="ready" class="cart-msg">مبلغ مجموع خرید مربوط به اقلام موجود می باشد</div>
           <div v-if="ready" class="divider"></div>
-          <v-btn class="btn-buy" depressed height="40" color="accent">
-            <div>
-              ادامه خرید
-            </div>
+          <v-btn @click="continueCheckout" class="btn-buy" depressed height="40" color="accent">
+            ادامه خرید
           </v-btn>
         </v-col>
       </v-row>
@@ -60,22 +58,35 @@ export default {
     async updateCartAfterReload() {
       this.$store.dispatch('cart/init_cart').then(x => {
         const cartProducts = this.cartList
-        this.$repositories.product
-          .checkCartProductsAvailability({ 'products': cartProducts })
+        this.$repositories.product.checkCartProductsAvailability({ 'products': cartProducts })
           .then(responseData => {
             if (responseData !== false) {
+              console.log(responseData.data)
               responseData.data.products.forEach(serverProduct => {
                 cartProducts.forEach(cartProduct => {
-                  if (cartProduct.stock !== serverProduct.stock)
+                  if (cartProduct.stock !== serverProduct.stock || serverProduct.inStockPeriod != null)
                     this.$store.dispatch('cart/update_product_stock', {
                       id: serverProduct.id,
-                      stock: serverProduct.stock
+                      stock: serverProduct.stock,
+                      inStockPeriod: serverProduct.inStockPeriod
                     })
                 })
               })
             }
           })
       })
+    },
+    async continueCheckout() {
+      this.$repositories.product.checkCartProductsAvailability({ 'products': this.cartList })
+        .then(res => {
+          if (res !== false) {
+            if (res.data.ready) {
+              this.$router.push('/checkout')
+            } else {
+              this.$notifier.showMessage({ content: 'برای ادامه همه اجناس باید سبز باشند', color: 'black' })
+            }
+          }
+        })
     }
   }
 }
