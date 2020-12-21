@@ -1,5 +1,3 @@
-import axios from '@/plugins/axios'
-
 const resource = '/product'
 
 
@@ -34,5 +32,11 @@ export default ($axios) => ({
   },
   getBusinessPartnerInfo(partnerId) {
     return $axios.get(`${resource}/business-partner/${partnerId}`)
+  },
+  getCategories() {
+    return $axios.get(`${resource}/category`)
+  },
+  getBusinessPartners() {
+    return $axios.get(`${resource}/business-partner`)
   }
 })
