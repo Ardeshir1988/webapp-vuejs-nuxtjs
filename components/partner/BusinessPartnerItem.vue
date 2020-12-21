@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="businessPartner" outlined rounded>
+  <v-sheet @click="gotoCategoryProduct" class="businessPartner" outlined rounded>
     <v-img class="img-businessPartner" height="119" :src="imageUrl">
     </v-img>
   </v-sheet>
@@ -15,6 +15,11 @@ export default {
     imageUrl: function() {
       return FILES_URL + this.partner.picture
     }
+  },
+  methods: {
+    gotoCategoryProduct() {
+      this.$router.push('/partner/' + this.partner.name + '?id=' + this.partner.id+'&businessid='+this.partner.businessPartnerId)
+    }
   }
 }
 </script>
@@ -25,10 +30,12 @@ export default {
   align-items: baseline;
   text-align: center;
 }
-.businessPartner{
+
+.businessPartner {
   text-align: center;
   width: 32vw;
 }
+
 .name-businessPartner {
   font-size: 10pt;
   align-items: center;
