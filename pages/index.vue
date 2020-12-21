@@ -11,7 +11,7 @@
       <SectionSeparator class="section-separator"
                         section-name="دسته بندی محصولات"
                         section-icon="category-24px.svg"
-                        section-link-url="" />
+                        section-link-url="/category" />
       <CategoryList :categories="homepage.categories" />
       <Banner class="section-separator" :banners="homepage.banners" />
 
