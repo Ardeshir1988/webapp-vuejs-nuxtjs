@@ -9,18 +9,21 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/axios": "5.12.1",
     "@nuxtjs/localforage": "^1.1.0",
     "@nuxtjs/pwa": "^3.0.2",
+    "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.6"
+    "express-session": "^1.17.1",
+    "nuxt": "^2.14.6",
+    "nuxt-user-agent": "^1.2.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.7",
+    "@nuxtjs/localforage": "^1.1.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "@nuxtjs/localforage": "^1.1.0",
     "prettier": "^2.1.2",
     "vuex": "^3.5.1"
   }
