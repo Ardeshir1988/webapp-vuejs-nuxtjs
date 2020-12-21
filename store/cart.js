@@ -66,6 +66,7 @@ export const actions = {
     let cart = await this.$localForage.getItem('cart')
     const cartProductIndex = cart.map(p => p.id).indexOf(product.id)
     cart[cartProductIndex].stock = product.stock
+    cart[cartProductIndex].inStockPeriod = product.inStockPeriod
     await this.$localForage.setItem('cart', cart)
     console.log('update cart')
     console.log(cart)
@@ -89,6 +90,7 @@ export const actions = {
           if (cartProduct.stock !== serverProduct.stock) {
             const cartProductIndex = cartList.map(p => p.id).indexOf(serverProduct.id)
             cartList[cartProductIndex].stock = serverProduct.stock
+            cartList[cartProductIndex].inStockPeriod = serverProduct.inStockPeriod
             this.$localForage.setItem('cart', cartList)
             commit('UPDATE_CART', cartList)
           }
