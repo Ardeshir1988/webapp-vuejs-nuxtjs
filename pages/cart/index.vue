@@ -4,7 +4,7 @@
     <div class="btn-container">
       <v-row>
         <v-col class="column">
-          <v-row>
+          <v-row no-gutters style="margin-top: 1vh">
             <v-col class="column-amount">
               {{ getCartTotalAmount() }}
             </v-col>
@@ -12,11 +12,13 @@
               مجموع خرید
             </v-col>
           </v-row>
-          <v-divider class="divider"></v-divider>
+          <div class="divider"></div>
+          <div v-if="ready" class="cart-msg">مبلغ مجموع خرید مربوط به اقلام موجود می باشد</div>
+          <div v-if="ready" class="divider"></div>
           <v-btn class="btn-buy" depressed height="40" color="accent">
-          <div>
-            ادامه خرید
-          </div>
+            <div>
+              ادامه خرید
+            </div>
           </v-btn>
         </v-col>
       </v-row>
@@ -34,14 +36,46 @@ export default {
   computed: {
     cartList: function() {
       return this.$store.getters['cart/getCartProducts']
+    },
+    ready: function() {
+      return this.cartList.filter(cpf => cpf.quantity > cpf.stock).length > 0
     }
+  },
+  activated() {
+    this.updateCartAfterReload()
   },
   methods: {
     getCartTotalAmount: function() {
       if (this.cartList.length === 0)
         return PersianUtil.makePersianPrice(0)
-      else
-        return PersianUtil.makePersianPrice(this.cartList.map(cp => cp.quantity * cp.discountPrice).reduce((previousValue, currentValue) => previousValue + currentValue))
+      else {
+        return PersianUtil.makePersianPrice(
+          this.cartList.filter(cpf => cpf.quantity <= cpf.stock)
+            .map(cp => cp.quantity * cp.discountPrice)
+            .reduce(function(accumulator, currentValue) {
+              return accumulator + currentValue
+            }, 0))
+      }
+    },
+    async updateCartAfterReload() {
+      this.$store.dispatch('cart/init_cart').then(x => {
+        const cartProducts = this.cartList
+        this.$repositories.product
+          .checkCartProductsAvailability({ 'products': cartProducts })
+          .then(responseData => {
+            if (responseData !== false) {
+              responseData.data.products.forEach(serverProduct => {
+                cartProducts.forEach(cartProduct => {
+                  if (cartProduct.stock !== serverProduct.stock)
+                    this.$store.dispatch('cart/update_product_stock', {
+                      id: serverProduct.id,
+                      stock: serverProduct.stock
+                    })
+                })
+              })
+            }
+          })
+      })
     }
   }
 }
@@ -49,7 +83,7 @@ export default {
 
 <style scoped>
 .cart-list {
-  margin-bottom: 96px;
+  margin-bottom: 24vh;
 }
 
 .btn-container {
@@ -87,7 +121,7 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
   text-align: left;
-  margin-left: 10px;
+  margin-left: 4vw;
   direction: rtl;
 }
 
@@ -95,7 +129,12 @@ export default {
   color: black;
   padding-top: 0;
   padding-bottom: 0;
-  margin-right: 10px;
+  margin-right: 4vw;
   text-align: right;
+}
+
+.cart-msg {
+  font-size: 0.85em;
+  color: black;
 }
 </style>
