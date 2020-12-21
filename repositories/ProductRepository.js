@@ -31,5 +31,8 @@ export default ($axios) => ({
   },
   checkCartProductsAvailability(cartDto) {
     return $axios.post(`${resource}/cart-availability`, cartDto)
+  },
+  getBusinessPartnerInfo(partnerId) {
+    return $axios.get(`${resource}/business-partner/${partnerId}`)
   }
 })
