@@ -1,16 +1,21 @@
-export default function({ $axios, redirect, $notifier }) {
+export default function({ $axios, redirect, $notifier, app, store }) {
   $axios.onRequest(config => {
-    console.log('Making request to ' + config.url)
+    console.log('Making request to ' + config.url + '-' + config.headers)
   })
   $axios.onError(error => {
+    console.log('----------error----' + error)
     if (error.response === undefined) {
       $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
-      return Promise.resolve(false);
+      return Promise.resolve(false)
     } else {
-      if (error.response.data.message !== undefined)
+      if (error.response.data.message !== '') {
+        console.log('------if----' + error.response.data)
         $notifier.showMessage({ content: error.response.data.message, color: 'black' })
-      else
+      } else {
+        console.log('-----else-----' + error.data)
         $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
+      }
     }
+    return Promise.resolve(false)
   })
 }
