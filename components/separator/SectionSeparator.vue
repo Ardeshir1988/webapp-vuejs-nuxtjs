@@ -3,27 +3,23 @@
     <v-col>
       <v-row justify="end" no-gutters>
         <v-col>
-          <nuxt-link :to="sectionLinkUrl">
-          <div class="section-link-text">مشاهده همه</div>
+          <nuxt-link style="text-decoration: none; color: inherit;" :to="sectionLinkUrl">
+            <div class="section-link-text">مشاهده همه</div>
           </nuxt-link>
         </v-col>
         <v-col>
           <v-row justify="end" no-gutters>
             <v-col cols="10">
-              <div class="section-name">{{sectionName}}</div>
+              <div class="section-name">{{ sectionName }}</div>
             </v-col>
             <v-col cols="auto">
               <CustomIcon24px :icon-src="sectionIcon" />
             </v-col>
-
           </v-row>
         </v-col>
-
       </v-row>
-
       <div class="divider-line" />
     </v-col>
-
   </v-row>
 </template>
 
@@ -54,9 +50,11 @@ export default {
 
 .section-name {
   direction: rtl;
+  font-size: 0.9em;
 }
 
 .section-link-text {
   color: #41b883;
+  font-size: 0.9em;
 }
 </style>
