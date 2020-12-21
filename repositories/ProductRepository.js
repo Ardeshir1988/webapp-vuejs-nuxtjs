@@ -1,3 +1,5 @@
+import axios from '@/plugins/axios'
+
 const resource = '/product'
 
 
@@ -27,16 +29,7 @@ export default ($axios) => ({
   getProductById(productId) {
     return $axios.get(`${resource}/${productId}`)
   },
-
-  create(payload) {
-    return $axios.post(`${resource}`, payload)
-  },
-
-  update(id, payload) {
-    return $axios.post(`${resource}/${id}`, payload)
-  },
-
-  delete(id) {
-    return $axios.delete(`${resource}/${id}`)
+  checkCartProductsAvailability(cartDto) {
+    return $axios.post(`${resource}/cart-availability`, cartDto)
   }
 })
