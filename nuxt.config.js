@@ -23,7 +23,7 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/repositories.js','~/plugins/notifier.js'],
+  plugins: ['~/plugins/repositories.js','~/plugins/notifier.js','~/plugins/axios.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -41,14 +41,20 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
 
-    '@nuxtjs/localforage'
-  ],
+    '@nuxtjs/localforage',
 
+    'nuxt-user-agent',
+
+    // With options
+    ['cookie-universal-nuxt', { parseJSON: false }],
+  ],
+  router: {
+    middleware: ['ssr-cookie']
+  },
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     baseURL: process.env.API_BASE_URL || 'http://api.hjet.ir/'
   },
-
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -61,7 +67,8 @@ export default {
           info: '#E6E6E6',
           warning: '#FF6672',
           error: '#FF6672',
-          success: '#0BCE83'
+          success: '#0BCE83',
+          caution:'#FECD55'
         }
       }
     }
