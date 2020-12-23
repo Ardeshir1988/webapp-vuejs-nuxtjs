@@ -21,6 +21,7 @@ import AddressItem from '@/components/address/AddressItem'
 import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
+  middleware:'auth',
   name: 'index',
   components: { RefreshUtil, AddressItem },
   data() {

@@ -42,6 +42,7 @@
 import CustomerAddress from '@/components/address/CustomerAddress'
 
 export default {
+  middleware:'auth',
   name: 'index',
   components: { CustomerAddress },
   data() {
