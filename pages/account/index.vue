@@ -5,7 +5,7 @@
     <RegisterMobile :loading="loading" v-if="registerMobile" @regmobile="sendMobileDto" />
     <VerifyOtp v-if="otp" @changemobile="changeMobile" @sendotp="verifyOtp" :mobile="mobile" />
     <RegisteredCustomer :customer-info="customer" v-if="isCustomer" />
-    <AccountGridOptions class="account-grid-options" />
+    <AccountGridOptions :registered="isCustomer" class="account-grid-options" />
   </div>
 </template>
 
