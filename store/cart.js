@@ -106,6 +106,11 @@ export const getters = {
       return '0'
     return state.cartProducts.map(cp => cp.quantity).reduce((previousValue, currentValue) => previousValue + currentValue)
   },
+  getCartTotalAmount: state => {
+    if (state.cartProducts.length === 0)
+      return '0'
+    return state.cartProducts.map(cp => cp.quantity * cp.discountPrice).reduce((previousValue, currentValue) => previousValue + currentValue)
+  },
   getProductCartQuantity: (state) => (productId) => {
     if (state.cartProducts.length === 0)
       return 0
