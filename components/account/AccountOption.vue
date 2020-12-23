@@ -1,14 +1,19 @@
 <template>
-  <v-sheet class="account-option" outlined rounded>
+  <v-sheet @click="clickOp" class="account-option" outlined rounded>
     <v-img class="img-option" :class="op.disable === true ? 'img-disable':''" :src="op.iconName"></v-img>
-    <div class="name-option">{{op.name}}</div>
+    <div class="name-option">{{ op.name }}</div>
   </v-sheet>
 </template>
 
 <script>
 export default {
   name: 'AccountOption',
-  props: { op: Object }
+  props: { op: Object },
+  methods: {
+    clickOp() {
+      this.$emit('chooseOp', this.op.id)
+    }
+  }
 }
 </script>
 
@@ -18,8 +23,9 @@ export default {
   height: 24px;
   margin: 3.5vh auto auto;
 }
-.img-disable{
-  filter: grayscale(0.9) opacity(0.3) ;
+
+.img-disable {
+  filter: grayscale(0.9) opacity(0.3);
 }
 
 .name-option {
