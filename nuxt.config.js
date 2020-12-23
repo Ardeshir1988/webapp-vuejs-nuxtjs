@@ -1,5 +1,3 @@
-
-
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'server',
@@ -23,7 +21,7 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/repositories.js','~/plugins/notifier.js','~/plugins/axios.js'],
+  plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -31,7 +29,7 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
+    '@nuxtjs/vuetify'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -44,16 +42,16 @@ export default {
     '@nuxtjs/localforage',
 
     'nuxt-user-agent',
-
+    'nuxt-leaflet',
     // With options
-    ['cookie-universal-nuxt', { parseJSON: false }],
+    ['cookie-universal-nuxt', { parseJSON: true }]
   ],
   router: {
     middleware: ['ssr-cookie']
   },
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: process.env.API_BASE_URL || 'http://api.hjet.ir/'
+    baseURL: process.env.API_BASE_URL || 'http://localhost:8090/'
   },
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
@@ -68,13 +66,12 @@ export default {
           warning: '#FF6672',
           error: '#FF6672',
           success: '#0BCE83',
-          caution:'#FECD55'
+          caution: '#FECD55'
         }
       }
     }
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-  }
+  build: {}
 }
