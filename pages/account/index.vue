@@ -40,7 +40,7 @@ export default {
       this.loading = true
       const res = await this.$repositories.register.sendOtp({ otp: otp })
       if (res !== false) {
-        this.$cookies.set('token', res.data.token)
+        this.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
