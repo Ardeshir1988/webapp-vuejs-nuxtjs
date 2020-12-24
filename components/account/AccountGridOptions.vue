@@ -49,7 +49,7 @@ export default {
     clickOp(opId) {
       switch (opId) {
         case 'op1': {
-          this.$router.push('/order-status')
+          this.$router.push('/orders/status')
           break
         }
         case 'op2': {
