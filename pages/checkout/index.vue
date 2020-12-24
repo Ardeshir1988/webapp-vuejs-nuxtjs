@@ -1,17 +1,7 @@
 <template>
   <div>
     <Header class="fix-header" title="نهایی سازی سفارش" />
-    <v-sheet class="address-item-sheet" rounded outlined>
-      <div class="address-item-details"> {{ address.title }}</div>
-      <div class="address-item-details">آدرس: {{ address.details }}</div>
-      <div class="address-item-details">تلفن: {{ address.number }}</div>
-    </v-sheet>
-    <nuxt-link style="text-decoration: none; color: inherit;" to="/address">
-      <v-btn rounded depressed class="btn-edit-address">ویرایش آدرس
-        <v-icon right dark>mdi-map-marker</v-icon>
-      </v-btn>
-    </nuxt-link>
-
+    <CheckoutAddress :address="getSelectedAddress" />
     <v-radio-group
       dense
       v-model="deliveryType"
@@ -24,7 +14,7 @@
           label="عادی"
           color="accent"
           class="radio"
-          value="0"
+          :value="normalDelivery"
         ></v-radio>
         <div class="delivery-type-item-msg">
           تحویل حداکثر ۹۰ دقیقه
@@ -37,7 +27,7 @@
           label="اکسپرس"
           color="accent"
           class="radio"
-          value="1"
+          :value="expressDelivery"
         ></v-radio>
         <div class="delivery-type-item-msg">
           تحویل حداکثر ۴۵ دقیقه
@@ -51,7 +41,8 @@
           تعداد اجناس
         </v-col>
         <v-col class="balance">
-          {{ getBalance }}
+          {{ getPersianDigit(cartCount) }}
+          عدد
         </v-col>
       </v-row>
       <v-row no-gutters dense>
@@ -59,7 +50,7 @@
           مجموع خرید
         </v-col>
         <v-col class="balance">
-          {{ getBalance }}
+          {{ getPersianPrice(cartAmount) }}
         </v-col>
       </v-row>
       <v-row no-gutters dense>
@@ -67,7 +58,7 @@
           هزینه ارسال
         </v-col>
         <v-col class="balance">
-          {{ getBalance }}
+          {{ getPersianPrice(deliveryType) }}
         </v-col>
       </v-row>
       <v-row no-gutters dense>
@@ -75,7 +66,7 @@
           قابل پرداخت
         </v-col>
         <v-col class="balance">
-          {{ getBalance }}
+          {{ getPersianPrice(deliveryType + cartAmount) }}
         </v-col>
       </v-row>
     </v-sheet>
@@ -92,7 +83,7 @@
           label="پرداخت آنلاین"
           class="radio"
           color="accent"
-          value="0"
+          value="online"
         ></v-radio>
       </v-sheet>
       <v-spacer />
@@ -102,18 +93,18 @@
           class="radio"
           label="پرداخت نقدی"
           color="accent"
-          value="1"
+          value="cash"
         ></v-radio>
       </v-sheet>
     </v-radio-group>
 
     <v-sheet class="payment-status" rounded outlined>
-      <v-row no-gutters dense>
+      <v-row no-gutters dense v-if="isOnline">
         <v-col class="credit">
           اعتبار کنونی
         </v-col>
         <v-col class="balance">
-          {{ getBalance }}
+          {{ getPersianPrice(balance) }}
         </v-col>
       </v-row>
       <div class="payment-status-msg">اعتبار شما فقط در صورت پرداخت آنلاین محاسبه میگردد</div>
@@ -132,26 +123,105 @@ import Header from '@/components/header/Header'
 import CustomerAddress from '@/components/address/CustomerAddress'
 import AddressItem from '@/components/address/AddressItem'
 import PersianUtil from '@/utils/PersianUtil'
+import CheckoutAddress from '@/components/address/CheckoutAddress'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'index',
-  components: { AddressItem, CustomerAddress, Header },
+  components: { CheckoutAddress, AddressItem, CustomerAddress, Header },
+  activated() {
+    $nuxt.refresh()
+  },
   data() {
     return {
-      address: { title: 'خانه', details: 'آدرس', number: '09122877481' },
-      deliveryType: '0',
-      paymentType: '0',
-      balance: 0
+      addresses: [],
+      addressId: '',
+      deliveryType: 0,
+      normalDelivery: 0,
+      expressDelivery: 0,
+      paymentType: 'online',
+      balance: 0,
+      checkoutOrderPermission: false,
+      reasonCheckoutOrder: ''
     }
   },
   computed: {
-    getBalance() {
-      return PersianUtil.makePersianPrice(this.balance)
+    ...mapGetters({
+      cartCount: 'cart/cartProductsCount',
+      cartAmount: 'cart/getCartTotalAmount',
+      cart: 'cart/getCartProducts'
+    }),
+    isOnline() {
+      return this.paymentType === 'online'
+    },
+    getSelectedAddress() {
+      const index = this.addresses.findIndex(ad => ad.selected === true)
+      if (index !== -1)
+        return this.addresses[index]
+      else return {}
     }
   },
   methods: {
     checkout() {
-
+      if (this.$cookies.get('token') === undefined) {
+        this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
+        this.$router.push('/account')
+      } else {
+        let deliveryType = ''
+        if (this.deliveryType === this.expressDelivery)
+          deliveryType = 'EXPRESS'
+        else
+          deliveryType = 'SCHEDULED'
+        const order = {
+          customerAddressId: this.getSelectedAddress.id,
+          deliveryType: deliveryType,
+          products: this.cart
+        }
+        this.$repositories.order.checkoutOrder(order)
+          .then(orderRes => {
+            if (orderRes !== false) {
+              if (orderRes.data.success) {
+                this.$cookies.set('order', orderRes.data, { maxAge: 60 * 15 })
+                this.$router.push('/checkout/done')
+              } else {
+                this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
+                this.$router.push('/cart')
+              }
+            }
+          })
+      }
+    },
+    getPersianPrice(val) {
+      return PersianUtil.makePersianPrice(val)
+    },
+    getPersianDigit(val) {
+      return PersianUtil.covertEngDigitToPersianDigit(val)
+    }
+  },
+  async asyncData({ $repositories, $cookies }) {
+    const info = await $repositories.product.getSystemInfo()
+    if ($cookies.get('token') !== undefined) {
+      const profile = await $repositories.customer.getCustomerProfile()
+      const addressesRes = await $repositories.customer.getAddresses()
+      if (addressesRes !== false && info !== false && profile !== false) {
+        return {
+          addresses: addressesRes.data,
+          balance: profile.data.balance,
+          deliveryType: info.data.normalDeliveryCost,
+          normalDelivery: info.data.normalDeliveryCost,
+          expressDelivery: info.data.expressDeliveryCost,
+          reasonCheckoutOrder: info.data.reasonCheckoutOrder,
+          checkoutOrderPermission: info.data.checkoutOrderPermission
+        }
+      } else if (info !== false) {
+        return {
+          deliveryType: info.data.normalDeliveryCost,
+          normalDelivery: info.data.normalDeliveryCost,
+          expressDelivery: info.data.expressDeliveryCost,
+          reasonCheckoutOrder: info.data.reasonCheckoutOrder,
+          checkoutOrderPermission: info.data.checkoutOrderPermission
+        }
+      }
     }
   }
 }
@@ -178,31 +248,6 @@ export default {
   font-family: 'IranSansMobileBold', sans-serif;
 }
 
-.address-item-sheet {
-  margin: 2vw;
-  direction: rtl;
-}
-
-.address-item-details {
-  font-size: 0.9em;
-  direction: rtl;
-  margin: 2vw 3vw 2vw 2vw;
-  color: #8E8E8E;
-  width: 80vw;
-}
-
-.btn-edit-address {
-  margin-left: 2vw;
-  text-align: center;
-  background-color: #E6E6E6;
-  border-radius: 5px;
-  font-size: 0.85em;
-  color: #808080;
-  height: 5vh;
-  vertical-align: center;
-  width: 35vw;
-}
-
 .delivery-type-item {
   margin: 2vw;
   direction: rtl;
@@ -226,7 +271,7 @@ export default {
 
 .payment-status {
   direction: rtl;
-  margin: 2vw;
+  margin: 2vw 2vw 13vh;
 }
 
 .credit {
