@@ -1,80 +1,96 @@
 <template>
-  <v-sheet class="order-status-sheet" rounded outlined>
-    <div class="sheet-status"></div>
-    <v-row class="row" no-gutters>
-      <v-col>
-        {{ getPersianDigit(this.order.createdDate) }}
-      </v-col>
-      <v-col class="sheet-title">
-        سفارش باز
-      </v-col>
-    </v-row>
-    <v-row class="row" no-gutters>
-      <v-col class="sheet-amount">
-        {{ getPersianPrice(this.order.amount) }}
-      </v-col>
-      <v-col class="sheet-title">
-        {{ this.order.reference }}
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <v-img contain class="img-status" src="/order-delivered.svg" :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
-        <div class="state-title">تحویل</div>
-        <div class="state-time">{{ getStateData('DELIVERED') }}</div>
-      </v-col>
-      <v-col>
-        <v-img contain class="img-status" src="/order-delivery.svg" :class="getStateData('SHIPPING') !== '' ? '' :'img-disable'" />
-        <div class="state-title">ارسال</div>
-        <div class="state-time">{{ getStateData('SHIPPING') }}</div>
-      </v-col>
-      <v-col>
-        <v-img contain class="img-status" src="/order-packing.svg" :class="getStateData('PACKED') !== '' ? '' :'img-disable'" />
-        <div class="state-title">بسته بندی</div>
-        <div class="state-time">{{ getStateData('PACKED') }}</div>
-      </v-col>
-      <v-col>
-        <v-img contain class="img-status" src="/order-approve.svg" :class="getStateData('APPROVED') !== '' ? '' :'img-disable'" />
-        <div class="state-title">تایید</div>
-        <div class="state-time">{{ getStateData('APPROVED') }}</div>
-      </v-col>
-    </v-row>
+  <div>
+    <v-sheet @click="getOrderProducts" class="order-status-sheet" rounded outlined>
+      <v-row class="row" no-gutters>
+        <v-col>
+          {{ getPersianDigit(this.order.createdDate) }}
+        </v-col>
+        <v-col class="sheet-title">
+          سفارش باز
+        </v-col>
+      </v-row>
+      <v-row class="row" no-gutters>
+        <v-col class="sheet-amount">
+          {{ getPersianPrice(this.order.amount) }}
+        </v-col>
+        <v-col class="sheet-title">
+          {{ this.order.reference }}
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-img contain class="img-status" src="/order-delivered.svg"
+                 :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
+          <div class="state-title">تحویل</div>
+          <div class="state-time">{{ getStateData('DELIVERED') }}</div>
+        </v-col>
+        <v-col>
+          <v-img contain class="img-status" src="/order-delivery.svg"
+                 :class="getStateData('SHIPPING') !== '' ? '' :'img-disable'" />
+          <div class="state-title">ارسال</div>
+          <div class="state-time">{{ getStateData('SHIPPING') }}</div>
+        </v-col>
+        <v-col>
+          <v-img contain class="img-status" src="/order-packing.svg"
+                 :class="getStateData('PACKED') !== '' ? '' :'img-disable'" />
+          <div class="state-title">بسته بندی</div>
+          <div class="state-time">{{ getStateData('PACKED') }}</div>
+        </v-col>
+        <v-col>
+          <v-img contain class="img-status" src="/order-approve.svg"
+                 :class="getStateData('APPROVED') !== '' ? '' :'img-disable'" />
+          <div class="state-title">تایید</div>
+          <div class="state-time">{{ getStateData('APPROVED') }}</div>
+        </v-col>
+      </v-row>
 
-    <v-row no-gutters class="order-info">
-      <v-col cols="7">
-        <div class="delivery-type">
-          <v-row>
-            <v-icon>mdi-truck-outline</v-icon>
-            <div style="margin-right: 1vw">نحوه ارسال :</div>
-            <div style="margin-right: 1vw">{{ getDeliveryType(this.order.deliveryType) }}</div>
-          </v-row>
-        </div>
-        <div class="address">
-          <v-row>
-            <v-icon>mdi-map-marker</v-icon>
-            <div style="margin-right: 1vw">آدرس :</div>
-            <div style="margin-right: 1vw">{{ this.order.customerAddress.title }}</div>
-          </v-row>
-          <div style="margin-right: 2vw">{{ this.order.customerAddress.details }}</div>
-        </div>
-      </v-col>
-      <v-col cols="5">
-        <v-img contain class="courier-avatar" src="/avatar.svg" />
-        <div class="courier-name">نام سفیر</div>
-        <div class="courier-call">
-          <v-btn outlined color="accent"> تماس با سفیر</v-btn>
-        </div>
-      </v-col>
-    </v-row>
-  </v-sheet>
+      <v-row no-gutters class="order-info">
+        <v-col cols="7">
+          <div class="delivery-type">
+            <v-row>
+              <v-icon>mdi-truck-outline</v-icon>
+              <div style="margin-right: 1vw">نحوه ارسال :</div>
+              <div style="margin-right: 1vw">{{ getDeliveryType(this.order.deliveryType) }}</div>
+            </v-row>
+          </div>
+          <div class="address">
+            <v-row>
+              <v-icon>mdi-map-marker</v-icon>
+              <div style="margin-right: 1vw">آدرس :</div>
+              <div style="margin-right: 1vw">{{ this.order.customerAddress.title }}</div>
+            </v-row>
+            <div style="margin-right: 2vw">{{ this.order.customerAddress.details }}</div>
+          </div>
+        </v-col>
+        <v-col cols="5">
+          <v-img contain class="courier-avatar" src="/avatar.svg" />
+          <div class="courier-name">نام سفیر</div>
+          <div class="courier-call">
+            <v-btn outlined color="accent"> تماس با سفیر</v-btn>
+          </div>
+        </v-col>
+      </v-row>
+    </v-sheet>
+    <v-bottom-sheet fullscreen class="bottom-sheet" scrollable v-model="sheet">
+      <OrderDetails @close="closeSheet" class="order-details" :order-details="orderDetails" />
+    </v-bottom-sheet>
+  </div>
 </template>
 
 <script>
 import PersianUtil from '@/utils/PersianUtil'
+import OrderDetails from '@/components/order/OrderDetails'
 
 export default {
   name: 'OrderStatus',
+  components: { OrderDetails },
   props: { order: Object },
+  data() {
+    return {
+      sheet: false,
+      orderDetails: {}
+    }
+  },
   methods: {
     getPersianDigit(val) {
       return PersianUtil.covertEngDigitToPersianDigit(val)
@@ -95,6 +111,18 @@ export default {
       } else {
         return ''
       }
+    },
+    closeSheet() {
+      this.sheet = false
+    },
+    async getOrderProducts() {
+      this.$repositories.order.getCurrentOrderDetail(this.order.reference)
+        .then(res => {
+          if (res.data !== false) {
+            this.orderDetails = res.data
+            this.sheet = true
+          }
+        })
     }
   }
 }
@@ -160,11 +188,22 @@ export default {
   color: #8E8E8E;
   margin-top: 3vw;
 }
+
 .img-disable {
   filter: grayscale(0.9) opacity(0.3);
 }
+
+.order-details {
+  padding-top: 1vh;
+  overflow: auto;
+}
+
 .address {
   color: #8E8E8E;
   margin-top: 3vw;
+}
+
+.bottom-sheet {
+  height: 100%;
 }
 </style>
