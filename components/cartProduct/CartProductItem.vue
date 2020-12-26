@@ -291,7 +291,7 @@ export default {
   color: white;
   border-radius: 5px;
   width: 95%;
-  background-color: #00c853;
+  background-color: #0BCE83;
   font-size: 0.8em;
 }
 
