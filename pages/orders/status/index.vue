@@ -21,11 +21,8 @@
       </div>
       <div class="divider"></div>
       <v-btn @click="pay" class="btn-primary" depressed height="40" color="accent">
-
-
-       +{{getPersianDigit(getPayableAmount)}}
+        +{{ getPersianDigit(getPayableAmount) }}
         افزایش اعتبار
-
       </v-btn>
     </div>
   </div>
@@ -40,7 +37,9 @@ export default {
   components: { OrderStatus },
   data() {
     return {
-      orders: []
+      orders: [],
+      totalOrdersAmount:0,
+      balance:0
     }
   },
   computed: {
