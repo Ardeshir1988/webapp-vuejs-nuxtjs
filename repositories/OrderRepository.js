@@ -6,5 +6,8 @@ export default ($axios) => ({
   },
   getCurrentOrders() {
     return $axios.get(`${resource}`)
+  },
+  getCurrentOrderDetail(trackingNumber) {
+    return $axios.get(`${resource}/${trackingNumber}`)
   }
 })
