@@ -53,7 +53,7 @@ export default {
           break
         }
         case 'op2': {
-          this.$router.push('/orders')
+          this.$router.push('/orders/transaction')
           break
         }
         case 'op3': {
