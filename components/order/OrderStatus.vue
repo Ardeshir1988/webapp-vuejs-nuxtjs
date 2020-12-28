@@ -1,75 +1,78 @@
 <template>
   <div>
     <v-sheet @click="getOrderProducts" class="order-status-sheet" rounded outlined>
-      <v-row class="row" no-gutters>
-        <v-col>
-          {{ getPersianDigit(this.order.createdDate) }}
-        </v-col>
-        <v-col class="sheet-title">
-          سفارش باز
-        </v-col>
-      </v-row>
-      <v-row class="row" no-gutters>
-        <v-col class="sheet-amount">
-          {{ getPersianPrice(this.order.amount) }}
-        </v-col>
-        <v-col class="sheet-title">
-          {{ this.order.reference }}
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-img contain class="img-status" src="/order-delivered.svg"
-                 :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
-          <div class="state-title">تحویل</div>
-          <div class="state-time">{{ getStateData('DELIVERED') }}</div>
-        </v-col>
-        <v-col>
-          <v-img contain class="img-status" src="/order-delivery.svg"
-                 :class="getStateData('SHIPPING') !== '' ? '' :'img-disable'" />
-          <div class="state-title">ارسال</div>
-          <div class="state-time">{{ getStateData('SHIPPING') }}</div>
-        </v-col>
-        <v-col>
-          <v-img contain class="img-status" src="/order-packing.svg"
-                 :class="getStateData('PACKED') !== '' ? '' :'img-disable'" />
-          <div class="state-title">بسته بندی</div>
-          <div class="state-time">{{ getStateData('PACKED') }}</div>
-        </v-col>
-        <v-col>
-          <v-img contain class="img-status" src="/order-approve.svg"
-                 :class="getStateData('APPROVED') !== '' ? '' :'img-disable'" />
-          <div class="state-title">تایید</div>
-          <div class="state-time">{{ getStateData('APPROVED') }}</div>
-        </v-col>
-      </v-row>
+      <div class="content">
+          <v-row class="row" no-gutters>
+            <v-col>
+              {{ getPersianDigit(this.order.createdDate) }}
+            </v-col>
+            <v-col class="sheet-title">
+              سفارش باز
+            </v-col>
+          </v-row>
+          <v-row class="row" no-gutters>
+            <v-col class="sheet-amount">
+              {{ getPersianPrice(this.order.amount) }}
+            </v-col>
+            <v-col class="sheet-title">
+              {{ this.order.reference }}
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-img contain class="img-status" src="/order-delivered.svg"
+                     :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
+              <div class="state-title">تحویل</div>
+              <div class="state-time">{{ getStateData('DELIVERED') }}</div>
+            </v-col>
+            <v-col>
+              <v-img contain class="img-status" src="/order-delivery.svg"
+                     :class="getStateData('SHIPPING') !== '' ? '' :'img-disable'" />
+              <div class="state-title">ارسال</div>
+              <div class="state-time">{{ getStateData('SHIPPING') }}</div>
+            </v-col>
+            <v-col>
+              <v-img contain class="img-status" src="/order-packing.svg"
+                     :class="getStateData('PACKED') !== '' ? '' :'img-disable'" />
+              <div class="state-title">بسته بندی</div>
+              <div class="state-time">{{ getStateData('PACKED') }}</div>
+            </v-col>
+            <v-col>
+              <v-img contain class="img-status" src="/order-approve.svg"
+                     :class="getStateData('APPROVED') !== '' ? '' :'img-disable'" />
+              <div class="state-title">تایید</div>
+              <div class="state-time">{{ getStateData('APPROVED') }}</div>
+            </v-col>
+          </v-row>
 
-      <v-row no-gutters class="order-info">
-        <v-col cols="7">
-          <div class="delivery-type">
-            <v-row>
-              <v-icon>mdi-truck-outline</v-icon>
-              <div style="margin-right: 1vw">نحوه ارسال :</div>
-              <div style="margin-right: 1vw">{{ getDeliveryType(this.order.deliveryType) }}</div>
-            </v-row>
-          </div>
-          <div class="address">
-            <v-row>
-              <v-icon>mdi-map-marker</v-icon>
-              <div style="margin-right: 1vw">آدرس :</div>
-              <div style="margin-right: 1vw">{{ this.order.customerAddress.title }}</div>
-            </v-row>
-            <div style="margin-right: 2vw">{{ this.order.customerAddress.details }}</div>
-          </div>
-        </v-col>
-        <v-col cols="5">
-          <v-img contain class="courier-avatar" src="/avatar.svg" />
-          <div class="courier-name">نام سفیر</div>
-          <div class="courier-call">
-            <v-btn outlined color="accent"> تماس با سفیر</v-btn>
-          </div>
-        </v-col>
-      </v-row>
+          <v-row no-gutters class="order-info">
+            <v-col cols="7">
+              <div class="delivery-type">
+                <v-row>
+                  <v-icon>mdi-truck-outline</v-icon>
+                  <div style="margin-right: 1vw">نحوه ارسال :</div>
+                  <div style="margin-right: 1vw">{{ getDeliveryType(this.order.deliveryType) }}</div>
+                </v-row>
+              </div>
+              <div class="address">
+                <v-row>
+                  <v-icon>mdi-map-marker</v-icon>
+                  <div style="margin-right: 1vw">آدرس :</div>
+                  <div style="margin-right: 1vw">{{ this.order.customerAddress.title }}</div>
+                </v-row>
+                <div style="margin-right: 2vw">{{ this.order.customerAddress.details }}</div>
+              </div>
+            </v-col>
+            <v-col cols="5">
+              <v-img contain class="courier-avatar" src="/avatar.svg" />
+              <div class="courier-name">نام سفیر</div>
+              <div class="courier-call">
+                <v-btn outlined color="accent"> تماس با سفیر</v-btn>
+              </div>
+            </v-col>
+          </v-row>
+      </div>
+      <div class="item-indicator"></div>
     </v-sheet>
     <v-bottom-sheet fullscreen class="bottom-sheet" scrollable v-model="sheet">
       <OrderDetails @close="closeSheet" class="order-details" :order-details="orderDetails" />
@@ -132,8 +135,14 @@ export default {
 .order-status-sheet {
   margin: 2vw;
   font-size: 0.9em;
-}
+  display: flex;
+  flex-flow: row;
 
+}
+.content{
+  display: inline;
+  width: 99vw;
+}
 .sheet-status {
   background-color: #0BCE83;
   width: 8px;
@@ -205,5 +214,12 @@ export default {
 
 .bottom-sheet {
   height: 100%;
+}
+
+.item-indicator {
+  background-color: #0BCE83;
+  width: 1.25vw;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
 }
 </style>
