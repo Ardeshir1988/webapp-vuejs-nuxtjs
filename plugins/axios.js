@@ -1,26 +1,34 @@
-export default function({ $axios, redirect, $notifier, app, store }) {
+export default function({ $axios, redirect, $notifier, app }) {
   $axios.onRequest(config => {
     const c = app.$cookies.get('token')
-    if (c !== undefined && config.headers.common.Authorization === undefined) {
-      console.log('axios header')
+    if (c !== undefined) {
       config.headers.common = { 'Authorization': 'Bearer ' + c }
     }
     console.log('Making request to ' + config.url + '-' + config.headers)
   })
-  $axios.onError(error => {
-    console.log('----------error----' + error)
-    if (error.response === undefined) {
+  $axios.onError(err => {
+    if (err.response === undefined) {
       $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
       return Promise.resolve(false)
     } else {
-      if (error.response.data.message !== '') {
-        console.log('------if----' + error.response.data)
-        $notifier.showMessage({ content: error.response.data.message, color: 'black' })
+      if (err.response.status === 401) {
+        const mobile = app.$cookies.get('mobile')
+        const device = app.$ua.deviceType() + '-' + app.$ua.browser()
+        return $axios.put('/register/renew-token', { mobile: mobile, device: device })
+          .then(res => {
+            app.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
+            err.config.headers['Authorization'] = 'Bearer ' + res.data.token
+            return $axios.request(err.config)
+          })
       } else {
-        console.log('-----else-----' + error.data)
-        $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
+        if (err.response.data.message !== '') {
+          $notifier.showMessage({ content: err.response.data.message, color: 'black' })
+          return Promise.resolve(false)
+        } else {
+          $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
+          return Promise.resolve(false)
+        }
       }
     }
-    return Promise.resolve(false)
   })
 }
