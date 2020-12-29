@@ -9,7 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "5.12.1",
+    "@nuxtjs/axios": "^5.12.4",
     "@nuxtjs/localforage": "^1.1.0",
     "@nuxtjs/pwa": "^3.0.2",
     "cookie-universal-nuxt": "^2.1.4",
