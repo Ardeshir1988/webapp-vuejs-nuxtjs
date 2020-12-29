@@ -61,16 +61,12 @@ export default {
         this.$repositories.product.checkCartProductsAvailability({ 'products': cartProducts })
           .then(responseData => {
             if (responseData !== false) {
-              console.log(responseData.data)
               responseData.data.products.forEach(serverProduct => {
-                cartProducts.forEach(cartProduct => {
-                  if (cartProduct.stock !== serverProduct.stock || serverProduct.inStockPeriod != null)
                     this.$store.dispatch('cart/update_product_stock', {
                       id: serverProduct.id,
                       stock: serverProduct.stock,
                       inStockPeriod: serverProduct.inStockPeriod
                     })
-                })
               })
             }
           })
