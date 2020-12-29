@@ -41,6 +41,7 @@ export default {
       const res = await this.$repositories.register.sendOtp({ otp: otp })
       if (res !== false) {
         this.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
+        this.$cookies.set('mobile', this.mobile, { maxAge: 60 * 60 * 24 * 90 })
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
@@ -50,8 +51,7 @@ export default {
           this.isCustomer = true
         }
       }
-    }
-    ,
+    },
     async sendMobileDto(mobile) {
       this.loading = true
       this.mobile = mobile
@@ -67,8 +67,7 @@ export default {
       } else {
         this.loading = false
       }
-    }
-    ,
+    },
     changeMobile() {
       this.registerMobile = true
       this.otp = false
