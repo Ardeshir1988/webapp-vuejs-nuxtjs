@@ -45,6 +45,7 @@ export default {
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
+          Pushe.setCustomId(resCustomer.data.pushId)
           this.customer = resCustomer.data
           this.loading = false
           this.otp = false
@@ -77,7 +78,8 @@ export default {
   async asyncData({ $repositories, $cookies }) {
     if ($cookies.get('token') !== undefined) {
       let responseData = await $repositories.customer.getCustomerProfile()
-      if (responseData !== false)
+      if (responseData !== false){
+        Pushe.setCustomId(responseData.data.pushId)
         return {
           customer: {
             name: responseData.data.name,
@@ -89,6 +91,7 @@ export default {
           register: false,
           isCustomer: true
         }
+      }
       else
         return {}
     } else {
