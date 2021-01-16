@@ -64,6 +64,7 @@ export default {
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         this.registerMobile = false
         this.otp = true
+        this.loading = false
       } else {
         this.loading = false
       }
