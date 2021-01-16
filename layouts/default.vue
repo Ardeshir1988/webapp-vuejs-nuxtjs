@@ -43,6 +43,7 @@
 import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
 import Snackbar from '@/components/snackbar/Snackbar'
+import Pushe from "pushe-webpush";
 
 export default {
   components: { Snackbar },
@@ -56,6 +57,9 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('cart/init_cart')
+
+    Pushe.init("5ej1kvjk3x5jk12e");
+    Pushe.subscribe();
   },
   computed: {
     ...mapGetters({ cartCount: 'cart/cartProductsCount' })

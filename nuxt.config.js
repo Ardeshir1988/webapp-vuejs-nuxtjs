@@ -36,8 +36,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/onesignal',
+
     '@nuxtjs/pwa',
 
     '@nuxtjs/localforage',
@@ -69,15 +68,6 @@ export default {
           success: '#0BCE83',
           caution: '#FECD55'
         }
-      }
-    }
-  },
-  oneSignal: {
-    init: {
-      appId: '253fd5b8-2bf8-4a3a-873d-a971c09bcb31',
-      allowLocalhostAsSecureOrigin: true,
-      welcomeNotification: {
-        disable: true
       }
     }
   },
