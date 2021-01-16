@@ -16,6 +16,7 @@ import Header from '@/components/header/Header'
 import RegisterMobile from '@/components/account/RegisterMobile'
 import VerifyOtp from '@/components/account/VerifyOtp'
 import RegisteredCustomer from '@/components/account/RegisteredCustomer'
+import Pushe from 'pushe-webpush'
 
 export default {
   name: 'index.vue',
