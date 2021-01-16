@@ -58,7 +58,7 @@ export default {
   async mounted() {
     await this.$store.dispatch('cart/init_cart')
 
-    Pushe.init("5ej1kvjk3x5jk12e");
+    Pushe.init("6g0372xq3q71lo3g");
     Pushe.subscribe();
   },
   computed: {
