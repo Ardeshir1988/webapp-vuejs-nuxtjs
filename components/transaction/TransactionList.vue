@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-for="item in transactions">
-      <OrderTransaction @click="getDetails" v-if="item.type === 'ORDER'" :transaction="item" :key="item.id" />
+      <OrderTransaction @click="getDetails" v-if="item.type === 'ORDER' && item.transactionDirection === 'WITHDRAW'" :transaction="item" :key="item.id" />
+      <ReturnedOrderTransaction @click="getDetails" v-if="item.type === 'ORDER' && item.transactionDirection === 'DEPOSIT'" :transaction="item" :key="item.id" />
       <ReturnProductTransaction @click="getDetails" v-if="item.type === 'PRODUCT'" :transaction="item" :key="item.id" />
       <RefundTransaction v-if="item.type === 'REFUND'" :transaction="item" :key="item.id" />
       <PaymentTransaction v-if="item.type === 'PAYMENT'" :transaction="item" :key="item.id" />

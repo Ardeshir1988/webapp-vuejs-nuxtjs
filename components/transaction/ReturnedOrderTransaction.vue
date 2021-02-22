@@ -3,17 +3,17 @@
     <v-row style="margin: 1vw" no-gutters>
       <v-col cols="11">
         <v-sheet class="sheet-order-transaction" rounded outlined>
-          <v-btn depressed icon class="transaction-icon">
+          <v-btn @click="getOrderDetails" depressed icon class="transaction-icon">
             <v-icon>mdi-dots-horizontal</v-icon>
           </v-btn>
           <div class="content">
             <v-row no-gutters style="margin-top: 1vh">
-              <v-col class="left-col" cols="6">{{transaction.productName}}</v-col>
-              <v-col class="right-col" cols="5">بازگشت کالا</v-col>
+              <v-col class="left-col" cols="6">{{ transaction.reference }}</v-col>
+              <v-col class="right-col" cols="5">برگشت سفارش</v-col>
             </v-row>
             <v-row no-gutters style="margin-top: 2vh;margin-bottom: 1vh;color: #808080">
-              <v-col class="left-col" cols="6">{{getPersianPrice(transaction.amount)}}</v-col>
-              <v-col class="right-col" cols="5">{{getPersianDigit(transaction.createdDate)}}</v-col>
+              <v-col class="left-col" cols="6">{{ getPersianPrice(transaction.amount) }}</v-col>
+              <v-col class="right-col" cols="5">{{ getPersianDigit(transaction.createdDate) }}</v-col>
             </v-row>
           </div>
           <div class="item-indicator"></div>
@@ -21,24 +21,47 @@
       </v-col>
 
       <v-col cols="1" class="transaction-icon">
-        <v-icon color="warning">mdi-compare-horizontal</v-icon>
+        <v-icon color="warning">mdi-cart</v-icon>
       </v-col>
     </v-row>
+    <v-bottom-sheet fullscreen class="bottom-sheet" scrollable v-model="sheet">
+      <OrderDetails @close="closeSheet" class="order-details" :order-details="transactionDetail" />
+    </v-bottom-sheet>
   </div>
 </template>
 
 <script>
-import PersianUtil from '@/utils/PersianUtil'
+import PersianUtil from '~/utils/PersianUtil'
+import OrderDetails from '~/components/order/OrderDetails'
 
 export default {
-  name: 'ReturnProductTransaction',
+  name: 'ReturnedOrderTransaction',
+  components: { OrderDetails },
   props: { transaction: Object },
+  data() {
+    return {
+      sheet: false,
+      transactionDetail: {}
+    }
+  },
   methods: {
+    getPersianPrice(val) {
+      return PersianUtil.makePersianPrice(val)
+    },
     getPersianDigit(val) {
       return PersianUtil.covertEngDigitToPersianDigit(val)
     },
-    getPersianPrice(val) {
-      return PersianUtil.makePersianPrice(val)
+    closeSheet() {
+      this.sheet = false
+    },
+    async getOrderDetails() {
+      this.$repositories.order.getTransactionDetails(this.transaction.id)
+        .then(res => {
+          if (res.data !== false) {
+            this.transactionDetail = res.data
+            this.sheet = true
+          }
+        })
     }
   }
 }
@@ -80,7 +103,6 @@ export default {
 
 .right-col {
   text-align: right;
-  direction: rtl;
   margin: auto;
   padding-right: 1vw;
   font-size: 1em;
