@@ -60,7 +60,8 @@ export default {
       const res = await this.$repositories.register.registerMobile({
         mobile: mobile,
         device: this.$ua.deviceType() + '-' + this.$ua.browser(),
-        version: '1'
+        version: '1',
+        customerChannel:'WEB'
       })
       if (res !== false) {
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
