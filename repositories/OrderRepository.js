@@ -15,5 +15,8 @@ export default ($axios) => ({
   },
   getTransactionDetails(transactionId) {
     return $axios.get(`/transaction/${transactionId}`)
+  },
+  getPaymentToken(amount,transactionType) {
+    return $axios.get(`/payment/get-payment-token?amount=${amount}&transaction-type=${transactionType}`)
   }
 })

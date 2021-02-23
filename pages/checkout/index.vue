@@ -63,7 +63,7 @@
       </v-row>
       <v-row no-gutters dense>
         <v-col class="credit">
-          قابل پرداخت
+          جمع کل
         </v-col>
         <v-col class="balance">
           {{ getPersianPrice(deliveryType + cartAmount) }}
@@ -71,35 +71,8 @@
       </v-row>
     </v-sheet>
 
-    <v-radio-group
-      dense
-      v-model="paymentType"
-      hide-details
-      class="delivery-type"
-      row>
-      <v-sheet class="delivery-type-item" rounded outlined>
-        <v-radio
-          style="margin-right: 0"
-          label="پرداخت آنلاین"
-          class="radio"
-          color="accent"
-          value="online"
-        ></v-radio>
-      </v-sheet>
-      <v-spacer />
-      <v-sheet class="delivery-type-item" rounded outlined>
-        <v-radio
-          style="margin-right: 0"
-          class="radio"
-          label="پرداخت نقدی"
-          color="accent"
-          value="cash"
-        ></v-radio>
-      </v-sheet>
-    </v-radio-group>
-
     <v-sheet class="payment-status" rounded outlined>
-      <v-row no-gutters dense v-if="isOnline">
+      <v-row no-gutters dense>
         <v-col class="credit">
           اعتبار کنونی
         </v-col>
@@ -107,12 +80,23 @@
           {{ getPersianPrice(balance) }}
         </v-col>
       </v-row>
-      <div class="payment-status-msg">اعتبار شما فقط در صورت پرداخت آنلاین محاسبه میگردد</div>
+      <div class="payment-status-msg" v-if="needPay">اعتبار کافی است, جمع کل از اعتبار شما کسر خواهد شد</div>
+      <v-row no-gutters dense v-else>
+        <v-col class="credit">
+          قابل پرداخت
+        </v-col>
+        <v-col class="balance">
+          {{ getPersianPrice((deliveryType + cartAmount) - this.balance) }}
+        </v-col>
+      </v-row>
     </v-sheet>
 
     <div class="btn-container">
-      <v-btn @click="checkout" class="btn-primary" depressed height="40" color="accent">
+      <v-btn v-if="needPay" @click="checkout" class="btn-primary" depressed height="40" color="accent">
         ثبت سفارش
+      </v-btn>
+      <v-btn v-else @click="getPaymentToken" class="btn-primary" depressed height="40" color="accent">
+        پرداخت
       </v-btn>
     </div>
   </div>
@@ -139,10 +123,10 @@ export default {
       deliveryType: 0,
       normalDelivery: 0,
       expressDelivery: 0,
-      paymentType: 'online',
       balance: 0,
       checkoutOrderPermission: false,
-      reasonCheckoutOrder: ''
+      reasonCheckoutOrder: '',
+      paymentUrl:''
     }
   },
   computed: {
@@ -151,8 +135,8 @@ export default {
       cartAmount: 'cart/getCartTotalAmount',
       cart: 'cart/getCartProducts'
     }),
-    isOnline() {
-      return this.paymentType === 'online'
+    needPay() {
+      return this.balance > (this.cartAmount + this.deliveryType)
     },
     getSelectedAddress() {
       const index = this.addresses.findIndex(ad => ad.selected === true)
@@ -162,6 +146,14 @@ export default {
     }
   },
   methods: {
+    getPaymentToken() {
+      this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
+        .then(paymentTokenRes => {
+          if (paymentTokenRes !== false) {
+            window.location.replace(this.paymentUrl+paymentTokenRes.data.msg)
+          }
+        })
+    },
     checkout() {
       if (this.$cookies.get('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
@@ -207,6 +199,7 @@ export default {
         return {
           addresses: addressesRes.data,
           balance: profile.data.balance,
+          paymentUrl:info.data.paymentUrl,
           deliveryType: info.data.normalDeliveryCost,
           normalDelivery: info.data.normalDeliveryCost,
           expressDelivery: info.data.expressDeliveryCost,
@@ -215,6 +208,7 @@ export default {
         }
       } else if (info !== false) {
         return {
+          paymentUrl:info.data.paymentUrl,
           deliveryType: info.data.normalDeliveryCost,
           normalDelivery: info.data.normalDeliveryCost,
           expressDelivery: info.data.expressDeliveryCost,
