@@ -135,7 +135,7 @@ export default {
       cartAmount: 'cart/getCartTotalAmount',
       cart: 'cart/getCartProducts'
     }),
-    async needPay() {
+     needPay() {
       const cart = this.$store.getters['cart/getCartProducts']
       if (cart.length>0 && this.$route.query.autoCheckout && this.balance > (this.cartAmount + this.deliveryType))
         this.checkout()
