@@ -140,7 +140,7 @@ export default {
       if (cart.length>0 && this.$route.query.autoCheckout && this.balance > (this.cartAmount + this.deliveryType))
         this.checkout()
       else
-      return this.balance > (this.cartAmount + this.deliveryType)
+      return this.balance >= (this.cartAmount + this.deliveryType)
     },
     getSelectedAddress() {
       const index = this.addresses.findIndex(ad => ad.selected === true)
