@@ -136,10 +136,9 @@ export default {
       cart: 'cart/getCartProducts'
     }),
      needPay() {
-      const cart = this.$store.getters['cart/getCartProducts']
-      if (cart.length>0 && this.$route.query.autoCheckout && this.balance > (this.cartAmount + this.deliveryType))
-        this.checkout()
-      else
+       if (this.$route.query.autoCheckout && this.balance >= (this.cartAmount + this.deliveryType))
+        this.checkAutoCheckout()
+
       return this.balance >= (this.cartAmount + this.deliveryType)
     },
     getSelectedAddress() {
@@ -157,6 +156,12 @@ export default {
             window.location.replace(this.paymentUrl+paymentTokenRes.data.msg)
           }
         })
+    },
+    async checkAutoCheckout(){
+      const cart = await this.$store.getters['cart/getCartProducts']
+      if (cart.length>0){
+        this.checkout()
+      }
     },
     checkout() {
       if (this.$cookies.get('token') === undefined) {
