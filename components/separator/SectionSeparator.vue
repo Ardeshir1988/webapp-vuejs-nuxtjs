@@ -2,11 +2,11 @@
   <v-row class="divider-container" no-gutters>
     <v-col>
       <v-row justify="end" no-gutters>
-        <v-col>
-          <nuxt-link style="text-decoration: none; color: inherit;" :to="sectionLinkUrl">
-            <div class="section-link-text">مشاهده همه</div>
-          </nuxt-link>
-        </v-col>
+<!--        <v-col>-->
+<!--          <nuxt-link style="text-decoration: none; color: inherit;" :to="sectionLinkUrl">-->
+<!--            <div class="section-link-text">مشاهده همه</div>-->
+<!--          </nuxt-link>-->
+<!--        </v-col>-->
         <v-col>
           <v-row justify="end" no-gutters>
             <v-col cols="10">
