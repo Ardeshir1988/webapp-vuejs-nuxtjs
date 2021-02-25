@@ -11,7 +11,7 @@ export default ($axios) => ({
     return $axios.get(`${resource}/${trackingNumber}`)
   },
   getTransactions() {
-    return $axios.get('/transaction')
+    return $axios.get('/transaction?from=0&size=99')
   },
   getTransactionDetails(transactionId) {
     return $axios.get(`/transaction/${transactionId}`)
