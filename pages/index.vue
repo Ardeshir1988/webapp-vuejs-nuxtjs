@@ -2,7 +2,7 @@
   <div>
     <RefreshUtil v-if="reload" />
     <div v-if="!reload">
-      <Banner :banners="homepage.banners" />
+      <Banner v-if="instructions.topBannerPermission" :banners="homepage.topBanners" />
       <SectionSeparator class="section-separator"
                         section-name="محصولات جدید"
                         section-icon="storefront-24px.svg"
@@ -13,14 +13,14 @@
                         section-icon="category-24px.svg"
                         section-link-url="/category" />
       <CategoryList :categories="homepage.categories" />
-      <Banner class="section-separator" :banners="homepage.banners" />
+      <Banner v-if="instructions.bottomBannerPermission" class="section-separator" :banners="homepage.bottomBanners" />
 
-      <SectionSeparator class="section-separator"
+      <SectionSeparator v-if="instructions.businessPartnerPermission" class="section-separator"
                         section-name="شرکای تجاری"
                         section-icon="partner-24px.svg"
                         section-link-url="" />
 
-      <BusinessPartnerList :business-partners="homepage.businessPartners" />
+      <BusinessPartnerList v-if="instructions.businessPartnerPermission" :business-partners="homepage.businessPartners" />
       <SectionSeparator class="section-separator"
                         section-name="حراج"
                         section-icon="storefront-24px.svg"
@@ -62,11 +62,14 @@ export default {
   },
   async asyncData({ $repositories }) {
     let responseData = await $repositories.product.homepage()
-    console.log(responseData)
-    if (responseData === false)
+    let resInstruction = await $repositories.product.getInstructions()
+    if (responseData === false || resInstruction === false)
       return { reload: true }
     else
-      return { homepage: responseData.data }
+      return {
+        homepage: responseData.data,
+        instructions: resInstruction.data
+      }
   }
 }
 </script>

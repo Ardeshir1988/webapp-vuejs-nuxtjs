@@ -200,7 +200,7 @@ export default {
     }
   },
   async asyncData({ $repositories, $cookies }) {
-    const info = await $repositories.product.getSystemInfo()
+    const info = await $repositories.product.getInstructions()
     if ($cookies.get('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()

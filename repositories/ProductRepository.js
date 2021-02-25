@@ -6,7 +6,7 @@ export default ($axios) => ({
   homepage() {
     return $axios.get('/home-page')
   },
-  getSystemInfo(){
+  getInstructions(){
     return $axios.get('/home-page/instructions')
   },
   getProductsByCategoryIdAndTypeId(categoryId, typeId, from) {
