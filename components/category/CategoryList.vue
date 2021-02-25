@@ -20,11 +20,12 @@ export default {
 .categories {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
 }
 
 .categories_item {
-  margin-bottom: 2vh;
-  margin-right: auto;
-  margin-left: auto;
+  margin-bottom: 0.5vw;
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
 }
 </style>

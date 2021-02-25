@@ -19,11 +19,12 @@ export default {
 .partners {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
 }
 
 .partners_item {
-  margin-bottom: 2vh;
-  margin-right: auto;
-  margin-left: auto;
+  margin-bottom: 0.5vw;
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
 }
 </style>
