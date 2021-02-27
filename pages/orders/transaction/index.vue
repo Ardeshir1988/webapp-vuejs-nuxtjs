@@ -14,6 +14,7 @@ import TransactionList from '@/components/transaction/TransactionList'
 
 export default {
   name: 'index',
+  middleware:'auth',
   components: { TransactionList, ReturnProductTransaction, RefundTransaction, PaymentTransaction, OrderTransaction },
   async asyncData({ $repositories }) {
     const transactionList =await $repositories.order.getTransactions()
