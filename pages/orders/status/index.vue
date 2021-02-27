@@ -1,29 +1,36 @@
 <template>
   <div>
     <Header class="fix-header" title="وضعیت سفارش" />
-    <div style="margin-bottom: 24vh">
-      <OrderStatus v-for="order in orders" :order="order" :key="order.id" />
-    </div>
-    <div class="btn-container">
-      <div class="payment-segment">
-        <v-row no-gutters>
-          <v-col class="amount" cols="6">{{ getPersianPrice(totalOrdersAmount) }}</v-col>
-          <v-col class="titles" cols="6">مجموع سفارشات</v-col>
-        </v-row>
-        <v-row no-gutters>
-          <v-col class="amount" cols="6">{{ getPersianPrice(balance) }}</v-col>
-          <v-col class="titles" cols="6">اعتبار کنونی</v-col>
-        </v-row>
-        <v-row no-gutters>
-          <v-col class="amount" cols="6">{{ getPersianPrice(getPayableAmount) }}</v-col>
-          <v-col class="titles" cols="6">قابل پرداخت</v-col>
-        </v-row>
+    <div v-if="currentOrdersIsEmpty" class="container">
+      <div class="msg-center">
+        <p class="empty-msg">هیج سفارشی وجود ندارد</p>
       </div>
-      <div class="divider"></div>
-      <v-btn @click="pay" class="btn-primary" depressed height="40" color="accent">
-        +{{ getPersianDigit(getPayableAmount) }}
-        افزایش اعتبار
-      </v-btn>
+    </div>
+    <div v-else>
+      <div style="margin-bottom: 24vh">
+        <OrderStatus v-for="order in orders" :order="order" :key="order.id" />
+      </div>
+      <div class="btn-container">
+        <div class="payment-segment">
+          <v-row no-gutters>
+            <v-col class="amount" cols="6">{{ getPersianPrice(totalOrdersAmount) }}</v-col>
+            <v-col class="titles" cols="6">مجموع سفارشات</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col class="amount" cols="6">{{ getPersianPrice(balance) }}</v-col>
+            <v-col class="titles" cols="6">اعتبار کنونی</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col class="amount" cols="6">{{ getPersianPrice(getPayableAmount) }}</v-col>
+            <v-col class="titles" cols="6">قابل پرداخت</v-col>
+          </v-row>
+        </div>
+        <div class="divider"></div>
+        <v-btn @click="pay" class="btn-primary" depressed height="40" color="accent">
+          +{{ getPersianDigit(getPayableAmount) }}
+          افزایش اعتبار
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +53,9 @@ export default {
   computed: {
     getPayableAmount() {
       return Math.abs(this.balance - this.totalOrdersAmount)
+    },
+    currentOrdersIsEmpty(){
+      return this.orders.length === 0
     }
   },
   methods: {
@@ -63,7 +73,9 @@ export default {
     const ordersRes = await $repositories.order.getCurrentOrders()
     const profile = await $repositories.customer.getCustomerProfile()
     if (ordersRes !== false && profile !== false) {
-      const total = ordersRes.data.map(order => order.amount).reduce((previousValue, currentValue) => previousValue + currentValue)
+      let total = 0
+      if (ordersRes.data.length>0)
+       total = ordersRes.data.map(order => order.amount).reduce((previousValue, currentValue) => previousValue + currentValue)
       return {
         totalOrdersAmount: total,
         orders: ordersRes.data,
@@ -120,5 +132,27 @@ export default {
   text-align: right;
   direction: rtl;
   padding: 1vw;
+}
+.empty-msg{
+  font-family: 'IranSansMobileBold', sans-serif;
+  color: #808080;
+  font-size: 0.8em;
+  text-align: center;
+  margin-top: auto;
+}
+
+.container {
+  height: 85vh;
+  position: relative;
+  text-align: center;
+}
+
+.msg-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 </style>
