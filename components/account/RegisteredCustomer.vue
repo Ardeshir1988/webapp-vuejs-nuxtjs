@@ -1,19 +1,14 @@
 <template>
   <v-sheet class="customer-container" rounded outlined>
-    <v-row class="row" no-gutters>
-      <v-col>
-        <v-img class="account-card" src="/account-card.png" />
-      </v-col>
-      <v-col>
-        <div style="direction: rtl;margin: 1vw">
-          <div class="customer-info">{{ name }}</div>
-          <div class="customer-info">{{ engDigitToPersianDigit(customerInfo.mobile) }}</div>
-          <v-btn rounded depressed class="btn">
-            <v-icon size="24" class="icon-btn" color="secondary">mdi-pencil</v-icon>
-          </v-btn>
-        </div>
-      </v-col>
-    </v-row>
+    <div style="direction: rtl;margin: 1vw;text-align: center">
+      <div class="customer-info">{{ name }}</div>
+      <div class="customer-info">{{ engDigitToPersianDigit(customerInfo.mobile) }}</div>
+    </div>
+    <div style="direction: rtl">
+      <v-btn rounded depressed class="btn">
+        <v-icon size="24" class="icon-btn" color="secondary">mdi-pencil</v-icon>
+      </v-btn>
+    </div>
     <v-sheet style="margin: 4vh 1.5vh 1.5vh;" rounded outlined>
       <v-row no-gutters class="row-customer-balance">
         <v-col cols="1">
@@ -62,7 +57,7 @@ export default {
 }
 
 .customer-container {
-  height: 32vh;
+  height: 30vh;
   margin: 2vh 1.6vw 1.6vw;
 }
 
