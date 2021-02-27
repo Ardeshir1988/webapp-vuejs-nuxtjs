@@ -1,66 +1,33 @@
 <template>
   <div>
     <v-sheet rounded outlined class="new-order">
-      <div class="new-order">سفارش شما با موفقیت ثبت گردید</div>
+      <v-icon style="margin: 1vh" color="accent" x-large>mdi-check-circle</v-icon>
+      <div style="margin: 1vh">سفارش شما با موفقیت ثبت گردید</div>
       <div class="tracking-number">شماره سفارش</div>
       <div class="tracking-number">{{ order.trackingNumber }}</div>
       <v-row no-gutters class="order-info">
         <v-col class="left-col">
-          {{ order.createdDate.replace('_', ' ') }}
+          {{ order.createdDate.split('_')[0] }}
         </v-col>
         <v-col class="right-col">
-          زمان ثبت
-          <v-icon>mdi-clock-outline</v-icon>
+          {{ order.createdDate.split('_')[1] }}
         </v-col>
       </v-row>
       <v-row no-gutters class="order-info">
         <v-col class="left-col">
           {{ getDeliveryType }}
-        </v-col>
-        <v-col class="right-col">
-          نحوه ارسال
+          :نحوه ارسال
           <v-icon>mdi-truck-outline</v-icon>
         </v-col>
-      </v-row>
-      <v-row no-gutters class="order-info">
-        <v-col class="left-col" cols="9">
-          {{ order.addressDetails }}
-        </v-col>
-        <v-col class="right-col" cols="3">
-          آدرس
+        <v-col class="right-col">
+          آدرس:
+          {{address.title}}
           <v-icon>mdi-map-marker</v-icon>
         </v-col>
       </v-row>
-    </v-sheet>
-
-    <v-sheet rounded outlined class="new-order-operations">
-      <v-row no-gutters class="order-info">
-        <v-col class="left-col-op">
-          {{ engDigitToPersianPrice(order.totalAmount) }}
-        </v-col>
-        <v-col class="right-col">
-          مبلغ سفارش
-          <v-icon>mdi-cash</v-icon>
-        </v-col>
+      <v-row no-gutters class="address-details" style="direction: rtl">
+          {{ address.details }}
       </v-row>
-      <v-row no-gutters class="order-info">
-        <v-col class="left-col-op" :class="getBalanceColor">
-          {{ engDigitToPersianPrice(order.customerBalance) }}
-        </v-col>
-        <v-col class="right-col">
-          اعتبار کنونی
-          <v-icon>mdi-wallet</v-icon>
-        </v-col>
-      </v-row>
-      <div class="enough-credit" v-if="needCharge">اعتبار کافی, مبلغ سفارش از اعتبار شما کسر میشود</div>
-      <div v-else>
-        <div class="payment-status"> اعتبار ناکافی</div>
-        <v-btn class="btn-primary" height="35" color="accent" style="direction: rtl">
-          +
-          {{ engDigitToPersianPrice(getChargeAmount) }}
-        </v-btn>
-      </div>
-
     </v-sheet>
 
     <div class="btn-container">
@@ -73,14 +40,9 @@
 </template>
 
 <script>
-import PersianUtil from '@/utils/PersianUtil'
-
 export default {
   name: 'index',
   methods: {
-    engDigitToPersianPrice: function(val) {
-      return PersianUtil.makePersianPrice(val)
-    },
     gotoOrderStatus(){
       this.$router.push('/orders/status')
     }
@@ -91,25 +53,13 @@ export default {
         return 'اکسپرس'
       } else
         return 'عادی'
-    },
-    getBalanceColor() {
-      if (this.order.customerBalance > this.order.totalAmount)
-        return 'enough-balance'
-      else
-        return 'warning-balance'
-    },
-    getChargeAmount() {
-      return Math.abs(this.order.customerBalance - this.order.totalAmount)
-    },
-    needCharge() {
-      const amount = this.order.customerBalance - this.order.totalAmount
-      return amount >= 0
     }
   },
   async asyncData({ $cookies, redirect }) {
     if ($cookies.get('order') !== undefined) {
       return {
-        order: $cookies.get('order')
+        order: $cookies.get('order'),
+        address : $cookies.get('address')
       }
     } else {
       redirect('/account')
@@ -145,7 +95,9 @@ export default {
 .new-order {
   text-align: center;
   font-size: 1.15em;
-  margin: 2vh;
+  margin-top: 20vh;
+  margin-left: 2vh;
+  margin-right: 2vh;
   color: #808080;
 }
 
@@ -158,8 +110,13 @@ export default {
 }
 
 .order-info {
-  font-size: 0.9em;
+  font-size: 0.8em;
   margin: 1vh;
+}
+.address-details {
+  font-size: 0.8em;
+  margin-right: 1.5vh;
+  margin-left: 1.5vh;
 }
 
 .left-col {

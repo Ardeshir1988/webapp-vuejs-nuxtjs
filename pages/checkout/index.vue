@@ -183,6 +183,7 @@ export default {
             if (orderRes !== false) {
               if (orderRes.data.success) {
                 this.$cookies.set('order', orderRes.data, { maxAge: 60 * 15 })
+                this.$cookies.set('address', this.getSelectedAddress , { maxAge: 60 * 15 })
                 this.$router.push('/checkout/done')
               } else {
                 this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
