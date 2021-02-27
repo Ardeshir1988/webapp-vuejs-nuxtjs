@@ -63,6 +63,7 @@ export default {
 
 .btn {
   background-color: #E6E6E6;
+  margin-right: 2vh;
 }
 
 .customer-info {

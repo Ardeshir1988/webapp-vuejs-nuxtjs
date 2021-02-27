@@ -118,8 +118,7 @@ export default {
 }
 
 .account-grid-options {
-  bottom: 10vh;
-  position: fixed;
+
 }
 
 .register-container {
