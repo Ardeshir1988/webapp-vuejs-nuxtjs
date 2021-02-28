@@ -51,7 +51,7 @@ export default {
 }
 
 .input-mobile {
-  margin: 1.5vh 9.5vh;
+  margin: 1.5vw 10.5vw;
 }
 
 .desc {

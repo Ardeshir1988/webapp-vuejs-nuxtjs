@@ -60,6 +60,10 @@ export default {
 
     Pushe.init("6g0372xq3q71lo3g");
     Pushe.subscribe();
+    Pushe.addEventListener(Pushe.EVENTS.NOTIFICATION_RECEIVED, function(data) {
+      console.log("listener")
+      console.log(data);
+    });
   },
   computed: {
     ...mapGetters({ cartCount: 'cart/cartProductsCount' })
