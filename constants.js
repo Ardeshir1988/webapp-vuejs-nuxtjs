@@ -1,1 +1,1 @@
-export const FILES_URL = 'https://maxproapp.com/files/';
+export const FILES_URL = 'https://api.hjet.ir/files/';
