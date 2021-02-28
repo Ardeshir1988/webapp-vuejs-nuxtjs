@@ -117,6 +117,7 @@ export default {
   font-size: 0.8em;
   margin-right: 1.5vh;
   margin-left: 1.5vh;
+  margin-bottom: 1vh;
 }
 
 .left-col {

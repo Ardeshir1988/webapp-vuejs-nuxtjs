@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-sheet @click="getOrderProducts" class="order-status-sheet" rounded outlined>
+    <v-sheet class="order-status-sheet" rounded outlined>
       <div class="content">
-          <v-row class="row" no-gutters>
+          <v-row class="row" no-gutters @click="getOrderProducts">
             <v-col>
               {{ getPersianDigit(this.order.createdDate) }}
             </v-col>
@@ -10,7 +10,7 @@
               سفارش باز
             </v-col>
           </v-row>
-          <v-row class="row" no-gutters>
+          <v-row class="row" @click="getOrderProducts" no-gutters>
             <v-col class="sheet-amount">
               {{ getPersianPrice(this.order.amount) }}
             </v-col>
@@ -18,7 +18,7 @@
               {{ this.order.reference }}
             </v-col>
           </v-row>
-          <v-row>
+          <v-row @click="getOrderProducts">
             <v-col>
               <v-img contain class="img-status" src="/order-delivered.svg"
                      :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
@@ -44,7 +44,11 @@
               <div class="state-time">{{ getStateData('APPROVED') }}</div>
             </v-col>
           </v-row>
-
+        <div style="direction: rtl">
+          <v-chip pill class="ma-2" :color="getPaymentStatusColor(this.order.paymentStatus)" text-color="white">
+            {{translatePaymentStatus(this.order.paymentStatus)}}
+          </v-chip>
+        </div>
           <v-row no-gutters class="order-info">
             <v-col cols="7">
               <div class="delivery-type">
@@ -64,10 +68,10 @@
               </div>
             </v-col>
             <v-col cols="5">
-              <v-img contain class="courier-avatar" src="/avatar.svg" />
-              <div class="courier-name">نام سفیر</div>
+              <v-img contain class="courier-avatar" :src="deliveryAvatar" />
+              <div class="courier-name">{{this.deliveryName}}</div>
               <div class="courier-call">
-                <v-btn outlined color="accent"> تماس با سفیر</v-btn>
+                <v-btn outlined color="accent" @click="dial(deliveryMobile)">تماس با سفیر</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -83,11 +87,29 @@
 <script>
 import PersianUtil from '@/utils/PersianUtil'
 import OrderDetails from '@/components/order/OrderDetails'
+import { FILES_URL } from '@/constants'
 
 export default {
   name: 'OrderStatus',
   components: { OrderDetails },
   props: { order: Object },
+  computed:{
+    deliveryName:function(){
+      if (this.onShipping()){
+        return this.order.deliveryName
+      }else return 'مشخص نشده'
+    },
+    deliveryAvatar:function(){
+      if (this.onShipping()){
+        return FILES_URL + this.order.deliveryAvatar
+      }else return '/avatar.svg'
+    },
+    deliveryMobile:function(){
+      if (this.onShipping()){
+        return this.order.deliveryMobile
+      }else return ''
+    }
+  },
   data() {
     return {
       sheet: false,
@@ -95,6 +117,30 @@ export default {
     }
   },
   methods: {
+    dial(number){
+      window.location ='tel:'+number;
+    },
+    onShipping(){
+      console.log(this.order.orderStates)
+      console.log('this.order.orderStates')
+      return this.order.orderStates.find(state => state.type === 'SHIPPING') !== undefined
+    },
+    translatePaymentStatus(paymentStatus){
+      if (paymentStatus === 'PAID')
+        return 'پرداخت شده'
+      else if (paymentStatus === 'ENOUGH_CREDIT')
+        return 'اعتبار کافی'
+      else
+      return 'در انتظار تکمیل وجه'
+    },
+    getPaymentStatusColor(paymentStatus){
+      if (paymentStatus === 'PAID')
+        return 'accent'
+      else if (paymentStatus === 'ENOUGH_CREDIT')
+        return 'accent'
+      else
+        return 'warning'
+    },
     getPersianDigit(val) {
       return PersianUtil.covertEngDigitToPersianDigit(val)
     },
@@ -141,7 +187,7 @@ export default {
 }
 .content{
   display: inline;
-  width: 99vw;
+  width: 94vw;
 }
 .sheet-status {
   background-color: #0BCE83;
