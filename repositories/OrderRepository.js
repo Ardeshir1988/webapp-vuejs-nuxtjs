@@ -18,5 +18,11 @@ export default ($axios) => ({
   },
   getPaymentToken(amount,transactionType) {
     return $axios.get(`/payment/get-payment-token?amount=${amount}&transaction-type=${transactionType}`)
+  },
+  saveOrderReview(orderReview){
+    return $axios.put(`${resource}`, orderReview)
+  },
+  needOrderReview(trackingNumber){
+    return $axios.get(`${resource}/review/${trackingNumber}`)
   }
 })
