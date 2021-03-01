@@ -21,6 +21,9 @@ import Pushe from 'pushe-webpush'
 export default {
   name: 'index.vue',
   components: { RegisteredCustomer, VerifyOtp, RegisterMobile, Header, Register, AccountGridOptions },
+  head:{
+    title:'حساب کاربری'
+  },
   data() {
     return {
       register: true,

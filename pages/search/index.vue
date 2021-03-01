@@ -30,6 +30,9 @@ import VerticalProductList from '@/components/products/vertical/VerticalProductL
 
 export default {
   name: 'index.vue',
+  head:{
+    title:'جستجو'
+  },
   components: { VerticalProductList },
   created() {
     if (process.client) {

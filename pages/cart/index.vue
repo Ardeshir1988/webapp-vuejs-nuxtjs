@@ -31,6 +31,9 @@ import PersianUtil from '@/utils/PersianUtil'
 export default {
   name: 'index.vue',
   components: { CartProductList },
+  head:{
+    title:'سبد خرید'
+  },
   computed: {
     cartList: function() {
       return this.$store.getters['cart/getCartProducts']

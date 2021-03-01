@@ -45,6 +45,9 @@ export default {
   middleware:'auth',
   name: 'index',
   components: { CustomerAddress },
+  head:{
+    title:'آدرس ها'
+  },
   data() {
     return {
       center: { lat: 35.8011681, lng: 51.4643361 },

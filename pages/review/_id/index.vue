@@ -87,6 +87,9 @@
 export default {
   name: 'index',
   middleware: 'auth',
+  head:{
+    title:'نظر سنجی'
+  },
   data() {
     return {
       loading:false,

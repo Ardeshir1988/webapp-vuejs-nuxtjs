@@ -113,6 +113,9 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'index',
   components: { CheckoutAddress, AddressItem, CustomerAddress, Header },
+  head:{
+    title:'ثبت سفارش'
+  },
   activated() {
     $nuxt.refresh()
   },

@@ -42,6 +42,9 @@ import { FILES_URL } from '@/constants'
 export default {
   name: 'index.vue',
   components: { HorizontalTypeList, VerticalProductList },
+  head:{
+    title:this.info.name
+  },
   created() {
     if (process.client) {
       window.addEventListener('scroll', this.handleScroll)

@@ -38,6 +38,9 @@ export default {
   name: 'index',
   middleware: 'auth',
   components: { OrderStatus },
+  head:{
+    title:'وضعبت سفارش'
+  },
   data() {
     return {
       orders: [],

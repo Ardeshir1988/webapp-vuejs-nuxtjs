@@ -23,6 +23,9 @@ import RefreshUtil from '@/components/utils/RefreshUtil'
 export default {
   middleware:'auth',
   name: 'index',
+  head:{
+    title:'آدرس'
+  },
   components: { RefreshUtil, AddressItem },
   data() {
     return {

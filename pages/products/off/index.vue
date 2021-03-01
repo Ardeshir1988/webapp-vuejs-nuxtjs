@@ -12,6 +12,9 @@ import VerticalProductList from '~/components/products/vertical/VerticalProductL
 export default {
   name: 'index',
   components: { VerticalProductList, Header },
+  head:{
+    title:'حراج'
+  },
   data() {
     return {
       products: [],

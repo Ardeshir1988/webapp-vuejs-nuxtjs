@@ -41,6 +41,9 @@ import BusinessPartnerList from '@/components/partner/BusinessPartnerList'
 import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
+  head:{
+    title:'خانه'
+  },
   components: {
     RefreshUtil,
     BusinessPartnerList,
@@ -48,9 +51,7 @@ export default {
     HorizontalProductList,
     HorizontalProductItem,
     SectionSeparator,
-    Banner,
-    Logo,
-    VuetifyLogo
+    Banner
   },
   data() {
     return {
