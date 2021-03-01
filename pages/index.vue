@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import Banner from '@/components/banner/Banner'
 import SectionSeparator from '@/components/separator/SectionSeparator'
 import HorizontalProductItem from '@/components/products/horizontal/HorizontalListProductItem'
