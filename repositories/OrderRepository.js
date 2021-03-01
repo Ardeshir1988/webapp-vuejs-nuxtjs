@@ -20,7 +20,7 @@ export default ($axios) => ({
     return $axios.get(`/payment/get-payment-token?amount=${amount}&transaction-type=${transactionType}`)
   },
   saveOrderReview(orderReview){
-    return $axios.put(`${resource}`, orderReview)
+    return $axios.put(`${resource}/review`, orderReview)
   },
   needOrderReview(trackingNumber){
     return $axios.get(`${resource}/review/${trackingNumber}`)
