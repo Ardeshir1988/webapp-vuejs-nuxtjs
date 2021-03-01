@@ -7,24 +7,27 @@
     <div class="review">آیا از نحوه سرویس دهی ما رضایت داشتید؟</div>
     <v-row no-gutters>
       <v-col class="left-col">
-        <v-sheet outlined rounded>
+        <v-sheet outlined rounded @click="selectFeeling('BAD')">
           <v-img contain class="img-status" src="/review-bad.svg"
                  :class="this.reviewDto.customerFeeling === 'BAD' ? '' :'img-disable'" />
-          <div class="review-status-color"></div>
+          <div class="feeling-name">بد</div>
+          <div :class="this.reviewDto.customerFeeling ===  'BAD' ? 'review-status-bad' :'review-status-color'"></div>
         </v-sheet>
       </v-col>
       <v-col class="center-col">
-        <v-sheet outlined rounded>
+        <v-sheet outlined rounded @click="selectFeeling('GOOD')">
           <v-img contain class="img-status" src="/review-good.svg"
                  :class="this.reviewDto.customerFeeling === 'GOOD' ? '' :'img-disable'" />
-          <div class="review-status-color"></div>
+          <div class="feeling-name">خوب</div>
+          <div :class="this.reviewDto.customerFeeling ===  'GOOD' ? 'review-status-good' :'review-status-color'"></div>
         </v-sheet>
       </v-col>
       <v-col class="right-col">
-        <v-sheet outlined rounded>
+        <v-sheet outlined rounded @click="selectFeeling('PERFECT')" >
           <v-img contain class="img-status" src="/review-perfect.svg"
                  :class="this.reviewDto.customerFeeling === 'PERFECT' ? '' :'img-disable'" />
-          <div class="review-status-color"></div>
+          <div class="feeling-name">عالی</div>
+          <div :class="this.reviewDto.customerFeeling ===  'PERFECT' ? 'review-status-perfect' :'review-status-color'"></div>
         </v-sheet>
       </v-col>
     </v-row>
@@ -41,6 +44,14 @@ export default {
     }
   },
   methods: {
+    selectFeeling(feeling){
+      if (feeling === 'GOOD')
+        this.reviewDto.customerFeeling = 'GOOD'
+      else if (feeling === 'PERFECT')
+        this.reviewDto.customerFeeling = 'PERFECT'
+      else
+        this.reviewDto.customerFeeling = 'BAD'
+    },
     saveReview() {
       this.$repositories.order.saveOrderReview(this.reviewDto)
         .then(res => {
@@ -74,7 +85,7 @@ export default {
 .tracking-number{
   font-family: 'IranSansMobileBold', sans-serif;
   font-size: 1em;
-  margin: 5vh auto;
+  margin: 4vh auto;
   text-align: center;
 }
 .divider-not-selected {
@@ -121,11 +132,34 @@ export default {
   margin-right: 4vw;
   margin-left: 4vw;
 }
-
+.feeling-name{
+  text-align: center;
+  font-size: 0.9em;
+  font-family: 'IranSansMobileMedium', sans-serif;
+  margin: 1vw;
+}
 .review-status-color {
   height: 4px;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
   background-color: #EDEDED;
+}
+.review-status-perfect {
+  height: 4px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: #0BCE83;
+}
+.review-status-good {
+  height: 4px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: #FECD55;
+}
+.review-status-bad {
+  height: 4px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  background-color: #FF6672;
 }
 </style>
