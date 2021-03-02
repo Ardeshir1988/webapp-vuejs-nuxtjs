@@ -1,9 +1,9 @@
 export default function({ $axios, redirect, $notifier, app }) {
   $axios.onRequest(config => {
-    const c = app.$cookies.get('token')
-    if (c !== undefined) {
-      config.headers.common = { 'Authorization': 'Bearer ' + c }
-    }
+    // const c = app.$cookies.get('token')
+    // if (c !== undefined) {
+    //   config.headers.common = { 'Authorization': 'Bearer ' + c }
+    // }
     console.log('Making request to ' + config.url + '-' + config.headers)
   })
   $axios.onError(err => {
