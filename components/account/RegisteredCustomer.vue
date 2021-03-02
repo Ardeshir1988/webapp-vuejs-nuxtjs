@@ -5,7 +5,7 @@
       <div class="customer-info">{{ engDigitToPersianDigit(customerInfo.mobile) }}</div>
     </div>
     <div style="direction: rtl">
-      <v-btn rounded depressed class="btn">
+      <v-btn rounded depressed class="btn" @click="customerData">
         <v-icon size="24" class="icon-btn" color="secondary">mdi-pencil</v-icon>
       </v-btn>
     </div>
@@ -37,6 +37,9 @@ export default {
     }
   },
   methods: {
+    customerData(){
+      this.$router.push('/account/1')
+    },
     engDigitToPersianPrice: function(val) {
       return PersianUtil.makePersianPrice(val)
     },
