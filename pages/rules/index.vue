@@ -75,6 +75,9 @@
 <script>
 export default {
   name: 'index',
+  head:{
+    title:'قوانین استفاده'
+  },
   data: () => ({
     // panel: [0, 1]
   }),
