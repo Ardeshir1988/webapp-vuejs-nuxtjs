@@ -5,7 +5,7 @@
     <RegisterMobile :loading="loading" v-if="registerMobile" @regmobile="sendMobileDto" />
     <VerifyOtp v-if="otp" @changemobile="changeMobile" @sendotp="verifyOtp" :mobile="mobile" />
     <RegisteredCustomer :customer-info="customer" v-if="isCustomer" />
-    <AccountGridOptions :registered="isCustomer" class="account-grid-options" />
+    <AccountGridOptions :registered="isCustomer" class="account-grid-options" :support-tel="supportTel"/>
   </div>
 </template>
 
@@ -32,7 +32,8 @@ export default {
       isCustomer: false,
       loading: false,
       mobile: '',
-      customer: {}
+      customer: {},
+      supportTel:''
     }
   },
   methods: {
@@ -83,7 +84,8 @@ export default {
   async asyncData({ $repositories, $cookies }) {
     if ($cookies.get('token') !== undefined) {
       let responseData = await $repositories.customer.getCustomerProfile()
-      if (responseData !== false){
+      let resSystemIns = await $repositories.product.getInstructions()
+      if (responseData !== false && resSystemIns !==false){
         Pushe.setCustomId(responseData.data.pushId)
         return {
           customer: {
@@ -94,7 +96,8 @@ export default {
           otp: false,
           registerMobile: false,
           register: false,
-          isCustomer: true
+          isCustomer: true,
+          supportTel: resSystemIns.data.supportTel
         }
       }
       else

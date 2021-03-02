@@ -16,7 +16,7 @@ import AccountOption from '@/components/account/AccountOption'
 
 export default {
   name: 'AccountGridOptions',
-  props: { registered: Boolean },
+  props: { registered: Boolean,supportTel:String },
   components: { AccountOption },
   data() {
     return {
@@ -72,6 +72,11 @@ export default {
           break
         }
         case 'op4': {
+          window.location ='tel:'+this.supportTel;
+          break
+        }
+        case 'op7': {
+          this.$router.push("/rules")
           break
         }
         case 'op9': {
