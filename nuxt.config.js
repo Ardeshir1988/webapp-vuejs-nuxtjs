@@ -83,13 +83,13 @@ export default {
       start_url: "/",
       icons: [
         {
-          src: "manifest-icon-192.png",
+          src: "/static/manifest-icon-192.png",
           sizes: "192x192",
           type: "image/png",
           purpose: "maskable any"
         },
         {
-          src: "manifest-icon-512.png",
+          src: "/static/manifest-icon-512.png",
           sizes: "512x512",
           type: "image/png",
           purpose: "maskable any"
