@@ -73,10 +73,10 @@ export default {
   },
   pwa: {
     manifest: {
-      name: 'هایپرجت',
-      short_name: 'Jet',
+      name: 'Hyper Jet',
+      short_name: 'HyperJet',
       lang: 'en',
-      description: 'HyperJet',
+      description: 'Hyper Jet online shopping',
       theme_color: '#8629FD',
       background_color: '#FFFFFF',
       ogImage: 'hyperjet-icon.png',
