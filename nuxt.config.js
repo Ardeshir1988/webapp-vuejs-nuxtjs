@@ -83,27 +83,27 @@ export default {
       start_url: "/",
       icons: [
         {
-          src: "/static/icons/ic_hjet_64.png",
+          src: "/icons/ic_hjet_64.png",
           sizes: "64x64",
           type: "image/png"
         },
         {
-          src: "/static/icons/ic_hjet_120.png",
+          src: "/icons/ic_hjet_120.png",
           sizes: "120x120",
           type: "image/png"
         },
         {
-          src: "/static/icons/ic_hjet_144.png",
+          src: "/icons/ic_hjet_144.png",
           sizes: "144x144",
           type: "image/png"
         },
         {
-          src: "/static/icons/ic_hjet_152.png",
+          src: "/icons/ic_hjet_152.png",
           sizes: "152x152",
           type: "image/png"
         },
         {
-          src: "/static/icons/ic_hjet_192.png",
+          src: "/icons/ic_hjet_192.png",
           sizes: "192x192",
           type: "image/png"
         },
@@ -113,7 +113,7 @@ export default {
           type: "image/png"
         },
         {
-          src: "/static/icons/ic_hjet_512.png",
+          src: "/icons/ic_hjet_512.png",
           sizes: "512x512",
           type: "image/png"
         }
