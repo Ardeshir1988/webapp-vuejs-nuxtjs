@@ -83,13 +83,13 @@ export default {
       start_url: "/",
       icons: [
         {
-          src: "manifest-icon-192.png",
+          src: "/static/manifest-icon-192.png",
           sizes: "192x192",
           type: "image/png",
           purpose: "maskable any"
         },
         {
-          src: "manifest-icon-512.png",
+          src: "/static/manifest-icon-512.png",
           sizes: "512x512",
           type: "image/png",
           purpose: "maskable any"
@@ -100,14 +100,14 @@ export default {
       orientation: "portrait"
     },
     icon: {
-      fileName: 'icon.png',
+      fileName: '/static/icon.png',
     }
   },
   meta: [
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
   ],
   link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
     // apple
 
     { rel:'apple-touch-icon', sizes:'180x180', href:'apple-icon-180.png' },
