@@ -108,7 +108,7 @@ export default {
           type: "image/png"
         },
         {
-          src: "/static/icons/ic_hjet_384.png",
+          src: "/icons/ic_hjet_384.png",
           sizes: "384x384",
           type: "image/png"
         },
