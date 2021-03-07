@@ -99,9 +99,9 @@ export default {
       display: "fullscreen",
       orientation: "portrait"
     },
-    // icon: {
-    //   fileName: 'icon.png',
-    // }
+    icon: {
+      fileName: 'icon.png',
+    }
   },
   meta: [
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
