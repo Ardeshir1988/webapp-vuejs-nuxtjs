@@ -79,17 +79,17 @@ export default {
       description: 'HyperJet',
       theme_color: '#8629FD',
       background_color: '#FFFFFF',
-      ogImage: 'icon.png',
+      ogImage: 'hyperjet-icon.png',
       start_url: "/",
       icons: [
         {
-          src: "/static/manifest-icon-192.png",
+          src: "manifest-icon-192.png",
           sizes: "192x192",
           type: "image/png",
           purpose: "maskable any"
         },
         {
-          src: "/static/manifest-icon-512.png",
+          src: "manifest-icon-512.png",
           sizes: "512x512",
           type: "image/png",
           purpose: "maskable any"
@@ -100,7 +100,7 @@ export default {
       orientation: "portrait"
     },
     icon: {
-      fileName: '/static/icon.png',
+      fileName: 'hyperjet-icon.png',
     }
   },
   meta: [
