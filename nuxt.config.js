@@ -122,9 +122,9 @@ export default {
       display: "fullscreen",
       orientation: "portrait"
     },
-    icon: {
-      fileName: 'hyperjet-icon.png',
-    }
+    // icon: {
+    //   fileName: 'hyperjet-icon.png',
+    // }
   },
   meta: [
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
