@@ -70,7 +70,7 @@ export default {
             title: this.addressTitle,
             number: this.addressNumber,
             details: this.addressDetails,
-            latLong: this.latLng.lat + ',' + this.latLng.lat,
+            latLong: this.latLng.lat + ',' + this.latLng.lng,
           }
 
           if (ad.id === null)
