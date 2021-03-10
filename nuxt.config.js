@@ -122,6 +122,10 @@ export default {
       display: "fullscreen",
       orientation: "portrait"
     },
+    workbox: {
+      cacheAssets: false, // for /*
+      offline: false // for /_nuxt/*
+    }
     // icon: {
     //   fileName: 'hyperjet-icon.png',
     // }
