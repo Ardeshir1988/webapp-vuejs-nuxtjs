@@ -31,5 +31,6 @@ export default {
 .snackbar{
   width: 100vw;
   direction: rtl;
+  z-index: 1100;
 }
 </style>
