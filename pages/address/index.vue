@@ -62,9 +62,15 @@ export default {
     }
   },
   async asyncData({ $repositories }) {
-    const res = await $repositories.customer.getAddresses()
+    let res = await $repositories.customer.getAddresses()
     if (res !== false) {
-      return { addresses: res.data }
+      if (res.data.length === 1 && res.data[0].selected === false){
+       const selectSingleAddress =await $repositories.customer.changeSelectedAddress(res.data[0].id)
+        if (selectSingleAddress !==false){
+          return { addresses: res.data[0].selected = true }
+        }
+      }else
+        return { addresses: res.data }
     } else
       return { reload: true }
   },
