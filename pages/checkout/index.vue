@@ -153,9 +153,10 @@ export default {
   },
   methods: {
     getPaymentToken() {
-      if (this.$cookies.get('token') === undefined)
-      this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
-      else {
+      if (this.$cookies.get('token') === undefined) {
+        this.$notifier.showMessage({ content: 'لطفا قبل از پرداخت وارد شوید', color: 'black' })
+        this.$router.push('/account')
+      } else {
         this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
           .then(paymentTokenRes => {
             if (paymentTokenRes !== false) {
@@ -180,24 +181,29 @@ export default {
           deliveryType = 'EXPRESS'
         else
           deliveryType = 'SCHEDULED'
-        const order = {
-          customerAddressId: this.getSelectedAddress.id,
-          deliveryType: deliveryType,
-          products: this.cart
-        }
-        this.$repositories.order.checkoutOrder(order)
-          .then(orderRes => {
-            if (orderRes !== false) {
-              if (orderRes.data.success) {
-                this.$cookies.set('order', orderRes.data, { maxAge: 60 * 15 })
-                this.$cookies.set('address', this.getSelectedAddress , { maxAge: 60 * 15 })
-                this.$router.push('/checkout/done')
-              } else {
-                this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
-                this.$router.push('/cart')
+
+        if (this.addresses === undefined || this.addresses.length ===0) {
+          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'black' })
+        } else {
+          const order = {
+            customerAddressId: this.getSelectedAddress.id,
+            deliveryType: deliveryType,
+            products: this.cart
+          }
+          this.$repositories.order.checkoutOrder(order)
+            .then(orderRes => {
+              if (orderRes !== false) {
+                if (orderRes.data.success) {
+                  this.$cookies.set('order', orderRes.data, { maxAge: 60 * 15 })
+                  this.$cookies.set('address', this.getSelectedAddress, { maxAge: 60 * 15 })
+                  this.$router.push('/checkout/done')
+                } else {
+                  this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
+                  this.$router.push('/cart')
+                }
               }
-            }
-          })
+            })
+        }
       }
     },
     getPersianPrice(val) {
