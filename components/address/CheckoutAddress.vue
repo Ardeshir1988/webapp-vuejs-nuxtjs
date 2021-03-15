@@ -9,7 +9,7 @@
       <div v-else class="address-item-empty">هیج آدرسی ثبت نشده است</div>
     </v-sheet>
     <nuxt-link style="text-decoration: none; color: inherit;" to="/address">
-      <v-btn rounded depressed class="btn-edit-address">ویرایش آدرس
+      <v-btn rounded depressed class="btn-edit-address">{{this.getBtnText()}}
         <v-icon right dark>mdi-map-marker</v-icon>
       </v-btn>
     </nuxt-link>
@@ -23,6 +23,15 @@ export default {
   computed: {
     existAddress() {
       return this.address.details !== undefined
+    }
+  },
+  methods:{
+    getBtnText(){
+      if (this.address.id === undefined || this.address.id === null){
+        return 'انتخاب آدرس'
+      }else {
+        return 'تغییر آدرس'
+      }
     }
   }
 }
