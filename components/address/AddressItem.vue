@@ -20,7 +20,7 @@
       <div class="address-item-operations">
         <v-btn @click="editAddress" class="op" icon depressed block>
           <v-icon size="24" dense color="secondary">
-            mdi-pencil
+            mdi-eye
           </v-icon>
         </v-btn>
         <v-divider />
