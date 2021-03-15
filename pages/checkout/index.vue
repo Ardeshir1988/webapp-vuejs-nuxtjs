@@ -153,12 +153,16 @@ export default {
   },
   methods: {
     getPaymentToken() {
-      this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
-        .then(paymentTokenRes => {
-          if (paymentTokenRes !== false) {
-            window.location.replace(this.paymentUrl+paymentTokenRes.data.msg)
-          }
-        })
+      if (this.$cookies.get('token') === undefined)
+      this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
+      else {
+        this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
+          .then(paymentTokenRes => {
+            if (paymentTokenRes !== false) {
+              window.location.replace(this.paymentUrl + paymentTokenRes.data.msg)
+            }
+          })
+      }
     },
     async checkAutoCheckout(){
       const cart = await this.$store.getters['cart/getCartProducts']
