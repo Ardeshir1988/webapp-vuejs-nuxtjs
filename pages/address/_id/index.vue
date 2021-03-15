@@ -1,15 +1,21 @@
 <template>
   <div>
-    <CustomerAddress :marker-loc="latLng" :center="center" @changelocation="changeLatLng" />
+  <v-bottom-sheet v-if="sheet" fullscreen class="bottom-sheet" scrollable v-model="sheet">
     <div class="address-data">
-      <v-text-field
-        label="آدرس"
-        color="accent"
+      <div class="btn-close">
+        <v-btn @click="close" icon depressed>
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </div>
+      <v-textarea
+        label="جزییات آدرس"
         outlined
         reverse
         dense
+        color="accent"
         v-model="addressDetails"
-      ></v-text-field>
+        placeholder="خیابان لواسانی ... پلاک ۲ واحد ۵"
+      ></v-textarea>
 
       <v-text-field
         label="عنوان آدرس (اختیاری)"
@@ -35,6 +41,8 @@
         ثبت آدرس
       </v-btn>
     </div>
+  </v-bottom-sheet>
+    <CustomerAddress v-else :marker-loc="latLng" :center="center" @changelocation="changeLatLng" @selectlocation="selectLocation" />
   </div>
 </template>
 
@@ -50,6 +58,7 @@ export default {
   },
   data() {
     return {
+      sheet:false,
       center: { lat: 35.8011681, lng: 51.4643361 },
       latLng: { lat: 0, lng: 0 },
       addressId: null,
@@ -59,6 +68,16 @@ export default {
     }
   },
   methods: {
+    close(){
+      this.sheet = false
+    },
+    selectLocation(){
+      if (this.latLng==={ lat: 0, lng: 0 }){
+        this.$notifier.showMessage({ content: 'موقعیت مکانی را انتخاب کنید', color: 'black' })
+      }else {
+        this.sheet = true
+      }
+    },
     changeLatLng(latlng) {
       this.latLng = latlng
     },
@@ -82,13 +101,14 @@ export default {
                 }
               })
           else
-            this.$repositories.customer
-              .updateAddress(ad)
-              .then(res => {
-                if (res !== false) {
-                  this.$router.push('/address')
-                }
-              })
+            // this.$repositories.customer
+            //   .updateAddress(ad)
+            //   .then(res => {
+            //     if (res !== false) {
+            //       this.$router.push('/address')
+            //     }
+            //   })
+            this.$notifier.showMessage({ content: 'ویرایش آدرس امکانپذیر نیست, لطفا آدرس جدید ثبت کنید', color: 'black' })
         } else {
           console.log(this.latLng)
           this.$notifier.showMessage({ content: 'جزییات آدرس را وارد کنید', color: 'black' })
@@ -101,20 +121,11 @@ export default {
   async asyncData({ $repositories, route }) {
     if (route.params.id !== 'new') {
       const res = await $repositories.customer.getAddressById(route.params.id)
-
-      //val id: String? = null,
-      // val title: String? = null,
-      //   val latLong: String? = null,
-      //   val details: String? = null,
-      //   val number: String? = null,
-      //   val unit: String? = null,
-      // var selected: Boolean? = false)
       if (res !== false) {
         const latlng = {
           lat: parseFloat(res.data.latLong.split(',')[0]),
           lng: parseFloat(res.data.latLong.split(',')[1])
         }
-        console.log(latlng)
         return {
           center: latlng,
           latLng: latlng,
@@ -123,6 +134,16 @@ export default {
           addressNumber: res.data.number,
           addressTitle: res.data.title
         }
+      }
+    }else {
+      return {
+        sheet:false,
+        center: { lat: 35.8011681, lng: 51.4643361 },
+        latLng: { lat: 0, lng: 0 },
+        addressId: null,
+        addressDetails: '',
+        addressNumber: '',
+        addressTitle: ''
       }
     }
   }
@@ -153,5 +174,13 @@ export default {
 .address-data {
   margin: 3vh 2vh 2vh;
   direction: rtl;
+}
+.btn-close {
+  text-align: left;
+  margin-right: 0;
+  margin-bottom: 2vh;
+}
+.bottom-sheet {
+  height: 100%;
 }
 </style>

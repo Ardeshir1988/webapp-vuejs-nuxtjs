@@ -1,12 +1,18 @@
 <template>
-  <div style="height: 55vh">
+  <div >
     <client-only>
-      <l-map @click="changeMarkerPosition" :zoom=15 :center="map">
+      <l-map style="height: 93vh" @click="changeMarkerPosition" :zoom=13 :center="map">
         <l-tile-layer :url="url"></l-tile-layer>
         <l-marker :lat-lng="marker"></l-marker>
         <l-geo-json :geojson="geometry" :options-style="myStyle" />
+
       </l-map>
     </client-only>
+        <div class="btn-container">
+          <v-btn @click="selectLocation" class="btn-primary" depressed color="accent">
+            ثبت موقعیت
+          </v-btn>
+        </div>
   </div>
 </template>
 
@@ -14,19 +20,6 @@
 
 export default {
   name: 'CustomerAddress',
-  head: {
-    // script: [
-    //   {
-    //     hid: 'stripe',
-    //     src: 'https://unpkg.com/@turf/turf@6.3.0/turf.min.js',
-    //     defer: true,
-    //     // Changed after script load
-    //     callback: () => {
-    //       this.isStripeLoaded = true
-    //     }
-    //   }
-    // ]
-  },
   props: { center: Object, markerLoc: Object },
   data() {
     return {
@@ -131,20 +124,16 @@ export default {
   },
   methods: {
     changeMarkerPosition(event) {
-
       if (this.isMarkerInsidePolygon(event, this.reversedPolygon[0])) {
         this.marker = event.latlng
         this.$emit('changelocation', this.marker)
       } else {
         this.$notifier.showMessage({ content: 'این نقطه در محدوده سرویس دهی نیست', color: 'black' })
       }
-
     },
-    // isMarkerInsidePolygonTurf(marker) {
-    //   var pt = turf.point([marker.latlng.lat, marker.latlng.lng])
-    //   var poly = turf.polygon(this.reversedPolygon)
-    //   console.log(turf.booleanPointInPolygon(pt, poly))
-    // },
+    selectLocation(){
+      this.$emit('selectlocation')
+    },
     isMarkerInsidePolygon(marker, poly) {
       let inside = false
       const x = marker.latlng.lat, y = marker.latlng.lng
@@ -161,5 +150,21 @@ export default {
 </script>
 
 <style scoped>
+.btn-container {
+  position: fixed;
+  position: -webkit-sticky;
+  bottom: 56px;
+  display: flex;
+  width: 100%;
+  z-index: 1007;
+  justify-content: center;
+  align-items: center;
+}
 
+.btn-primary {
+  margin: 2vh auto;
+  width: 94%;
+  font-size: 1em;
+  font-family: 'IranSansMobileBold', sans-serif;
+}
 </style>
