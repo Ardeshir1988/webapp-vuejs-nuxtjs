@@ -1,8 +1,8 @@
 <template>
-  <v-carousel cycle
+  <v-carousel style="padding: 3vw" cycle
               height="auto"
               show-arrows-on-hover
-              hide-delimiter-background>
+              hide-delimiters>
 
     <v-carousel-item
       v-for="(item,i) in bannersUrl"
