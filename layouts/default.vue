@@ -8,6 +8,7 @@
     <Snackbar> </Snackbar>
     <v-bottom-navigation
       color="primary"
+      style="z-index: 1015"
       horizontal
       app
       grow>
