@@ -3,15 +3,26 @@
     <RefreshUtil v-if="reload" />
     <div v-if="!reload">
       <div>
+        <Header class="fix-header" title="آدرس ها" />
+        <div v-if="this.addresses.length<1" class="container">
+          <div class="msg-center">
+            <p class="empty-msg">هیج آدرسی ثبت نشده است</p>
+          </div>
+        </div>
+        <div v-else>
+      <div>
         <AddressItem @editAddress="editAddress" @deleteAddress="deleteAddress" @selectAddress="selectAddress"
                      v-for="address in addresses"
                      :address="address" :key="address.id" />
       </div>
+        </div>
       <div class="btn-container">
         <v-btn @click="newAddress" class="btn-primary" depressed height="40" color="accent">
           ثبت آدرس جدید
         </v-btn>
       </div>
+    </div>
+
     </div>
   </div>
 </template>
@@ -99,5 +110,20 @@ export default {
   width: 94%;
   font-size: 1em;
   font-family: 'IranSansMobileBold', sans-serif;
+}
+.msg-center {
+  margin: 0;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.empty-msg {
+  font-family: 'IranSansMobileBold', sans-serif;
+  color: #808080;
+  font-size: 0.8em;
+  text-align: center;
+  margin-top: auto;
 }
 </style>
