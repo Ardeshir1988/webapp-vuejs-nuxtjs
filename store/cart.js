@@ -81,6 +81,11 @@ export const actions = {
     } else
       commit('UPDATE_CART', cart)
   },
+  async delete_cart({ commit }) {
+    const emptyCart = []
+    await this.$localForage.setItem('cart', emptyCart)
+    commit('UPDATE_CART', emptyCart)
+  },
   async update_cart({ commit }) {
     let cartList = await this.$localForage.getItem('cart')
     const responseData = await this.$repositories.product.checkCartProductsAvailability({ 'products': cartList })

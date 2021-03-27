@@ -113,8 +113,8 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'index',
   components: { CheckoutAddress, AddressItem, CustomerAddress, Header },
-  head:{
-    title:'ثبت سفارش'
+  head: {
+    title: 'ثبت سفارش'
   },
   activated() {
     $nuxt.refresh()
@@ -129,7 +129,7 @@ export default {
       balance: 0,
       checkoutOrderPermission: false,
       reasonCheckoutOrder: '',
-      paymentUrl:''
+      paymentUrl: ''
     }
   },
   computed: {
@@ -138,10 +138,7 @@ export default {
       cartAmount: 'cart/getCartTotalAmount',
       cart: 'cart/getCartProducts'
     }),
-     needPay() {
-       if (this.$route.query.autoCheckout && this.balance >= (this.cartAmount + this.deliveryType))
-        this.checkAutoCheckout()
-
+    needPay() {
       return this.balance >= (this.cartAmount + this.deliveryType)
     },
     getSelectedAddress() {
@@ -157,18 +154,32 @@ export default {
         this.$notifier.showMessage({ content: 'لطفا قبل از پرداخت وارد شوید', color: 'black' })
         this.$router.push('/account')
       } else {
-        this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
-          .then(paymentTokenRes => {
-            if (paymentTokenRes !== false) {
-              window.location.replace(this.paymentUrl + paymentTokenRes.data.msg)
-            }
-          })
-      }
-    },
-    async checkAutoCheckout(){
-      const cart = await this.$store.getters['cart/getCartProducts']
-      if (cart.length>0){
-        this.checkout()
+        let deliveryType = ''
+        if (this.deliveryType === this.expressDelivery)
+          deliveryType = 'EXPRESS'
+        else
+          deliveryType = 'SCHEDULED'
+
+        if (this.addresses === undefined || this.addresses.length === 0) {
+          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'black' })
+        } else {
+          this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
+            .then(paymentTokenRes => {
+              if (paymentTokenRes !== false) {
+                const order = {
+                  customerAddressId: this.getSelectedAddress.id,
+                  deliveryType: deliveryType,
+                  products: this.cart,
+                  resNum: paymentTokenRes.data.msg
+                }
+                this.$repositories.order.saveUnpaidOrder(order)
+                  .then(saveUnpaidOrder => {
+                    if (saveUnpaidOrder !== false)
+                      window.location.replace(this.paymentUrl + paymentTokenRes.data.msg)
+                  })
+              }
+            })
+        }
       }
     },
     checkout() {
@@ -182,7 +193,7 @@ export default {
         else
           deliveryType = 'SCHEDULED'
 
-        if (this.addresses === undefined || this.addresses.length ===0) {
+        if (this.addresses === undefined || this.addresses.length === 0) {
           this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'black' })
         } else {
           const order = {
@@ -213,16 +224,25 @@ export default {
       return PersianUtil.covertEngDigitToPersianDigit(val)
     }
   },
-  async asyncData({ $repositories, $cookies }) {
+  async asyncData({ $repositories, $cookies, redirect, route }) {
     const info = await $repositories.product.getInstructions()
     if ($cookies.get('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
       if (addressesRes !== false && info !== false && profile !== false) {
+        if (route.query.autoCheckout) {
+          const checkedOutOrder = await $repositories.order.getCheckedOutOrder(route.query.orderId)
+          if (checkedOutOrder !== false) {
+            $cookies.set('order', checkedOutOrder.data, { maxAge: 60 * 15 })
+            const index = addressesRes.data.findIndex(ad => ad.selected === true)
+            $cookies.set('address', addressesRes.data[index], { maxAge: 60 * 15 })
+            redirect('/checkout/done')
+          }
+        }
         return {
           addresses: addressesRes.data,
           balance: profile.data.balance,
-          paymentUrl:info.data.paymentUrl,
+          paymentUrl: info.data.paymentUrl,
           deliveryType: info.data.normalDeliveryCost,
           normalDelivery: info.data.normalDeliveryCost,
           expressDelivery: info.data.expressDeliveryCost,
@@ -231,7 +251,7 @@ export default {
         }
       } else if (info !== false) {
         return {
-          paymentUrl:info.data.paymentUrl,
+          paymentUrl: info.data.paymentUrl,
           deliveryType: info.data.normalDeliveryCost,
           normalDelivery: info.data.normalDeliveryCost,
           expressDelivery: info.data.expressDeliveryCost,

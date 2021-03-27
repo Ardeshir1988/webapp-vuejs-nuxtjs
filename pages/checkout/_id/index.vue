@@ -42,6 +42,9 @@
 <script>
 export default {
   name: 'index',
+  async mounted() {
+    await this.$store.dispatch('cart/delete_cart')
+  },
   methods: {
     gotoOrderStatus(){
       this.$router.push('/orders/status')

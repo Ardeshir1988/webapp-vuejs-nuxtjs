@@ -4,6 +4,12 @@ export default ($axios) => ({
   checkoutOrder(orderDto) {
     return $axios.post(`${resource}`, orderDto)
   },
+  getCheckedOutOrder(orderId){
+    return $axios.put(`${resource}/order_checked_out/${orderId}`)
+  },
+  saveUnpaidOrder(orderDto) {
+    return $axios.post(`${resource}/save_unpaid_order`, orderDto)
+  },
   getCurrentOrders() {
     return $axios.get(`${resource}`)
   },
