@@ -44,7 +44,7 @@ export default {
     'nuxt-user-agent',
     'nuxt-leaflet',
     // With options
-    ['cookie-universal-nuxt', { parseJSON: false }]
+    ['cookie-universal-nuxt', { parseJSON: true }]
   ],
   router: {
     middleware: ['ssr-cookie']

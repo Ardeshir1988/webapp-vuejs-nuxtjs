@@ -48,15 +48,12 @@ export default {
 
 
         this.$cookies.set('token', res.data.token, {
-          path: '/',
           httpOnly: true,
-          domain: 'hyperjet.ir',
           secure: true,
           maxAge: 60 * 60 * 24 * 200
         })
-        this.$cookies.set('mobile', this.mobile, {path: '/',
+        this.$cookies.set('mobile', this.mobile, {
           httpOnly: true,
-          domain: 'hyperjet.ir',
           secure: true,
         maxAge: 60 * 60 * 24 * 200
       })
