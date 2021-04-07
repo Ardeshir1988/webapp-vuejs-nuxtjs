@@ -20,9 +20,6 @@ export default function({ $axios, redirect, $notifier, app }) {
 
 
             app.$cookies.set('token', res.data.token, {
-              httpOnly: true,
-              domain: 'hyperjet.ir',
-              secure: true,
               maxAge: 60 * 60 * 24 * 200
             })
 

@@ -48,13 +48,9 @@ export default {
 
 
         this.$cookies.set('token', res.data.token, {
-          httpOnly: true,
-          secure: true,
           maxAge: 60 * 60 * 24 * 200
         })
         this.$cookies.set('mobile', this.mobile, {
-          httpOnly: true,
-          secure: true,
         maxAge: 60 * 60 * 24 * 200
       })
 
