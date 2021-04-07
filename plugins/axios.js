@@ -16,7 +16,22 @@ export default function({ $axios, redirect, $notifier, app }) {
         const device = app.$ua.deviceType() + '-' + app.$ua.browser()
         return $axios.put('/register/renew-token', { mobile: mobile, device: device, customerChannel: "WEB" })
           .then(res => {
-            app.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
+
+
+
+            app.$cookies.set('token', res.data.token, {
+              path: '/',
+              httpOnly: true,
+              domain: 'hyperjet.ir',
+              secure: true,
+              maxAge: 60 * 60 * 24 * 200
+            })
+
+
+            // app.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
+
+
+
             err.config.headers['Authorization'] = 'Bearer ' + res.data.token
             return $axios.request(err.config)
           })
