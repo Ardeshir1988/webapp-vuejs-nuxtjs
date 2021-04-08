@@ -13,6 +13,7 @@
     "@nuxtjs/localforage": "^1.1.0",
     "@nuxtjs/onesignal": "^3.0.0-beta.16",
     "@nuxtjs/pwa": "^3.0.2",
+    "cookie": "^0.4.1",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.6.5",
     "express-session": "^1.17.1",
