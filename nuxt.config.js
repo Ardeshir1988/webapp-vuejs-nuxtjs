@@ -48,7 +48,7 @@ export default {
     'cookie-universal-nuxt',
 
     // With options
-    ['cookie-universal-nuxt', { alias: 'cookiz' }],
+    ['cookie-universal-nuxt'],
 
   ],
   router: {
