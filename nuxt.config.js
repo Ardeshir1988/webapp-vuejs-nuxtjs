@@ -43,8 +43,13 @@ export default {
 
     'nuxt-user-agent',
     'nuxt-leaflet',
+
+    // Simple usage
+    'cookie-universal-nuxt',
+
     // With options
-    ['cookie-universal-nuxt', { parseJSON: true }]
+    ['cookie-universal-nuxt', { alias: 'cookiz' }],
+
   ],
   router: {
     middleware: ['ssr-cookie']

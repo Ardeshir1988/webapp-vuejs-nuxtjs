@@ -18,14 +18,7 @@ export default function({ $axios, redirect, $notifier, app }) {
           .then(res => {
 
 
-
-            app.$cookies.set('token', res.data.token, {
-              maxAge: 60 * 60 * 24 * 200
-            })
-
-
-            // app.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
-
+            app.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
 
 
             err.config.headers['Authorization'] = 'Bearer ' + res.data.token
