@@ -7,10 +7,10 @@ export default function({ app, $axios }) {
     }
   }else{
     app.$cookies.set('localToken', app.$cookies.get('token'), {  path:"/" , httpOnly:true ,
-      maxAge: 60 * 60 * 24 * 200
+     secure: true, domain:'hyperjet.ir', maxAge: 60 * 60 * 24 * 200
     })
     app.$cookies.set('localMobile', app.$cookies.get('mobile'), {path:"/" , httpOnly:true ,
-      maxAge: 60 * 60 * 24 * 200
+      secure: true, domain:'hyperjet.ir',maxAge: 60 * 60 * 24 * 200
     })
   }
 
