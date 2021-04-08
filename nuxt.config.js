@@ -46,9 +46,8 @@ export default {
 
     // Simple usage
     'cookie-universal-nuxt',
-
     // With options
-    ['cookie-universal-nuxt'],
+    ['cookie-universal-nuxt', { parseJSON: true }]
 
   ],
   router: {
