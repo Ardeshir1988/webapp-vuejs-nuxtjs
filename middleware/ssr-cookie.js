@@ -2,8 +2,8 @@ export default function({ app, $axios }) {
 
   if (app.$cookies.get('token') === undefined) {
     if (app.$cookies.get('localToken') !== undefined ) {
-      app.$cookies.set('token', app.$cookies.get('localToken'))
-      app.$cookies.set('mobile', app.$cookies.get('localMobile'))
+      app.$cookies.set('token', app.$cookies.get('localToken'),{ maxAge: 60 * 60 * 24 * 90 })
+      app.$cookies.set('mobile', app.$cookies.get('localMobile'),{ maxAge: 60 * 60 * 24 * 90 })
     }
   }else{
     app.$cookies.set('localToken', app.$cookies.get('token'), {  path:"/" , httpOnly:true ,
