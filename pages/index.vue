@@ -42,7 +42,7 @@ import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
   head:{
-    title:'خانه'
+    title:'هایپرجت ، هوشمندانه ترین راه خربد نیاز های روزانه شما'
   },
   components: {
     RefreshUtil,
