@@ -1,11 +1,7 @@
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  // target: 'server',
-  ssr:false,
-  target: 'static',
-  server: {
-    port: 3000 // default: 3000
-  },
+  target: 'server',
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - HyperJet',
