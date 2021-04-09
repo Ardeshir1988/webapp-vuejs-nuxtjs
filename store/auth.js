@@ -18,6 +18,9 @@ export const getters = {
   },
   getToken(state) {
     return state.token
+  },
+  getMobile(state) {
+    return state.mobile
   }
 }
 
