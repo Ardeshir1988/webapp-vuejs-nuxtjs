@@ -13,25 +13,14 @@ export const mutations = {
 }
 
 export const getters = {
-  loggedIn (state) {
-    return Boolean(state.user && state.token)
-  },
-  getToken(state) {
-    return state.token
-  },
-  getMobile(state) {
-    return state.mobile
-  }
+
 }
 
 export const actions = {
-  async setAuth({ commit }, state){
-    await commit('setToken', state.token)
-    await commit('setMobile', state.mobile)
-  },
-  async resetAuth ({commit}) {
-    await commit('setMobile', null)
-    await commit('setToken', null)
+  async setAuth({ commit }, token, mobile){
+    await this.$localForage.setItem('token', token)
+    await this.$localForage.setItem('mobile', mobile)
+
   }
 }
 

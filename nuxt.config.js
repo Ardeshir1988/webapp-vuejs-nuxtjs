@@ -47,7 +47,21 @@ export default {
     // Simple usage
     'cookie-universal-nuxt',
     // With options
-    ['cookie-universal-nuxt', { parseJSON: true }]
+    ['cookie-universal-nuxt', { parseJSON: true }],
+
+      ['vue-warehouse/nuxt',
+      {
+        vuex: true,
+        plugins: [
+          'store/plugins/expire',
+          'store/plugins/defaults'
+        ],
+        storages: [
+          'store/storages/localStorage',
+          'store/storages/cookieStorage'
+        ]
+      }
+      ]
 
   ],
   router: {

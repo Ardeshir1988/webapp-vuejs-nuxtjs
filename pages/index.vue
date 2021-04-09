@@ -60,6 +60,10 @@ export default {
     }
   },
   async asyncData({ $repositories }) {
+    // this.$warehouse.get('token')
+    // this.$warehouse.get('mobile')
+
+
     let responseData = await $repositories.product.homepage()
     let resInstruction = await $repositories.product.getInstructions()
     if (responseData === false || resInstruction === false)

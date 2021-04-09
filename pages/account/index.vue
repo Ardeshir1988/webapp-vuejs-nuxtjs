@@ -45,8 +45,18 @@ export default {
       this.loading = true
       const res = await this.$repositories.register.sendOtp({ otp: otp })
       if (res !== false) {
-        this.$cookies.set('token', res.data.token, { maxAge: 60 * 60 * 24 * 90 })
-        this.$cookies.set('mobile', this.mobile, { maxAge: 60 * 60 * 24 * 90 })
+
+        this.$cookies.set('token', res.data.token, {path:"/" , httpOnly:true ,
+          secure: true, domain:'hyperjet.ir',maxAge: 60 * 60 * 24 * 200
+        })
+        this.$cookies.set('mobile', this.mobile, {path:"/" , httpOnly:true ,
+          secure: true, domain:'hyperjet.ir',maxAge: 60 * 60 * 24 * 200
+        })
+
+        // this.$warehouse.set('token', res.data.token)
+        // this.$warehouse.set('mobile', this.mobile)
+
+
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
