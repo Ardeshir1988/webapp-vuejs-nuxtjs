@@ -36,33 +36,14 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-
     '@nuxtjs/pwa',
-
     '@nuxtjs/localforage',
-
     'nuxt-user-agent',
     'nuxt-leaflet',
+    '@nuxtjs/universal-storage',
 
-    // Simple usage
-    'cookie-universal-nuxt',
     // With options
-    ['cookie-universal-nuxt', { parseJSON: true }],
-
-      ['vue-warehouse/nuxt',
-      {
-        vuex: true,
-        plugins: [
-          'store/plugins/expire',
-          'store/plugins/defaults'
-        ],
-        storages: [
-          'store/storages/localStorage',
-          'store/storages/cookieStorage'
-        ]
-      }
-      ]
-
+    ['cookie-universal-nuxt', { parseJSON: true }]
   ],
   router: {
     middleware: ['ssr-cookie']

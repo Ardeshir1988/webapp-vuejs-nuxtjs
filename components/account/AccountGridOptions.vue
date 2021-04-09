@@ -80,7 +80,9 @@ export default {
           break
         }
         case 'op9': {
-          this.$cookies.removeAll()
+          // this.$cookies.removeAll()
+          this.$storage.removeUniversal('token')
+          this.$storage.removeUniversal('mobile')
           $nuxt.refresh()
           break
         }

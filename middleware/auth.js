@@ -5,7 +5,7 @@ export default function({ app, req, $notifier, redirect }) {
       redirect('/account')
     }
   } else {
-    if (app.$cookies.get('token') === undefined) {
+    if (app.$storage.getCookie('token') === undefined) {
       $notifier.showMessage({ content: 'لطفا وارد شوید', color: 'black' })
       redirect('/account')
     }

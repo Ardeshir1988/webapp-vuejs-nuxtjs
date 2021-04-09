@@ -46,19 +46,8 @@ export default {
       const res = await this.$repositories.register.sendOtp({ otp: otp })
       if (res !== false) {
 
-        this.$cookies.set('token', res.data.token, {path:"/" ,
-          secure: true,maxAge: 60 * 60 * 24 * 200
-        })
-        this.$cookies.set('token', res.data.token, {path:"/" ,
-          domain:'hyperjet.ir',maxAge: 60 * 60 * 24 * 200
-        })
-        this.$cookies.set('mobile', this.mobile, {path:"/" ,
-          secure: true, domain:'hyperjet.ir',maxAge: 60 * 60 * 24 * 200
-        })
-
-        // this.$warehouse.set('token', res.data.token)
-        // this.$warehouse.set('mobile', this.mobile)
-
+        this.$storage.setUniversal('token', res.data.token)
+        this.$storage.setUniversal('mobile', this.mobile)
 
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
