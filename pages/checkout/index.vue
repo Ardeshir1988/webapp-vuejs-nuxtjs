@@ -175,10 +175,10 @@ export default {
                 this.$repositories.order.saveUnpaidOrder(order)
                   .then(saveUnpaidOrder => {
                     if (saveUnpaidOrder !== false){
-                      if(saveUnpaidOrder.orderRes.data.success)
+                      if(saveUnpaidOrder.data.success)
                       window.location.replace(this.paymentUrl + paymentTokenRes.data.msg)
                       else {
-                        this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
+                        this.$notifier.showMessage({ content: saveUnpaidOrder.data.reason, color: 'black' })
                         this.$router.push('/cart')
                       }
                     }
