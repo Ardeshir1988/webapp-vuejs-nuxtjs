@@ -81,6 +81,7 @@ export default {
       background_color: '#FFFFFF',
       ogImage: 'hyperjet-icon.png',
       start_url: "/",
+      workbox: true,
       icons: [
         {
           src: "/icons/ic_hjet_64.png",
@@ -126,18 +127,20 @@ export default {
       runtimeCaching: [
         {
           urlPattern: 'https://api.hjet.ir/files/.*',
-          strategyOptions: {
-            cacheName: 'our-cache',
-          },
-          strategyPlugins: [{
-            use: 'Expiration',
-            config: {
-              maxEntries: 1000000,
-              maxAgeSeconds: 300000000
-            }
-          }]
+          // strategyOptions: {
+          //   cacheName: 'our-cache',
+          // },
+          // strategyPlugins: [{
+          //   use: 'Expiration',
+          //   config: {
+          //     maxEntries: 1000000,
+          //     maxAgeSeconds: 300000000
+          //   }
+          // }]
         }
       ],
+      debug: true,
+      enabled: true,
       cacheAssets: true, // for /*
       offline: true // for /_nuxt/*
     }

@@ -1,4 +1,5 @@
 export default function({ $axios, redirect, $notifier, app }) {
+
   $axios.onRequest(config => {
     // const c = app.$cookies.get('token')
     // if (c !== undefined) {

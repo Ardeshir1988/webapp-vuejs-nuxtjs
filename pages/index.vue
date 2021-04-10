@@ -1,4 +1,5 @@
 <template>
+  <v-lazy>
   <div>
     <RefreshUtil v-if="reload" />
     <div v-if="!reload">
@@ -29,6 +30,7 @@
       <div class="null-div"></div>
     </div>
   </div>
+  </v-lazy>
 </template>
 
 <script>
