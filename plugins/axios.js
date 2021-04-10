@@ -1,10 +1,12 @@
 export default function({ $axios, redirect, $notifier, app }) {
+  if (app.$storage.getCookie('token') === undefined ){
+    if (app.$storage.getUniversal('token') !== null &&  app.$storage.getUniversal('token') !== undefined) {
+      app.$storage.setCookie('token', app.$storage.getLocalStorage('token'))
+      app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'))
+    }
+  }
 
   $axios.onRequest(config => {
-    // const c = app.$cookies.get('token')
-    // if (c !== undefined) {
-    //   config.headers.common = { 'Authorization': 'Bearer ' + c }
-    // }
     console.log('Making request to ' + config.url + '-' + config.headers)
   })
   $axios.onError(err => {

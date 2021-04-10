@@ -43,6 +43,7 @@ import BusinessPartnerList from '@/components/partner/BusinessPartnerList'
 import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
+
   head:{
     title:'هایپرجت ، هوشمندانه ترین راه خرید نیاز های روزانه شما'
   },
@@ -62,6 +63,7 @@ export default {
     }
   },
   async asyncData({ $repositories }) {
+
     let responseData = await $repositories.product.homepage()
     let resInstruction = await $repositories.product.getInstructions()
     if (responseData === false || resInstruction === false)
