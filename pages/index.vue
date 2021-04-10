@@ -2,7 +2,7 @@
   <div>
     <RefreshUtil v-if="reload" />
     <div v-if="!reload">
-      <Banner v-if="instructions.topBannerPermission" :banners="homepage.topBanners" />
+      <Banner v-if="instructions.topBannerPermission" :banners="homepage.topBanners"/>
       <SectionSeparator class="section-separator"
                         section-name="محصولات جدید"
                         section-icon="storefront-24px.svg"
