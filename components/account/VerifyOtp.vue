@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="verify-otp" rounded outlined>
+  <v-sheet class="verify-otp" rounded outlined min-height='240'>
     <div class="desc">
       کد تایید به شماره {{ this.mobile }} ارسال شد
     </div>

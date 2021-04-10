@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="register-mobile" rounded outlined>
+  <v-sheet class="register-mobile" rounded outlined min-height='190'>
     <div class="desc">
       تلفن همراه خود را وارد نمایید
     </div>
