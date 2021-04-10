@@ -1,7 +1,8 @@
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  target: 'server',
-
+  // target: 'server',
+  mode: 'universal', // or 'spa'
+  target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - HyperJet',
@@ -122,8 +123,23 @@ export default {
       orientation: "portrait"
     },
     workbox: {
-      cacheAssets: false, // for /*
-      offline: false // for /_nuxt/*
+      runtimeCaching: [
+        {
+          urlPattern: 'https://api.hjet.ir/files/.*',
+          strategyOptions: {
+            cacheName: 'our-cache',
+          },
+          strategyPlugins: [{
+            use: 'Expiration',
+            config: {
+              maxEntries: 1000000,
+              maxAgeSeconds: 300000000
+            }
+          }]
+        }
+      ],
+      cacheAssets: true, // for /*
+      offline: true // for /_nuxt/*
     }
     // icon: {
     //   fileName: 'hyperjet-icon.png',
