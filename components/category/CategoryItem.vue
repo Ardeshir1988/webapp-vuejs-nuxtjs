@@ -1,4 +1,6 @@
 <template>
+  <v-lazy
+  >
   <v-sheet @click="gotoCategoryProduct" class="category" outlined rounded>
     <v-img class="img-category" height="auto" :src="imageUrl">
       <div class="name-category">
@@ -6,6 +8,7 @@
       </div>
     </v-img>
   </v-sheet>
+  </v-lazy>
 </template>
 
 <script>

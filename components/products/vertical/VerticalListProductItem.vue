@@ -1,9 +1,11 @@
 <template>
   <v-sheet class="product" outlined rounded>
+    <v-lazy
+    >
     <div class="measureAndImg" @click="gotoProduct">
       <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
       <v-img class="img-product" contain height="140" :src="imageUrl" />
-    </div>
+    </div></v-lazy>
     <div class="productName">{{ product.name }}</div>
     <v-row no-gutters>
       <v-col class="empty-price">
