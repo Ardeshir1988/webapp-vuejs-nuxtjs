@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="cartProduct in cartProducts">
-      <CartProductItem :cart-product="cartProduct" :key="cartProduct.id" />
+      <CartProductItem :cart-product="cartProduct" :key="cartProduct.id"  />
     </div>
   </div>
 </template>

@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class='flex  ' >
+    <v-sheet height='700' class='d-flex flex-column align-stretch' >
     <CartProductList class="cart-list" :cart-products="cartList" />
-    <div class="btn-container">
+
+    <div class="btn-container mt-auto">
       <v-row>
         <v-col class="column">
-          <v-row no-gutters style="margin-top: 1vh">
+          <v-row no-gutters style="margin-top: 3vh">
             <v-col class="column-amount">
               {{ getCartTotalAmount() }}
             </v-col>
@@ -15,12 +17,13 @@
           <div class="divider"></div>
           <div v-if="ready" class="cart-msg">مبلغ مجموع خرید مربوط به اقلام موجود می باشد</div>
           <div v-if="ready" class="divider"></div>
-          <v-btn @click="continueCheckout" class="btn-buy" depressed height="40" color="accent">
-            ادامه خرید
+          <v-btn @click="continueCheckout" class="btn-buy" depressed height="40" color="accent" style="margin-bottom: 2vh">
+            ادامه فرآیند خرید
           </v-btn>
         </v-col>
       </v-row>
     </div>
+    </v-sheet>
   </div>
 </template>
 
@@ -93,16 +96,17 @@ export default {
 
 <style scoped>
 .cart-list {
-  margin-bottom: 24vh;
+
+
 }
 
 .btn-container {
   position: fixed;
   position: -webkit-sticky;
   bottom: 56px;
-  display: flex;
+  /*display: flex;*/
   width: 100%;
-  z-index: 7;
+  z-index: 9;
   justify-content: center;
   align-items: center;
   color: #fff;
