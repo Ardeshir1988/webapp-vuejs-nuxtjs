@@ -45,10 +45,8 @@ export default {
       this.loading = true
       const res = await this.$repositories.register.sendOtp({ otp: otp })
       if (res !== false) {
-
         this.$storage.setUniversal('token', res.data.token)
         this.$storage.setUniversal('mobile', this.mobile)
-
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
@@ -83,8 +81,8 @@ export default {
       this.otp = false
     }
   },
-  async asyncData({ $repositories, $cookies }) {
-    if ($cookies.get('token') !== undefined) {
+  async asyncData({ $repositories, app }) {
+    if (app.$storage.getLocalStorage('token')  !== null) {
       let responseData = await $repositories.customer.getCustomerProfile()
       let resSystemIns = await $repositories.product.getInstructions()
       if (responseData !== false && resSystemIns !==false){

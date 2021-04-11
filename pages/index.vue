@@ -1,5 +1,4 @@
 <template>
-  <v-lazy>
   <div>
     <RefreshUtil v-if="reload" />
     <div v-if="!reload">
@@ -30,7 +29,6 @@
       <div class="null-div"></div>
     </div>
   </div>
-  </v-lazy>
 </template>
 
 <script>
@@ -43,7 +41,6 @@ import BusinessPartnerList from '@/components/partner/BusinessPartnerList'
 import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
-
   head:{
     title:'هایپرجت ، هوشمندانه ترین راه خرید نیاز های روزانه شما'
   },
@@ -57,13 +54,19 @@ export default {
     Banner
   },
   data() {
+
     return {
       homepage: {},
       reload: false
     }
   },
-  async asyncData({ $repositories }) {
-
+  async asyncData({ $repositories, app}) {
+    if (app.$storage.getCookie('token') === undefined ) {
+      if (app.$storage.getUniversal('token') !== null && app.$storage.getUniversal('token') !== undefined) {
+        app.$storage.setCookie('token', app.$storage.getLocalStorage('token'))
+        app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'))
+      }
+    }
     let responseData = await $repositories.product.homepage()
     let resInstruction = await $repositories.product.getInstructions()
     if (responseData === false || resInstruction === false)

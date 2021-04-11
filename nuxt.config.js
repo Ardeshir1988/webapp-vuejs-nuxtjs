@@ -39,12 +39,11 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/localforage',
+    '@nuxtjs/universal-storage',
     'nuxt-user-agent',
     'nuxt-leaflet',
-    '@nuxtjs/universal-storage',
-
     // With options
-    ['cookie-universal-nuxt', { parseJSON: true }]
+    // 'cookie-universal-nuxt'
   ],
   router: {
     middleware: ['ssr-cookie']
@@ -123,13 +122,23 @@ export default {
       orientation: "portrait"
     },
     workbox: {
-      // runtimeCaching: [
-      //   {
-      //     urlPattern: '.*',
-      //   }
-      // ],
-      // cacheAssets: true, // for /*
-      // offline: true // for /_nuxt/*
+      runtimeCaching: [
+        {
+          urlPattern: 'https://api.hjet.ir/files/.*',
+          strategyOptions: {
+            cacheName: 'our-cache',
+          },
+          strategyPlugins: [{
+            use: 'Expiration',
+            config: {
+              maxEntries: 1000000,
+              maxAgeSeconds: 300000000
+            }
+          }]
+        }
+      ],
+      cacheAssets: true, // for /*
+      offline: true // for /_nuxt/*
     }
     // icon: {
     //   fileName: 'hyperjet-icon.png',

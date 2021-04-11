@@ -1,11 +1,4 @@
 export default function({ $axios, redirect, $notifier, app }) {
-  if (app.$storage.getCookie('token') === undefined ){
-    if (app.$storage.getUniversal('token') !== null &&  app.$storage.getUniversal('token') !== undefined) {
-      app.$storage.setCookie('token', app.$storage.getLocalStorage('token'))
-      app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'))
-    }
-  }
-
   $axios.onRequest(config => {
     console.log('Making request to ' + config.url + '-' + config.headers)
   })
@@ -15,7 +8,7 @@ export default function({ $axios, redirect, $notifier, app }) {
       return Promise.resolve(false)
     } else {
       if (err.response.status === 401) {
-        const mobile = app.$cookies.get('mobile')
+        const mobile = app.$storage.getLocalStorage('token')
         const device = app.$ua.deviceType() + '-' + app.$ua.browser()
         return $axios.put('/register/renew-token', { mobile: mobile, device: device, customerChannel: "WEB" })
           .then(res => {

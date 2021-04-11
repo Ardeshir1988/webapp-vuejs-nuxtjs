@@ -1275,24 +1275,12 @@
   dependencies:
     v-localforage "^2.0.1"
 
-"@nuxtjs/onesignal@^3.0.0-beta.16":
-  version "3.0.0-beta.16"
-  resolved "https://registry.npmjs.org/@nuxtjs/onesignal/-/onesignal-3.0.0-beta.16.tgz"
-  integrity sha512-wQViakFeEz21cz+WsRuJ+uKoxjmzT8w2CRr1FrzjZn8K4R4jqKWT7qP96YnxFHIR1/YErP+P22MkzNzawMNcUQ==
-  dependencies:
-    "@nuxtjs/pwa-utils" "3.0.0-beta.16"
-
 "@nuxtjs/proxy@^2.1.0":
   version "2.1.0"
   resolved "https://registry.npmjs.org/@nuxtjs/proxy/-/proxy-2.1.0.tgz"
   integrity sha512-/qtoeqXgZ4Mg6LRg/gDUZQrFpOlOdHrol/vQYMnKu3aN3bP90UfOUB3QSDghUUK7OISAJ0xp8Ld78aHyCTcKCQ==
   dependencies:
     http-proxy-middleware "^1.0.6"
-
-"@nuxtjs/pwa-utils@3.0.0-beta.16":
-  version "3.0.0-beta.16"
-  resolved "https://registry.npmjs.org/@nuxtjs/pwa-utils/-/pwa-utils-3.0.0-beta.16.tgz"
-  integrity sha512-3sF8iAstLi/dbQ39S4Zdy/QsK5IArgJ2s/nuGxOTVuxz01m07VdMbJejzsdYbyz31mQP0w4IPFNYOCPZhcvVig==
 
 "@nuxtjs/pwa@^3.0.2":
   version "3.3.5"
@@ -1310,9 +1298,9 @@
     workbox-cdn "^5.1.4"
 
 "@nuxtjs/universal-storage@^0.5.7":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/universal-storage/-/universal-storage-0.5.7.tgz#39b2b2e0afbdb1a8bada3ea3281bfd52ddb827a1"
-  integrity sha512-2lQ4ZgCKQ1W9qpf2nmmm4OmRUEjzykgA+P3YBJQNr+Qji+W3+N6l5q/kXlZEAw/8oz1HvhT8zvH296xo912R8w==
+  version "0.5.9"
+  resolved "https://registry.npmjs.org/@nuxtjs/universal-storage/-/universal-storage-0.5.9.tgz"
+  integrity sha512-T7rTu4Z933IcQqKTe45Ht4vJFUYXLjbHiovLLuD9yrAIganOh1nWBA6Ig8IyvaOALQt5KqKLNPSZXTQYxfI2Iw==
   dependencies:
     cookie "^0.4.1"
     defu "^3.2.2"
@@ -1479,11 +1467,6 @@
   integrity sha512-ePPA/JuI+X0vb+gSWlPKOY0NdNAie/rPUqX2GUPpbZwiKTkSPhjXWuee47E4MtE54QVzGCQMQkAL6JhV2E1+cQ==
   dependencies:
     "@types/node" "*"
-
-"@types/cookie@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.3.3.tgz"
-  integrity sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==
 
 "@types/etag@^1.8.0":
   version "1.8.0"
@@ -3036,22 +3019,6 @@ cookie-signature@1.0.6:
   resolved "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz"
   integrity sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
 
-cookie-universal-nuxt@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/cookie-universal-nuxt/-/cookie-universal-nuxt-2.1.4.tgz"
-  integrity sha512-xbn4Ozs9S0u2+0mQTZRwGlBL9MGNq8N4H6iGfprR5ufZFCS2hGef++3DBHSmHXZi30Wu3Q7RI/GkNMhz3cecmg==
-  dependencies:
-    "@types/cookie" "^0.3.3"
-    cookie-universal "^2.1.4"
-
-cookie-universal@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/cookie-universal/-/cookie-universal-2.1.4.tgz"
-  integrity sha512-dwWXs7NGBzaBYDypu3jWH5M3NJW+zu5QdyJkFMHJvhLuyL4/eXG4105fwtTDwfIqyTunwVvQX4PHdtfPDS7URQ==
-  dependencies:
-    "@types/cookie" "^0.3.3"
-    cookie "^0.4.0"
-
 cookie@0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.0.tgz"
@@ -3062,7 +3029,7 @@ cookie@^0.3.1:
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.3.1.tgz"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
 
-cookie@^0.4.0, cookie@^0.4.1:
+cookie@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.1.tgz"
   integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
@@ -3642,7 +3609,7 @@ dotenv@^8.2.0:
 
 dotprop@^1.2.1:
   version "1.2.1"
-  resolved "https://registry.yarnpkg.com/dotprop/-/dotprop-1.2.1.tgz#7df88dd1c50ae4e93773475f85c84f77c302953b"
+  resolved "https://registry.npmjs.org/dotprop/-/dotprop-1.2.1.tgz"
   integrity sha512-TcgsqnhHYytg+JKusKAwe4YLZWtD/vfOmblUEbSDZxQy1nlOQTChbyvj/f6kqKLUYbcJqie97rVhDc1JBs00LA==
 
 duplexer@^0.1.2:
