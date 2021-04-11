@@ -61,8 +61,8 @@ export default {
   async asyncData({ redirect, app }) {
     if (app.$storage.getCookie('order') !== undefined) {
       return {
-        order: app.$storage.getCookie('order'),
-        address : app.$storage.getCookie('address')
+        order: app.$storage.getCookie('order').orderDetail,
+        address : app.$storage.getCookie('order').address
       }
     } else {
       redirect('/account')

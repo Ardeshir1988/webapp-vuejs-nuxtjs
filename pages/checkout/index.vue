@@ -211,8 +211,7 @@ export default {
             .then(orderRes => {
               if (orderRes !== false) {
                 if (orderRes.data.success) {
-                  this.$storage.setCookie('order', orderRes.data, { maxAge: 60 * 15 })
-                  this.$storage.setCookie('address', this.getSelectedAddress, { maxAge: 60 * 15 })
+                  this.$storage.setCookie('order', { orderDetail: orderRes.data, address: this.getSelectedAddress} , { maxAge: 60 * 15 })
                   this.$router.push('/checkout/done')
                 } else {
                   this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
@@ -231,17 +230,18 @@ export default {
     }
   },
   async asyncData({ $repositories, redirect, route, app }) {
+
     const info = await $repositories.product.getInstructions()
     if (app.$storage.getCookie('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
       if (addressesRes !== false && info !== false && profile !== false) {
+        // check deep link localhost:3000/checkout?autoCheckout=true&orderId=607327b59f2135450d97b000
         if (route.query.autoCheckout) {
           const checkedOutOrder = await $repositories.order.getCheckedOutOrder(route.query.orderId)
           if (checkedOutOrder !== false) {
-            await app.$storage.setCookie('order', checkedOutOrder.data, { maxAge: 60 * 15 })
             const index = addressesRes.data.findIndex(ad => ad.selected === true)
-            await app.$storage.setCookie('address', addressesRes.data[index], { maxAge: 60 * 15 })
+            app.$storage.setCookie('order', { orderDetail: checkedOutOrder.data, address: addressesRes.data[index]}, { maxAge: 60 * 15 })
             redirect('/checkout/done')
           }
         }
