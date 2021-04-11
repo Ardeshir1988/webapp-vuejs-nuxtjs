@@ -232,7 +232,7 @@ export default {
   },
   async asyncData({ $repositories, redirect, route, app }) {
     const info = await $repositories.product.getInstructions()
-    if (app.$storage.localStorage('token') !== undefined) {
+    if (app.$storage.getCookie('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
       if (addressesRes !== false && info !== false && profile !== false) {
