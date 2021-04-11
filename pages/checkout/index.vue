@@ -150,7 +150,7 @@ export default {
   },
   methods: {
     getPaymentToken() {
-      if (this.$cookies.get('token') === undefined) {
+      if (this.$storage.getLocalStorage('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا قبل از پرداخت وارد شوید', color: 'black' })
         this.$router.push('/account')
       } else {
@@ -230,9 +230,9 @@ export default {
       return PersianUtil.covertEngDigitToPersianDigit(val)
     }
   },
-  async asyncData({ $repositories, $cookies, redirect, route }) {
+  async asyncData({ $repositories, app, redirect, route }) {
     const info = await $repositories.product.getInstructions()
-    if (this.$storage.getLocalStorage('token') !== undefined) {
+    if (app.$storage.getLocalStorage('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
       if (addressesRes !== false && info !== false && profile !== false) {
