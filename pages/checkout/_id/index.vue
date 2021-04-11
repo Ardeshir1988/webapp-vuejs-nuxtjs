@@ -59,14 +59,14 @@ export default {
     }
   },
   async asyncData({ app, redirect }) {
-    if (app.$storage.getCookie('order') !== undefined) {
+    // if (app.$storage.getCookie('order') !== undefined) {
       return {
         order: app.$storage.getCookie('order'),
         address : app.$storage.getCookie('address')
       }
-    } else {
-      redirect('/account')
-    }
+    // } else {
+    //   redirect('/account')
+    // }
   },
   activated() {
     $nuxt.refresh()
