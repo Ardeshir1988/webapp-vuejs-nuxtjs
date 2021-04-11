@@ -150,7 +150,7 @@ export default {
   },
   methods: {
     getPaymentToken() {
-      if (this.$storage.getLocalStorage('token') === undefined) {
+      if (this.$storage.getCookie('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا قبل از پرداخت وارد شوید', color: 'black' })
         this.$router.push('/account')
       } else {
@@ -189,7 +189,7 @@ export default {
       }
     },
     checkout() {
-      if (this.$storage.getLocalStorage('token') === undefined) {
+      if (this.$storage.getCookie('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
         this.$router.push('/account')
       } else {
@@ -211,8 +211,8 @@ export default {
             .then(orderRes => {
               if (orderRes !== false) {
                 if (orderRes.data.success) {
-                  this.$cookies.set('order', orderRes.data, { maxAge: 60 * 15 })
-                  this.$cookies.set('address', this.getSelectedAddress, { maxAge: 60 * 15 })
+                  this.$storage.setCookie('order', orderRes.data, { maxAge: 60 * 15 })
+                  this.$storage.setCookie('address', this.getSelectedAddress, { maxAge: 60 * 15 })
                   this.$router.push('/checkout/done')
                 } else {
                   this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
@@ -230,24 +230,18 @@ export default {
       return PersianUtil.covertEngDigitToPersianDigit(val)
     }
   },
-  async asyncData({ $repositories, app, redirect, route }) {
+  async asyncData({ $repositories, redirect, route, app }) {
     const info = await $repositories.product.getInstructions()
-    if (app.$storage.getCookie('token') === undefined ) {
-      if (app.$storage.getUniversal('token') !== null && app.$storage.getUniversal('token') !== undefined) {
-        app.$storage.setCookie('token', app.$storage.getLocalStorage('token'))
-        app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'))
-      }
-    }
-    if (app.$storage.getLocalStorage('token') !== undefined) {
+    if (app.$storage.getCookie('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
       if (addressesRes !== false && info !== false && profile !== false) {
         if (route.query.autoCheckout) {
           const checkedOutOrder = await $repositories.order.getCheckedOutOrder(route.query.orderId)
           if (checkedOutOrder !== false) {
-            $cookies.set('order', checkedOutOrder.data, { maxAge: 60 * 15 })
+            app.$storage.setCookie('order', checkedOutOrder.data, { maxAge: 60 * 15 })
             const index = addressesRes.data.findIndex(ad => ad.selected === true)
-            $cookies.set('address', addressesRes.data[index], { maxAge: 60 * 15 })
+            app.$storage.setCookie('address', addressesRes.data[index], { maxAge: 60 * 15 })
             redirect('/checkout/done')
           }
         }

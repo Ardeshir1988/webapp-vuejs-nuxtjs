@@ -58,11 +58,11 @@ export default {
         return 'عادی'
     }
   },
-  async asyncData({ $cookies, redirect }) {
-    if ($cookies.get('order') !== undefined) {
+  async asyncData({ app, redirect }) {
+    if (app.$storage.getCookie('order') !== undefined) {
       return {
-        order: $cookies.get('order'),
-        address : $cookies.get('address')
+        order: app.$storage.getCookie('order'),
+        address : app.$storage.getCookie('address')
       }
     } else {
       redirect('/account')

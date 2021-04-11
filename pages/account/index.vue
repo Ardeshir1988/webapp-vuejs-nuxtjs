@@ -47,6 +47,8 @@ export default {
       if (res !== false) {
         this.$storage.setUniversal('token', res.data.token)
         this.$storage.setUniversal('mobile', this.mobile)
+        this.$storage.setCookie('token',  res.data.token, { maxAge: 60 * 60 * 24 * 100} )
+        this.$storage.setCookie('mobile', this.mobile, { maxAge: 60 * 60 * 24 * 100} )
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {

@@ -63,8 +63,8 @@ export default {
   async asyncData({ $repositories, app}) {
     if (app.$storage.getCookie('token') === undefined ) {
       if (app.$storage.getUniversal('token') !== null && app.$storage.getUniversal('token') !== undefined) {
-        app.$storage.setCookie('token', app.$storage.getLocalStorage('token'))
-        app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'))
+        app.$storage.setCookie('token', app.$storage.getLocalStorage('token'), { maxAge: 60 * 60 * 24 * 100} )
+        app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'), { maxAge: 60 * 60 * 24 * 100} )
       }
     }
     let responseData = await $repositories.product.homepage()
