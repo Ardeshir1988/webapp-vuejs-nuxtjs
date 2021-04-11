@@ -84,7 +84,7 @@ export default {
         for (var i = ordersRes.data.length - 1; i > -1; i--) {
           if (ordersRes.data[i].orderStates.find(state => state.type === 'SHIPPING') === undefined) {
             total = ordersRes.data.filter(order => order.orderStates.find(state => state.type === 'SHIPPING') === undefined).map(order => order.amount).reduce((previousValue, currentValue) => previousValue + currentValue)
-            if (credit > ordersRes.data[i].amount) {
+            if (credit > ordersRes.data[i].amount || credit === ordersRes.data[i].amount) {
               credit = credit - ordersRes.data[i].amount
               ordersRes.data[i].paymentStatus = 'ENOUGH_CREDIT'
             } else {
