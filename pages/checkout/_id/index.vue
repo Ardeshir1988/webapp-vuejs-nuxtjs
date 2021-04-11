@@ -58,15 +58,15 @@ export default {
         return 'عادی'
     }
   },
-  async asyncData({ app, redirect }) {
-    // if (app.$storage.getCookie('order') !== undefined) {
+  async asyncData({ $cookies, redirect }) {
+    if ($cookies.get('order') !== undefined) {
       return {
-        order: app.$storage.getCookie('order'),
-        address : app.$storage.getCookie('address')
+        order: $cookies.get('order'),
+        address : $cookies.get('address')
       }
-    // } else {
-    //   redirect('/account')
-    // }
+    } else {
+      redirect('/account')
+    }
   },
   activated() {
     $nuxt.refresh()
