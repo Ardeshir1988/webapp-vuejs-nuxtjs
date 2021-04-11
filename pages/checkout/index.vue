@@ -189,7 +189,7 @@ export default {
       }
     },
     checkout() {
-      if (this.$cookies.get('token') === undefined) {
+      if (this.$storage.getLocalStorage('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
         this.$router.push('/account')
       } else {
@@ -232,6 +232,12 @@ export default {
   },
   async asyncData({ $repositories, app, redirect, route }) {
     const info = await $repositories.product.getInstructions()
+    if (app.$storage.getCookie('token') === undefined ) {
+      if (app.$storage.getUniversal('token') !== null && app.$storage.getUniversal('token') !== undefined) {
+        app.$storage.setCookie('token', app.$storage.getLocalStorage('token'))
+        app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'))
+      }
+    }
     if (app.$storage.getLocalStorage('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
