@@ -239,9 +239,9 @@ export default {
         if (route.query.autoCheckout) {
           const checkedOutOrder = await $repositories.order.getCheckedOutOrder(route.query.orderId)
           if (checkedOutOrder !== false) {
-            app.$storage.setCookie('order', checkedOutOrder.data, { maxAge: 60 * 15 })
+            await app.$storage.setCookie('order', checkedOutOrder.data, { maxAge: 60 * 15 })
             const index = addressesRes.data.findIndex(ad => ad.selected === true)
-            app.$storage.setCookie('address', addressesRes.data[index], { maxAge: 60 * 15 })
+            await app.$storage.setCookie('address', addressesRes.data[index], { maxAge: 60 * 15 })
             redirect('/checkout/done')
           }
         }
