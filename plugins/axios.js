@@ -8,7 +8,7 @@ export default function({ $axios, redirect, $notifier, app }) {
       return Promise.resolve(false)
     } else {
       if (err.response.status === 401) {
-        const mobile = app.$storage.getLocalStorage('token')
+        const mobile = app.$storage.getLocalStorage('mobile')
         const device = app.$ua.deviceType() + '-' + app.$ua.browser()
         return $axios.put('/register/renew-token', { mobile: mobile, device: device, customerChannel: "WEB" })
           .then(res => {

@@ -4,6 +4,7 @@ export default {
   // mode: 'universal', // or 'spa'
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  debug: true,
   head: {
     titleTemplate: '%s - HyperJet',
     title: '',
