@@ -27,7 +27,7 @@
           :content="engDigitToPersianDigit(cartCount)">
           <v-icon style="margin: auto">mdi-cart</v-icon>
         </v-badge>
-        <v-icon v-if="cartCount<=0">mdi-cart</v-icon>
+        <v-icon style="margin: auto" v-if="cartCount<=0">mdi-cart</v-icon>
       </v-btn>
       <v-btn min-width="55" icon to="/search">
         <v-icon style="margin: auto">mdi-magnify</v-icon>
