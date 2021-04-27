@@ -4,7 +4,7 @@
     <div v-if="!reload">
       <div class="measureAndImg">
         <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
-        <v-img class="img-product" contain :src="imageUrl" />
+        <v-img class="img-product" contain :lazy-src='imageUrl'/>
       </div>
       <div class="product-name">{{ product.name }}</div>
       <div v-if="product.discountPercent>0 && product.stock>0" class="product-price-before-discount">
