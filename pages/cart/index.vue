@@ -2,6 +2,7 @@
   <div class='flex  ' >
     <v-sheet min-height='700' class='d-flex flex-column align-stretch ' >
     <CartProductList class="cart-list" :cart-products="cartList" />
+      <div style="height: 90px;">   </div>
 
     <div class="btn-container mt-auto">
       <v-row>
