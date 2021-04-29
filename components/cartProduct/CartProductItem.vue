@@ -141,11 +141,9 @@ export default {
     },
     increaseProduct: async function(cartProduct) {
       await this.$store.dispatch('cart/increase_product', cartProduct)
-      await this.$store.dispatch('cart/update_cart')
     },
     decreaseProduct: async function(cartProduct) {
       await this.$store.dispatch('cart/decrease_product', cartProduct)
-      await this.$store.dispatch('cart/update_cart')
     },
     quantity: function() {
       return this.$store.getters['cart/getProductCartQuantity'](this.cartProduct.id)

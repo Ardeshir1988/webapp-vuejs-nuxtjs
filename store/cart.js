@@ -2,76 +2,99 @@ export const state = () => ({
   cartProducts: []
 })
 export const mutations = {
+
+  INCREASE_PRODUCT(state, product){
+    const cartProductIndex = state.cartProducts.map(p => p.id).indexOf(product.id)
+    if (cartProductIndex === -1) {
+      const cartProduct = {
+        id: product.id,
+        name: product.name,
+        measure: product.measure,
+        picture: product.pictures[0],
+        price: product.price,
+        discountPrice: product.discountPrice,
+        stepDiscountPrice: product.stepDiscountPrice,
+        discountPercent: product.discountPercent,
+        quantity: 1,
+        stock: product.stock,
+        inStockPeriod: product.inStockPeriod
+      }
+      state.cartProducts.push(cartProduct)
+    } else {
+      state.cartProducts[cartProductIndex].quantity = state.cartProducts[cartProductIndex].quantity + 1
+    }
+    this.$localForage.setItem('cart', state.cartProducts)
+  },
+
+  DECREASE_PRODUCT(state, product){
+    const cartProductIndex = state.cartProducts.map(p => p.id).indexOf(product.id)
+    if (cartProductIndex > -1) {
+      let quantity = state.cartProducts[cartProductIndex].quantity
+      if (quantity === 1) {
+        state.cartProducts = state.cartProducts.filter(p => p.id !== product.id)
+
+      } else
+        state.cartProducts[cartProductIndex].quantity = quantity - 1
+    }
+    this.$localForage.setItem('cart', state.cartProducts)
+  },
+  DELETE_PRODUCT(state, productId){
+    state.cartProducts = state.cartProducts.filter(p => p.id !== productId)
+    this.$localForage.setItem('cart', state.cartProducts)
+  },
+
+  UPDATE_PRODUCT_STOCK(state, product){
+    const cartProductIndex = state.cartProducts.map(p => p.id).indexOf(product.id)
+    state.cartProducts[cartProductIndex].stock = product.stock
+    state.cartProducts[cartProductIndex].inStockPeriod = product.inStockPeriod
+
+    this.$localForage.setItem('cart', state.cartProducts)
+  },
+
+  UPDATE_CART_STOCK(state, cartProducts){
+  // console.log(state.cartProducts.size)
+    // if (state.cartProducts.size > 0){
+
+      // const hashCart = Object.fromEntries(
+      //   state.cartProducts.forEach((p, index) => {[p.id, index]})
+      // )
+    // const responseData =  this.$repositories.product.checkCartProductsAvailability({ 'products': state.cartProducts })
+    // if (responseData !== false) {
+    cartProducts.map(serverProduct => {
+    //     const cartProductIndex = state.cartProducts.map(p => p.id).indexOf(serverProduct.id)
+    //     state.cartProducts[cartProductIndex].stock = serverProduct.stock
+    //     state.cartProducts[cartProductIndex].inStockPeriod = serverProduct.inStockPeriod
+    //     // state.cartProducts[hashCart[serverProduct.id]].stock = serverProduct.stock
+    //     // state.cartProducts[hashCart[serverProduct.id]].inStockPeriod = serverProduct.inStockPeriod
+      })
+    //   this.$localForage.setItem('cart', state.cartProducts)
+    // }
+  // }
+  },
+
   UPDATE_CART(state, cartProducts) {
     state.cartProducts = cartProducts
   }
+
+
+
+
 }
 
 export const actions = {
-  async increase_product({ commit }, product) {
-    let pic = ''
-    if (product.quantity === undefined) {
-      pic = product.pictures[0]
-    } else {
-      pic = product.pictures
-    }
-    const cartProduct = {
-      id: product.id,
-      name: product.name,
-      measure: product.measure,
-      picture: pic,
-      price: product.price,
-      discountPrice: product.discountPrice,
-      stepDiscountPrice: product.stepDiscountPrice,
-      discountPercent: product.discountPercent,
-      quantity: product.quantity,
-      stock: product.stock,
-      inStockPeriod: product.inStockPeriod
-    }
-    let cart = await this.$localForage.getItem('cart')
-    if (cart == null) {
-      cart = []
-      cartProduct.quantity = 1
-      cart.push(cartProduct)
-      await this.$localForage.setItem('cart', cart)
-    } else {
-      const cartProductIndex = cart.map(p => p.id).indexOf(cartProduct.id)
-      if (cartProductIndex === -1) {
-        cartProduct.quantity = 1
-        cart.push(cartProduct)
-      } else {
-        cart[cartProductIndex].quantity = cart[cartProductIndex].quantity + 1
-      }
-      await this.$localForage.setItem('cart', cart)
-    }
-    commit('UPDATE_CART', cart)
+  async increase_product({ commit } , product) {
+    commit('INCREASE_PRODUCT', product)
   },
   async decrease_product({ commit }, product) {
-    let cart = await this.$localForage.getItem('cart')
-    const cartProductIndex = cart.map(p => p.id).indexOf(product.id)
-    if (cart[cartProductIndex].quantity === 1) {
-      cart = cart.filter(p => p.id !== product.id)
-    } else
-      cart[cartProductIndex].quantity = cart[cartProductIndex].quantity - 1
-    await this.$localForage.setItem('cart', cart)
-    commit('UPDATE_CART', cart)
+    commit('DECREASE_PRODUCT', product)
   },
   async delete_product({ commit }, productId) {
-    let cart = await this.$localForage.getItem('cart')
-    cart = cart.filter(p => p.id !== productId)
-    await this.$localForage.setItem('cart', cart)
-    commit('UPDATE_CART', cart)
+    commit('DELETE_PRODUCT', productId)
   },
   async update_product_stock({ commit }, product) {
-    let cart = await this.$localForage.getItem('cart')
-    const cartProductIndex = cart.map(p => p.id).indexOf(product.id)
-    cart[cartProductIndex].stock = product.stock
-    cart[cartProductIndex].inStockPeriod = product.inStockPeriod
-    await this.$localForage.setItem('cart', cart)
-    console.log('update cart')
-    console.log(cart)
-    commit('UPDATE_CART', cart)
+    commit('UPDATE_PRODUCT_STOCK', product)
   },
+
   async init_cart({ commit }) {
     let cart = await this.$localForage.getItem('cart')
     if (cart == null) {
@@ -86,23 +109,18 @@ export const actions = {
     await this.$localForage.setItem('cart', emptyCart)
     commit('UPDATE_CART', emptyCart)
   },
-  async update_cart({ commit }) {
-    let cartList = await this.$localForage.getItem('cart')
-    const responseData = await this.$repositories.product.checkCartProductsAvailability({ 'products': cartList })
+
+  async update_cart_stock({ commit, state }) {
+
+    if(state.cartProducts.length >0 ){
+    const responseData = await this.$repositories.product.checkCartProductsAvailability({ 'products': state.cartProducts })
     if (responseData !== false) {
-      responseData.data.products.forEach(serverProduct => {
-        cartList.forEach(cartProduct => {
-          if (cartProduct.stock !== serverProduct.stock) {
-            const cartProductIndex = cartList.map(p => p.id).indexOf(serverProduct.id)
-            cartList[cartProductIndex].stock = serverProduct.stock
-            cartList[cartProductIndex].inStockPeriod = serverProduct.inStockPeriod
-            this.$localForage.setItem('cart', cartList)
-            commit('UPDATE_CART', cartList)
-          }
-        })
+      responseData.data.products.map(serverProduct => {
+        commit('UPDATE_PRODUCT_STOCK', serverProduct)
       })
-    }
+    }}
   }
+
 }
 
 export const getters = {

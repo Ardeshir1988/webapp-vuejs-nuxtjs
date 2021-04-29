@@ -2,7 +2,7 @@
   <div class='flex  ' >
     <v-sheet min-height='700' class='d-flex flex-column align-stretch ' >
     <CartProductList class="cart-list" :cart-products="cartList" />
-      <div style="height: 90px;">   </div>
+      <div style="height: 120px;">   </div>
 
     <div class="btn-container mt-auto">
       <v-row>
@@ -47,7 +47,20 @@ export default {
     }
   },
   activated() {
+    console.log('activated')
     this.updateCartAfterReload()
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      // console.log('mounted')
+      // this.updateCartAfterReload()
+    })
+  },
+  updated: function () {
+    this.$nextTick(function () {
+      // console.log('updated')
+      // this.updateCartAfterReload()
+    })
   },
   methods: {
     getCartTotalAmount: function() {
@@ -63,21 +76,7 @@ export default {
       }
     },
     async updateCartAfterReload() {
-      this.$store.dispatch('cart/init_cart').then(x => {
-        const cartProducts = this.cartList
-        this.$repositories.product.checkCartProductsAvailability({ 'products': cartProducts })
-          .then(responseData => {
-            if (responseData !== false) {
-              responseData.data.products.forEach(serverProduct => {
-                    this.$store.dispatch('cart/update_product_stock', {
-                      id: serverProduct.id,
-                      stock: serverProduct.stock,
-                      inStockPeriod: serverProduct.inStockPeriod
-                    })
-              })
-            }
-          })
-      })
+      await this.$store.dispatch('cart/update_cart_stock')
     },
     async continueCheckout() {
       this.$repositories.product.checkCartProductsAvailability({ 'products': this.cartList })
