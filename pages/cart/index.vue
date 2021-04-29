@@ -50,18 +50,6 @@ export default {
     console.log('activated')
     this.updateCartAfterReload()
   },
-  mounted: function () {
-    this.$nextTick(function () {
-      // console.log('mounted')
-      // this.updateCartAfterReload()
-    })
-  },
-  updated: function () {
-    this.$nextTick(function () {
-      // console.log('updated')
-      // this.updateCartAfterReload()
-    })
-  },
   methods: {
     getCartTotalAmount: function() {
       if (this.cartList.length === 0)
