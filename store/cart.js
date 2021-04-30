@@ -50,35 +50,9 @@ export const mutations = {
 
     this.$localForage.setItem('cart', state.cartProducts)
   },
-
-  UPDATE_CART_STOCK(state, cartProducts){
-  // console.log(state.cartProducts.size)
-    // if (state.cartProducts.size > 0){
-
-      // const hashCart = Object.fromEntries(
-      //   state.cartProducts.forEach((p, index) => {[p.id, index]})
-      // )
-    // const responseData =  this.$repositories.product.checkCartProductsAvailability({ 'products': state.cartProducts })
-    // if (responseData !== false) {
-    cartProducts.map(serverProduct => {
-    //     const cartProductIndex = state.cartProducts.map(p => p.id).indexOf(serverProduct.id)
-    //     state.cartProducts[cartProductIndex].stock = serverProduct.stock
-    //     state.cartProducts[cartProductIndex].inStockPeriod = serverProduct.inStockPeriod
-    //     // state.cartProducts[hashCart[serverProduct.id]].stock = serverProduct.stock
-    //     // state.cartProducts[hashCart[serverProduct.id]].inStockPeriod = serverProduct.inStockPeriod
-      })
-    //   this.$localForage.setItem('cart', state.cartProducts)
-    // }
-  // }
-  },
-
   UPDATE_CART(state, cartProducts) {
     state.cartProducts = cartProducts
   }
-
-
-
-
 }
 
 export const actions = {

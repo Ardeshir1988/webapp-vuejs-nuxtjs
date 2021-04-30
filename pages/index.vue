@@ -57,26 +57,26 @@ export default {
 
     return {
       homepage: {},
+      instructions: {},
       reload: false
     }
   },
-  async asyncData({ $repositories, app}) {
-    if (app.$storage.getCookie('token') === undefined ) {
-      if (app.$storage.getUniversal('token') !== null && app.$storage.getUniversal('token') !== undefined) {
-        app.$storage.setCookie('token', app.$storage.getLocalStorage('token'), { maxAge: 60 * 60 * 24 * 100} )
-        app.$storage.setCookie('mobile', app.$storage.getLocalStorage('mobile'), { maxAge: 60 * 60 * 24 * 100} )
-      }
+  async beforeCreate() {
+    console.log('beforeCreate index')
+    let responseData = await this.$repositories.product.homepage()
+    let resInstruction = await this.$repositories.product.getInstructions()
+    if (responseData === false || resInstruction === false){
+       this.reload = true
     }
-    let responseData = await $repositories.product.homepage()
-    let resInstruction = await $repositories.product.getInstructions()
-    if (responseData === false || resInstruction === false)
-      return { reload: true }
-    else
-      return {
-        homepage: responseData.data,
-        instructions: resInstruction.data
-      }
+    else {
+      this.homepage = responseData.data
+      this.instructions = resInstruction.data
+    }
   }
+
+
+  // async asyncData({ $repositories, app, store}) {
+  // }
 }
 </script>
 <style scoped>

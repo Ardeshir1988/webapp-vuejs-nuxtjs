@@ -73,6 +73,7 @@ export default {
             if (res.data.ready) {
               this.$router.push('/checkout')
             } else {
+              this.$store.dispatch('cart/update_cart_stock')
               this.$notifier.showMessage({ content: 'برای ادامه همه اجناس باید سبز باشند', color: 'black' })
             }
           }

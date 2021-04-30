@@ -48,6 +48,10 @@ import Pushe from "pushe-webpush";
 
 export default {
   components: { Snackbar },
+
+  async beforeCreate() {
+    console.log('beforeCreate')
+  },
   created() {
     this.isDisable = this.isRootURL()
   },
@@ -57,6 +61,7 @@ export default {
     }
   },
   async mounted() {
+    console.log('mounted')
     await this.$store.dispatch('cart/init_cart')
 
     if (this.$storage.getCookie('token') === undefined ) {
@@ -65,8 +70,6 @@ export default {
         this.$storage.setCookie('mobile', this.$storage.getLocalStorage('mobile'), { maxAge: 60 * 60 * 24 * 100} )
       }
     }
-
-
 
     Pushe.init("6g0372xq3q71lo3g");
     Pushe.subscribe();
