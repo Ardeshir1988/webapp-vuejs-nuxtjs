@@ -14,16 +14,11 @@ export const mutations = {
 export const actions = {
 
   async load_home_instruction({ commit }, homeInstruction) {
-    let responseData = await this.$repositories.product.homepage()
-    if (responseData !== false ){
-      commit('UPDATE_HOME_INSTRUCTION',responseData.data)
-    }
+      commit('UPDATE_HOME_INSTRUCTION',homeInstruction)
+
   },
   async load_sys_instruction({ commit }, sysInstruction) {
-    let responseData = await this.$repositories.product.getInstructions()
-    if (responseData !== false ){
-      commit('UPDATE_SYS_INSTRUCTION',responseData.data)
-    }
+      commit('UPDATE_SYS_INSTRUCTION',sysInstruction)
   }
 }
 

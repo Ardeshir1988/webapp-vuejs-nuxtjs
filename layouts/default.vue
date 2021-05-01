@@ -50,7 +50,7 @@ export default {
   components: { Snackbar },
 
   async beforeCreate() {
-    console.log('beforeCreate')
+
   },
   created() {
     this.isDisable = this.isRootURL()
@@ -61,7 +61,6 @@ export default {
     }
   },
   async mounted() {
-    console.log('mounted')
     await this.$store.dispatch('cart/init_cart')
 
     if (this.$storage.getCookie('token') === undefined ) {

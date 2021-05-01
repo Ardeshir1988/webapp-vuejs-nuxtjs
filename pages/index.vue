@@ -1,7 +1,9 @@
 <template>
+
   <div>
+    <loading-animation v-if="!ready"/>
     <RefreshUtil v-if="reload" />
-    <div v-if="!reload">
+    <div v-if="!reload && ready">
       <Banner v-if="instructions.topBannerPermission" :banners="homepage.topBanners"/>
       <SectionSeparator class="section-separator"
                         section-name="محصولات جدید"
@@ -39,6 +41,7 @@ import HorizontalProductList from '@/components/products/horizontal/HorizontalPr
 import CategoryList from '@/components/category/CategoryList'
 import BusinessPartnerList from '@/components/partner/BusinessPartnerList'
 import RefreshUtil from '@/components/utils/RefreshUtil'
+import LoadingAnimation from '@/components/utils/LoadingAnimation'
 
 export default {
   head:{
@@ -51,29 +54,34 @@ export default {
     HorizontalProductList,
     HorizontalProductItem,
     SectionSeparator,
-    Banner
+    Banner,
+    LoadingAnimation
   },
   data() {
 
     return {
       homepage: {},
       instructions: {},
-      reload: false
+      reload: false,
+      ready: false
     }
   },
   async beforeCreate() {
     console.log('beforeCreate index')
-    let responseData = await this.$repositories.product.homepage()
+    let responseData =  await this.$repositories.product.homepage()
     let resInstruction = await this.$repositories.product.getInstructions()
     if (responseData === false || resInstruction === false){
        this.reload = true
+      this.ready = true
     }
     else {
       this.homepage = responseData.data
       this.instructions = resInstruction.data
+      await this.$store.dispatch('instruction/load_home_instruction', responseData)
+      await this.$store.dispatch('instruction/load_sys_instruction', resInstruction)
+      this.ready = true
     }
   }
-
 
   // async asyncData({ $repositories, app, store}) {
   // }

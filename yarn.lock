@@ -5451,6 +5451,18 @@ lodash@^4.15.0, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
+lottie-web-vue@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/lottie-web-vue/-/lottie-web-vue-1.0.1.tgz#c143baded93b3f31a1dc3ba2f4f31d16766b47b3"
+  integrity sha512-NrL2Muwo/WqR6HCW4Gk5OeZ0v36ml90McqdQlxOVhfkDYRWumJbsbb2EQXpl6Xy6XOaoVQzy5m1qzrh0i76ciA==
+  dependencies:
+    lottie-web "^5.7.4"
+
+lottie-web@^5.7.4:
+  version "5.7.8"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.7.8.tgz#c7a2e42983bcb42093590a03ccdde8741d3f960e"
+  integrity sha512-VxKCZk33GwZac6mVHvT3grUFR/zrMsW85M7vxQPrgpJOP2IhcnjMbuD0h7muBkXgw84K9KmGulmcyzvhpzSMAg==
+
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.npmjs.org/loud-rejection/-/loud-rejection-1.6.0.tgz"
