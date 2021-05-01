@@ -76,6 +76,7 @@ export default {
       console.log("listener")
       console.log(data);
     });
+
   },
   computed: {
     ...mapGetters({ cartCount: 'cart/cartProductsCount' })

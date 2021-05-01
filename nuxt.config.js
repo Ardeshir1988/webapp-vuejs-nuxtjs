@@ -1,10 +1,10 @@
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  target: 'server',
+  // target: 'server',
   // mode: 'universal', // or 'spa'
-  // target: 'static',
+  target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
-  debug: true,
+  // debug: true,
   head: {
     titleTemplate: '%s - HyperJet',
     title: '',
@@ -126,7 +126,7 @@ export default {
     workbox: {
       runtimeCaching: [
         {
-          urlPattern: 'https://api.hjet.ir/files/.*',
+          urlPattern: 'https://api.hjet.ir/.*',
           strategyOptions: {
             cacheName: 'our-cache',
           },
@@ -142,9 +142,7 @@ export default {
       cacheAssets: true, // for /*
       offline: true // for /_nuxt/*
     },
-    icon: {
-
-    }
+    icon: true
   },
   meta: [
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
