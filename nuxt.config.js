@@ -124,27 +124,27 @@ export default {
       orientation: "portrait"
     },
     workbox: {
-      // runtimeCaching: [
-      //   {
-      //     urlPattern: 'https://api.hjet.ir/files/.*',
-      //     strategyOptions: {
-      //       cacheName: 'our-cache',
-      //     },
-      //     strategyPlugins: [{
-      //       use: 'Expiration',
-      //       config: {
-      //         maxEntries: 1000000,
-      //         maxAgeSeconds: 300000000
-      //       }
-      //     }]
-      //   }
-      // ],
+      runtimeCaching: [
+        {
+          urlPattern: 'https://api.hjet.ir/files/.*',
+          strategyOptions: {
+            cacheName: 'our-cache',
+          },
+          strategyPlugins: [{
+            use: 'Expiration',
+            config: {
+              maxEntries: 1000000,
+              maxAgeSeconds: 300000000
+            }
+          }]
+        }
+      ],
       cacheAssets: true, // for /*
       offline: true // for /_nuxt/*
+    },
+    icon: {
+
     }
-    // icon: {
-    //   fileName: 'hyperjet-icon.png',
-    // }
   },
   meta: [
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
