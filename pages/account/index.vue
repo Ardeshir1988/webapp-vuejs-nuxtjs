@@ -36,6 +36,9 @@ export default {
       supportTel:''
     }
   },
+  async mounted(){
+    this.supportTel = await this.$store.getters['instruction/getSysInstruction'].supportTel
+  },
   methods: {
     login() {
       this.register = false
@@ -86,8 +89,7 @@ export default {
   async asyncData({ $repositories, app }) {
     if (app.$storage.getLocalStorage('token')  !== null) {
       let responseData = await $repositories.customer.getCustomerProfile()
-      let resSystemIns = await $repositories.product.getInstructions()
-      if (responseData !== false && resSystemIns !==false){
+      if (responseData !== false ){
         Pushe.setCustomId(responseData.data.pushId)
         return {
           customer: {
@@ -98,8 +100,7 @@ export default {
           otp: false,
           registerMobile: false,
           register: false,
-          isCustomer: true,
-          supportTel: resSystemIns.data.supportTel
+          isCustomer: true
         }
       }
       else

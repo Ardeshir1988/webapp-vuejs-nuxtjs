@@ -77,8 +77,8 @@ export default {
     else {
       this.homepage = responseData.data
       this.instructions = resInstruction.data
-      await this.$store.dispatch('instruction/load_home_instruction', responseData)
-      await this.$store.dispatch('instruction/load_sys_instruction', resInstruction)
+      await this.$store.dispatch('instruction/load_home_instruction', responseData.data)
+      await this.$store.dispatch('instruction/load_sys_instruction', resInstruction.data)
       this.ready = true
     }
   }

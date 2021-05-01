@@ -15,7 +15,6 @@ export const actions = {
 
   async load_home_instruction({ commit }, homeInstruction) {
       commit('UPDATE_HOME_INSTRUCTION',homeInstruction)
-
   },
   async load_sys_instruction({ commit }, sysInstruction) {
       commit('UPDATE_SYS_INSTRUCTION',sysInstruction)
