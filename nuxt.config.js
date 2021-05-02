@@ -131,7 +131,18 @@ export default {
             cacheName: 'our-cache',
           },
           strategyPlugins: [{
-            use: 'Expiration',
+            config: {
+              maxEntries: 1000000,
+              maxAgeSeconds: 300000000
+            }
+          }]
+        },
+        {
+          urlPattern: 'https://api.hjet.ir/.*',
+          strategyOptions: {
+            cacheName: 'our-image-cash',
+          },
+          strategyPlugins: [{
             config: {
               maxEntries: 1000000,
               maxAgeSeconds: 300000000
