@@ -126,7 +126,7 @@ export default {
     workbox: {
       runtimeCaching: [
         {
-          urlPattern: 'https://api.hjet.ir/.*',
+          urlPattern: 'https://hyperjet.ir/.*',
           strategyOptions: {
             cacheName: 'our-cache',
           },
