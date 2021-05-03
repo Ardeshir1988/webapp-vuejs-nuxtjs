@@ -125,6 +125,7 @@ export default {
     },
     workbox: {
       debug: false,
+      dev: false,
       cacheId: 'ir.hyperjet',
       directoryIndex: '/',
       revision: 1.1,
