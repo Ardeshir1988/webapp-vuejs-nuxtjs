@@ -8,7 +8,7 @@
     <v-row no-gutters>
       <v-col class="left-col">
         <v-sheet outlined rounded @click="selectFeeling('BAD')">
-          <v-img contain class="img-status" src="/review-bad.svg"
+          <v-img contain class="img-status" :src="require('~/assets/icon/review-bad.svg')"
                  :class="this.reviewDto.customerFeeling === 'BAD' ? '' :'img-disable'" />
           <div class="feeling-name">بد</div>
           <div :class="this.reviewDto.customerFeeling ===  'BAD' ? 'review-status-bad' :'review-status-color'"></div>
@@ -16,7 +16,7 @@
       </v-col>
       <v-col class="center-col">
         <v-sheet outlined rounded @click="selectFeeling('GOOD')">
-          <v-img contain class="img-status" src="/review-good.svg"
+          <v-img contain class="img-status" :src="require('~/assets/icon/review-good.svg')"
                  :class="this.reviewDto.customerFeeling === 'GOOD' ? '' :'img-disable'" />
           <div class="feeling-name">خوب</div>
           <div :class="this.reviewDto.customerFeeling ===  'GOOD' ? 'review-status-good' :'review-status-color'"></div>
@@ -24,7 +24,7 @@
       </v-col>
       <v-col class="right-col">
         <v-sheet outlined rounded @click="selectFeeling('PERFECT')">
-          <v-img contain class="img-status" src="/review-perfect.svg"
+          <v-img contain class="img-status" :src="require('~/assets/icon/review-perfect.svg')"
                  :class="this.reviewDto.customerFeeling === 'PERFECT' ? '' :'img-disable'" />
           <div class="feeling-name">عالی</div>
           <div

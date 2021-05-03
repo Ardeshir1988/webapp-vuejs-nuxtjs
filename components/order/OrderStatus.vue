@@ -20,25 +20,25 @@
           </v-row>
           <v-row @click="getOrderProducts">
             <v-col>
-              <v-img contain class="img-status" src="/order-delivered.svg"
+              <v-img contain class="img-status" :src=require('~/assets/icon/order-delivered.svg')"
                      :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
               <div class="state-title">تحویل</div>
               <div class="state-time">{{ getStateData('DELIVERED') }}</div>
             </v-col>
             <v-col>
-              <v-img contain class="img-status" src="/order-delivery.svg"
+              <v-img contain class="img-status" :src="require('~/assets/icon/order-delivery.svg')"
                      :class="getStateData('SHIPPING') !== '' ? '' :'img-disable'" />
               <div class="state-title">ارسال</div>
               <div class="state-time">{{ getStateData('SHIPPING') }}</div>
             </v-col>
             <v-col>
-              <v-img contain class="img-status" src="/order-packing.svg"
+              <v-img contain class="img-status" :src="require('~/assets/icon/order-packing.svg')"
                      :class="getStateData('PACKED') !== '' ? '' :'img-disable'" />
               <div class="state-title">بسته بندی</div>
               <div class="state-time">{{ getStateData('PACKED') }}</div>
             </v-col>
             <v-col>
-              <v-img contain class="img-status" src="/order-approve.svg"
+              <v-img contain class="img-status" :src="require('~/assets/icon/order-approve.svg')"
                      :class="getStateData('APPROVED') !== '' ? '' :'img-disable'" />
               <div class="state-title">تایید</div>
               <div class="state-time">{{ getStateData('APPROVED') }}</div>

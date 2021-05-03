@@ -7,25 +7,25 @@
       <Banner v-if="instructions.topBannerPermission" :banners="homepage.topBanners"/>
       <SectionSeparator class="section-separator"
                         section-name="محصولات جدید"
-                        section-icon="storefront-24px.svg"
+                        :section-icon="require('~/assets/icon/storefront-24px.svg')"
                         section-link-url="/products/new" />
       <HorizontalProductList :products="homepage.newProducts" />
       <SectionSeparator class="section-separator"
                         section-name="دسته بندی محصولات"
-                        section-icon="category-24px.svg"
+                        :section-icon="require('~/assets/icon/category-24px.svg')"
                         section-link-url="/category" />
       <CategoryList :categories="homepage.categories" />
       <Banner v-if="instructions.bottomBannerPermission" class="section-separator" :banners="homepage.bottomBanners" />
 
       <SectionSeparator v-if="instructions.businessPartnerPermission" class="section-separator"
                         section-name="شرکای تجاری"
-                        section-icon="partner-24px.svg"
+                        :section-icon="require('~/assets/icon/partner-24px.svg')"
                         section-link-url="" />
 
       <BusinessPartnerList v-if="instructions.businessPartnerPermission" :business-partners="homepage.businessPartners" />
       <SectionSeparator class="section-separator"
                         section-name="حراج"
-                        section-icon="storefront-24px.svg"
+                        :section-icon="require('~/assets/icon/storefront-24px.svg')"
                         section-link-url="/products/off" />
       <HorizontalProductList :products="homepage.offProducts" />
       <div class="null-div"></div>

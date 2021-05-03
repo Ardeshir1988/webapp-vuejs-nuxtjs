@@ -26,7 +26,7 @@
       <div class="detail-content">{{ product.details }}</div>
       <SectionSeparator class="section-separator"
                         section-name="محصولات مشابه"
-                        section-icon="/layers-24px.svg"
+                        :section-icon="require('~/assets/icon/layers-24px.svg')"
                         :section-link-url="'/products/similar/'+product.id" />
       <HorizontalProductList class="similar-products" :products="similarProducts" />
       <div class="btn-container">
@@ -36,7 +36,7 @@
                v-on:click="setInStockNotification">
           <v-img class="cart-icon"
                  contain
-                 src="/notifications-24px.svg"
+                 :src="require('~/assets/icon/notifications-24px.svg')"
                  alt="" />
         </v-btn>
         <v-btn v-if="quantity()<=0 && product.stock>0" class="btn-add-product"
@@ -45,7 +45,7 @@
                v-on:click="increaseProduct(product)">
           <v-img class="cart-icon"
                  contain
-                 src="/cart_grocery_store_green-24px.svg"
+                 :src="require('~/assets/icon/cart_grocery_store_green-24px.svg')"
                  alt="" />
         </v-btn>
         <v-row class="row-cart-operation" v-if="quantity()>0 && product.stock>0" no-gutters>

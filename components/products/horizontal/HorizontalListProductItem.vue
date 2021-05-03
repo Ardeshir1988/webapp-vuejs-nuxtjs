@@ -23,7 +23,7 @@
            v-on:click="setInStockNotification">
       <v-img class="cart-icon"
              contain
-             src="/notifications-24px.svg"
+             :src="require('~/assets/icon/notifications-24px.svg')"
              alt="" />
     </v-btn>
     <v-btn v-if="quantity()<=0 && product.stock>0" class="btn-add-product"
@@ -32,7 +32,7 @@
            v-on:click="increaseProduct($props.product)">
       <v-img class="cart-icon"
              contain
-             src="/cart_grocery_store_green-24px.svg"
+             :src="require('~/assets/icon/cart_grocery_store_green-24px.svg')"
              alt="" />
     </v-btn>
     <div class="cart-operation" v-if="quantity()>0 && product.stock>0">

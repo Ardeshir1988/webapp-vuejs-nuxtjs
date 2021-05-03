@@ -18,7 +18,7 @@
       <v-btn color="white" depressed height="41" width="100%" @click="setInStockNotification">
         <v-img class="cart-icon"
                contain
-               src="/notifications-24px.svg"
+               :src="require('~/assets/icon/notifications-24px.svg')"
                alt="" />
       </v-btn>
     </div>
@@ -27,7 +27,7 @@
              v-on:click="increaseProduct(product)">
         <v-img class="cart-icon"
                contain
-               src="/cart_grocery_store_green-24px.svg"
+               :src="require('~/assets/icon/cart_grocery_store_green-24px.svg')"
                alt="" />
       </v-btn>
     </div>

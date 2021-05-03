@@ -12,9 +12,16 @@
 </template>
 
 <script>
+import { FILES_URL } from '@/constants'
+
 export default {
   name: 'AccountOptionList',
   props: { op: Object },
+  computed: {
+    imageUrl: function() {
+      return require(this.op.iconName)
+    }
+  },
   methods:{
     clickOp() {
       this.$emit('chooseOp', this.op.id)

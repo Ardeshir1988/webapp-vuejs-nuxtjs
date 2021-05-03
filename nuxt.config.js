@@ -131,6 +131,7 @@ export default {
             cacheName: 'our-cache',
           },
           strategyPlugins: [{
+            use: 'Expiration',
             config: {
               maxEntries: 1000000,
               maxAgeSeconds: 300000000
@@ -143,6 +144,7 @@ export default {
             cacheName: 'our-image-cash',
           },
           strategyPlugins: [{
+            use: 'Expiration',
             config: {
               maxEntries: 1000000,
               maxAgeSeconds: 300000000
@@ -152,8 +154,7 @@ export default {
       ],
       cacheAssets: true, // for /*
       offline: true // for /_nuxt/*
-    },
-    icon: true
+    }
   },
   meta: [
     { name: 'apple-mobile-web-app-capable', content: 'yes' }

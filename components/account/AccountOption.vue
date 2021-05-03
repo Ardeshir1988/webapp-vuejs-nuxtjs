@@ -9,6 +9,7 @@
 export default {
   name: 'AccountOption',
   props: { op: Object },
+
   methods: {
     clickOp() {
       this.$emit('chooseOp', this.op.id)
