@@ -1,6 +1,6 @@
 <template>
   <v-sheet @click="gotoCategoryProduct" class="category" outlined rounded>
-    <v-img class="img-category" :src="imageUrl">
+    <v-img class="img-category" :src="imageUrl" :lazy-src="require('assets/category-lazyload.png')">
       <div class="name-category">
         {{ category.name }}
       </div>
