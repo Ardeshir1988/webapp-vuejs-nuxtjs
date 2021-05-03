@@ -4,7 +4,7 @@ export default {
   mode: 'universal', // or 'spa'
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
-  // debug: true,
+  debug: false,
   head: {
     titleTemplate: '%s - HyperJet',
     title: '',
@@ -124,36 +124,44 @@ export default {
       orientation: "portrait"
     },
     workbox: {
+      debug: false,
+      cacheId: 'ir.hyperjet',
+      directoryIndex: '/',
+      revision: 1.1,
       runtimeCaching: [
         {
           urlPattern: 'https://hyperjet.ir/.*',
+          handler: 'CacheFirst',
+          method: 'GET',
           strategyOptions: {
             cacheName: 'our-cache',
           },
           strategyPlugins: [{
             use: 'Expiration',
             config: {
-              maxEntries: 1000000,
-              maxAgeSeconds: 300000000
+              maxEntries: 1000000000,
+              maxAgeSeconds: 300000000000
             }
           }]
         },
         {
           urlPattern: 'https://api.hjet.ir/.*',
+        handler: 'CacheFirst',
+         method: 'GET',
           strategyOptions: {
             cacheName: 'our-image-cash',
           },
           strategyPlugins: [{
             use: 'Expiration',
             config: {
-              maxEntries: 1000000,
-              maxAgeSeconds: 300000000
+              maxEntries: 100000000,
+              maxAgeSeconds: 300000000000
             }
           }]
         }
       ],
       cacheAssets: true, // for /*
-      offline: true // for /_nuxt/*
+      // offline: true // for /_nuxt/*
     }
   },
   meta: [
