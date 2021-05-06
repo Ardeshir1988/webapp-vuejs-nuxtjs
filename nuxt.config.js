@@ -129,23 +129,9 @@ export default {
       directoryIndex: '/',
       revision: 1.1,
       runtimeCaching: [
+
         {
-          urlPattern: 'https://hyperjet.ir/.png',
-          handler: 'CacheFirst',
-          method: 'GET',
-          strategyOptions: {
-            cacheName: 'our-cache',
-          },
-          strategyPlugins: [{
-            use: 'Expiration',
-            config: {
-              maxEntries: 1000000000,
-              maxAgeSeconds: 300000000000
-            }
-          }]
-        },
-        {
-          urlPattern: 'https://api.hjet.ir/.png',
+          urlPattern: 'https://api.hjet.ir/files/.*',
         handler: 'CacheFirst',
          method: 'GET',
           strategyOptions: {
