@@ -130,7 +130,7 @@ export default {
       revision: 1.1,
       runtimeCaching: [
         {
-          urlPattern: 'https://hyperjet.ir/.*',
+          urlPattern: 'https://hyperjet.ir/.png',
           handler: 'CacheFirst',
           method: 'GET',
           strategyOptions: {
@@ -145,7 +145,7 @@ export default {
           }]
         },
         {
-          urlPattern: 'https://api.hjet.ir/.*',
+          urlPattern: 'https://api.hjet.ir/.png',
         handler: 'CacheFirst',
          method: 'GET',
           strategyOptions: {
