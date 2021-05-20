@@ -11,7 +11,9 @@
             filled
             dense
             rounded
-            v-model="keyword">
+            v-model="keyword"
+            @keydown.enter="getProductsByKeyword()"
+          >
           </v-text-field>
         </v-col>
         <v-col class="search-btn">

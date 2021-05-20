@@ -63,11 +63,12 @@ export default {
   async mounted() {
     await this.$store.dispatch('cart/init_cart')
 
-    if (this.$storage.getCookie('token') === undefined ) {
-      if (this.$storage.getUniversal('token') !== null && this.$storage.getUniversal('token') !== undefined) {
-        this.$storage.setCookie('token', this.$storage.getLocalStorage('token'), { maxAge: 60 * 60 * 24 * 100} )
-        this.$storage.setCookie('mobile', this.$storage.getLocalStorage('mobile'), { maxAge: 60 * 60 * 24 * 100} )
-      }
+    if (this.$storage.getCookie('token') !== undefined && this.$storage.getCookie('token') !== null ){
+      this.$axios.defaults.headers.common = { 'Authorization': 'Bearer ' + this.$storage.getCookie('token') }
+    }else if(this.$storage.getLocalStorage('token') !== undefined && this.$storage.getLocalStorage('token') !== null) {
+      this.defaults.headers.common = { 'Authorization': 'Bearer ' + this.$storage.getLocalStorage('token') }
+      this.$storage.setCookie('token', this.$storage.getLocalStorage('token'), { maxAge: 60 * 60 * 24 * 100})
+      this.$storage.setCookie('mobile', this.$storage.getLocalStorage('mobile'), { maxAge: 60 * 60 * 24 * 100} )
     }
 
     Pushe.init("6g0372xq3q71lo3g");

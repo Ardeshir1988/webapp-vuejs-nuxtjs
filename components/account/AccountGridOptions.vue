@@ -83,6 +83,7 @@ export default {
           // this.$cookies.removeAll()
           this.$storage.removeUniversal('token')
           this.$storage.removeUniversal('mobile')
+          this.$axios.defaults.headers.common = { 'Authorization': 'Bearer ' + this.$storage.getCookie('token') }
           $nuxt.refresh()
           break
         }
