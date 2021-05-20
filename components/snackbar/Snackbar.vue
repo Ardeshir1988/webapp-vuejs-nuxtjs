@@ -1,5 +1,5 @@
 <template>
-  <v-snackbar class="snackbar" v-model="show" :color="color" :timeout="3000">
+  <v-snackbar class="snackbar" v-model="show" :color="color" :timeout="5000" >
     <v-layout align-center pr-4>
       <v-icon class="pl-3" dark large>{{ icon }}</v-icon>
       <v-layout column>

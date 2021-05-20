@@ -94,7 +94,7 @@ export default {
         if (responseData !== false) {
           this.$notifier.showMessage({ content: 'در صورت موجود شدن به شما اعلام خواهد شد', color: 'success', title: 'موفقیت آمیز' , icon: 'mdi-check-circle-outline' })
         }else{
-          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید', color: 'error', title: 'توجه' , icon: 'mdi-alert-circle-outline' })
+          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید', color: 'error', title: 'خطا' , icon: 'mdi-alert-circle-outline' })
         }
       }else {
         this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })

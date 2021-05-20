@@ -9,7 +9,7 @@
       <div v-else class="address-item-empty">هیج آدرسی ثبت نشده است</div>
     </v-sheet>
     <nuxt-link style="text-decoration: none; color: inherit;" to="/address">
-      <v-btn rounded depressed class="btn-edit-address">{{this.getBtnText()}}
+      <v-btn rounded depressed class="btn-edit-address">انتخاب آدرس
         <v-icon right dark>mdi-map-marker</v-icon>
       </v-btn>
     </nuxt-link>
@@ -28,7 +28,7 @@ export default {
   methods:{
     getBtnText(){
       if (this.address.id === undefined || this.address.id === null){
-        return 'انتخاب آدرس'
+        return ' انتخاب آدرس'
       }else {
         return 'تغییر آدرس'
       }
@@ -67,6 +67,7 @@ export default {
   color: #808080;
   height: 5vh;
   vertical-align: center;
-  width: 35vw;
+
 }
+
 </style>

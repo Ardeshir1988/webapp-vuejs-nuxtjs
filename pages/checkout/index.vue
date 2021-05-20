@@ -151,7 +151,7 @@ export default {
   methods: {
     getPaymentToken() {
       if (this.$storage.getCookie('token') === undefined) {
-        this.$notifier.showMessage({ content: 'لطفا قبل از پرداخت وارد شوید', color: 'black' })
+        this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
         this.$router.push('/account')
       } else {
         let deliveryType = ''
@@ -161,7 +161,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'black' })
+          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
         } else {
           this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
             .then(paymentTokenRes => {
@@ -190,7 +190,7 @@ export default {
     },
     checkout() {
       if (this.$storage.getCookie('token') === undefined) {
-        this.$notifier.showMessage({ content: 'لطفا قبل از ثبت سفارش وارد شوید', color: 'black' })
+        this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
         this.$router.push('/account')
       } else {
         let deliveryType = ''
@@ -200,7 +200,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'black' })
+          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
         } else {
           const order = {
             customerAddressId: this.getSelectedAddress.id,
@@ -214,7 +214,7 @@ export default {
                   this.$storage.setCookie('order', { orderDetail: orderRes.data, address: this.getSelectedAddress} , { maxAge: 60 * 15 })
                   this.$router.push('/checkout/done')
                 } else {
-                  this.$notifier.showMessage({ content: orderRes.data.reason, color: 'black' })
+                  this.$notifier.showMessage({ content: orderRes.data.reason, color: 'error', title: 'خطا' , icon: 'mdi-alert-circle-outline' })
                   this.$router.push('/cart')
                 }
               }

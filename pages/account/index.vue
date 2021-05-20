@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header class="header" title="حساب کاربری" />
-    <Register :login="login" v-if="register" class="register-container" />
+<!--    <Register :login="login" v-if="register" class="register-container" />-->
     <RegisterMobile :loading="loading" v-if="registerMobile" @regmobile="sendMobileDto" />
     <VerifyOtp v-if="otp" @changemobile="changeMobile" @sendotp="verifyOtp" :mobile="mobile" />
     <RegisteredCustomer :customer-info="customer" v-if="isCustomer" />
@@ -26,8 +26,7 @@ export default {
   },
   data() {
     return {
-      register: true,
-      registerMobile: false,
+      registerMobile: true,
       otp: false,
       isCustomer: false,
       loading: false,
@@ -40,10 +39,6 @@ export default {
     this.supportTel = await this.$store.getters['instruction/getSysInstruction'].supportTel
   },
   methods: {
-    login() {
-      this.register = false
-      this.registerMobile = true
-    },
     async verifyOtp(otp) {
       this.loading = true
       const res = await this.$repositories.register.sendOtp({ otp: otp })
@@ -99,7 +94,6 @@ export default {
           },
           otp: false,
           registerMobile: false,
-          register: false,
           isCustomer: true
         }
       }
@@ -109,8 +103,7 @@ export default {
       return {
         customer: {},
         otp: false,
-        registerMobile: false,
-        register: true,
+        registerMobile: true,
         isCustomer: false
       }
     }
