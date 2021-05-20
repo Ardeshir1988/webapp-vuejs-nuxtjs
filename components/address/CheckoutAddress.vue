@@ -25,15 +25,6 @@ export default {
       return this.address.details !== undefined
     }
   },
-  methods:{
-    getBtnText(){
-      if (this.address.id === undefined || this.address.id === null){
-        return ' انتخاب آدرس'
-      }else {
-        return 'تغییر آدرس'
-      }
-    }
-  }
 }
 </script>
 

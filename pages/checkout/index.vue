@@ -161,7 +161,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+          this.$router.push('/address/new_check_out')
         } else {
           this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
             .then(paymentTokenRes => {
@@ -200,7 +200,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$notifier.showMessage({ content: 'لطفا آدرس سفارش را انتخاب کنید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+          this.$router.push('/address/new_check_out')
         } else {
           const order = {
             customerAddressId: this.getSelectedAddress.id,
@@ -229,7 +229,7 @@ export default {
       return PersianUtil.covertEngDigitToPersianDigit(val)
     }
   },
-  async asyncData({ $repositories, redirect, route, app }) {
+  async asyncData({ $repositories, redirect, route, app, $notifier }) {
 
     const info = await $repositories.product.getInstructions()
     if (app.$storage.getCookie('token') !== undefined) {
@@ -245,6 +245,9 @@ export default {
             redirect('/checkout/done')
           }
         }
+        if(addressesRes.data === undefined || addressesRes.data.length === 0) {
+          redirect('/address/new_check_out')
+          }
         return {
           addresses: addressesRes.data,
           balance: profile.data.balance,

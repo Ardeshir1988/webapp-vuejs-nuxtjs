@@ -10,7 +10,7 @@
     </client-only>
         <div class="btn-container">
           <v-btn @click="selectLocation" class="btn-primary" depressed color="accent">
-            ثبت موقعیت
+            ادامه
           </v-btn>
         </div>
   </div>

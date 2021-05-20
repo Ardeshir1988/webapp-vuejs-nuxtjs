@@ -64,7 +64,8 @@ export default {
       addressId: null,
       addressDetails: '',
       addressNumber: '',
-      addressTitle: ''
+      addressTitle: '',
+      checkout: Boolean
     }
   },
   methods: {
@@ -91,27 +92,24 @@ export default {
             details: this.addressDetails,
             latLong: this.latLng.lat + ',' + this.latLng.lng,
           }
-
           if (ad.id === null)
             this.$repositories.customer
               .saveAddress(ad)
               .then(res => {
                 if (res !== false) {
-                  this.$router.push('/address')
+                  if(this.checkout){
+                    this.$repositories.customer.changeSelectedAddress(res.data.id).then( response => {
+                    if (response !==false) {
+                      this.$router.push('/checkout')
+                    }})
+                  }else{
+                  this.$router.push('/address') }
                 }
               })
           else
-            // this.$repositories.customer
-            //   .updateAddress(ad)
-            //   .then(res => {
-            //     if (res !== false) {
-            //       this.$router.push('/address')
-            //     }
-            //   })
             this.$notifier.showMessage({ content: 'ویرایش آدرس امکانپذیر نیست, لطفا آدرس جدید ثبت کنید', color: 'black' })
         } else {
-          console.log(this.latLng)
-          this.$notifier.showMessage({ content: 'جزییات آدرس را وارد کنید', color: 'black' })
+            this.$notifier.showMessage({ content: 'جزییات آدرس را وارد کنید', color: 'black' })
         }
       } else {
         this.$notifier.showMessage({ content: 'آدرس را روی نقشه مشخص کنید', color: 'black' })
@@ -119,7 +117,23 @@ export default {
     }
   },
   async asyncData({ $repositories, route }) {
-    if (route.params.id !== 'new') {
+    if (route.params.id === 'new' || route.params.id === 'new_check_out') {
+      let tempCheckout = false
+      if(route.params.id === 'new_check_out') {
+        tempCheckout = true
+      }
+      return {
+        checkout: tempCheckout,
+        sheet:false,
+        center: { lat: 35.8011681, lng: 51.4643361 },
+        latLng: { lat: 0, lng: 0 },
+        addressId: null,
+        addressDetails: '',
+        addressNumber: '',
+        addressTitle: ''
+      }
+    }
+    else {
       const res = await $repositories.customer.getAddressById(route.params.id)
       if (res !== false) {
         const latlng = {
@@ -134,16 +148,6 @@ export default {
           addressNumber: res.data.number,
           addressTitle: res.data.title
         }
-      }
-    }else {
-      return {
-        sheet:false,
-        center: { lat: 35.8011681, lng: 51.4643361 },
-        latLng: { lat: 0, lng: 0 },
-        addressId: null,
-        addressDetails: '',
-        addressNumber: '',
-        addressTitle: ''
       }
     }
   }
