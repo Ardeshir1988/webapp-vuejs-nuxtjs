@@ -63,9 +63,9 @@ export default {
           primary: '#8629FD',
           accent: '#0BCE83',
           secondary: '#808080',
-          info: '#E6E6E6',
-          warning: '#FF6672',
-          error: '#FF6672',
+          info: '#F9AA33',
+          warning: '#FF4C6A',
+          error: '#FF4C6A',
           success: '#0BCE83',
           caution: '#FECD55'
         }

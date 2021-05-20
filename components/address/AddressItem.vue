@@ -25,7 +25,7 @@
         </v-btn>
         <v-divider />
         <v-btn @click="deleteAddress" class="op" icon depressed block>
-          <v-icon size="24" dense color="warning">
+          <v-icon size="24" dense color="error">
             mdi-delete-sweep
           </v-icon>
         </v-btn>

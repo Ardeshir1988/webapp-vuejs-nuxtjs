@@ -88,8 +88,17 @@ export default {
     gotoProduct() {
       this.$router.push('/product/' + this.product.id)
     },
-    setInStockNotification(){
-      console.log(this.product)
+    async setInStockNotification(){
+      if(this.$storage.getCookie('token')  !== null && this.$storage.getCookie('token')  !== undefined) {
+        let responseData = await this.$repositories.customer.setNotifyInStock(this.product.id)
+        if (responseData !== false) {
+          this.$notifier.showMessage({ content: 'در صورت موجود شدن به شما اعلام خواهد شد', color: 'success', title: 'موفقیت آمیز' , icon: 'mdi-check-circle-outline' })
+        }else{
+          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید', color: 'error', title: 'توجه' , icon: 'mdi-alert-circle-outline' })
+        }
+      }else {
+        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+      }
     }
   }
 }
