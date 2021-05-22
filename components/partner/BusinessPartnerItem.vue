@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     gotoCategoryProduct() {
-      this.$router.push('/partner/' + this.partner.name + '?id=' + this.partner.id+'&businessid='+this.partner.businessPartnerId)
+      this.$router.push('/partner/' + this.partner.name + '?_id=' + this.partner.id+'&businessid='+this.partner.businessPartnerId)
     }
   }
 }

@@ -2,32 +2,28 @@
   <div>
 <div style="text-align: center">
   <Header class="fix-header" title="مشخصات کاربر" />
-  <div class="txt-fields">
+  <div style='padding-top: 4vh;'>
     <v-text-field
-      dir="rtl"
-      outlined
+      reverse
+      filled
       class="txt-field"
       v-model="name"
-      hide-details
-      placeholder="نام"
+      label="نام و نام خانوادگی"
     ></v-text-field>
-
     <v-text-field
-      dir="rtl"
-      outlined
+      reverse
+      filled
       class="txt-field"
-      hide-details
-      disabled
+      readonly
       :value="mobile"
+      label='شماره همراه'
     ></v-text-field>
-
     <v-text-field
-      dir="rtl"
-      outlined
+      reverse
+      filled
       class="txt-field"
       v-model="tel"
-      hide-details
-      placeholder="تلفن"
+      label="تلفن"
     ></v-text-field>
   </div>
 </div>
@@ -55,7 +51,8 @@ export default {
       this.$repositories.customer.updateProfile({name:this.name,number:this.tel})
       .then(res=>{
         if (res !== false){
-          this.$notifier.showMessage({ content: 'اطلاعات ثبت شد', color: 'black' })
+          this.$notifier.showMessage({ content: 'اطلاعات شما ثبت گردید.',
+            color: 'success', title: 'موفقیت آمیز' , icon: 'mdi-check-circle-outline' })
           this.$router.push('/account')
         }
       })
@@ -96,7 +93,6 @@ export default {
   font-family: 'IranSansMobileBold', sans-serif;
 }
 .txt-field{
-  margin-top: 1vh;
   margin-right: 5vw;
   margin-left: 5vw;
 }

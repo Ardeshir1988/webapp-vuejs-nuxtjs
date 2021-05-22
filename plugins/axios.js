@@ -11,7 +11,12 @@ export default function({ $axios, redirect, $notifier, app }) {
   })
   $axios.onError(err => {
     if (err.response === undefined) {
-      $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
+      $notifier.showMessage({
+        content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
+        color: 'info',
+        title: 'عدم ارتباط',
+        icon: 'mdi-alert-outline'
+      })
       return Promise.resolve(false)
     } else {
       if (err.response.status === 401) {
@@ -25,10 +30,20 @@ export default function({ $axios, redirect, $notifier, app }) {
           })
       } else {
         if (err.response.data.message !== '') {
-          $notifier.showMessage({ content: err.response.data.message, color: 'black' })
+          $notifier.showMessage({
+            content: err.response.data.message,
+            color: 'error',
+            title: 'خطا',
+            icon: 'mdi-alert-circle-outline'
+          })
           return Promise.resolve(false)
         } else {
-          $notifier.showMessage({ content: 'خطا در برقراری ارتباط با سرور', color: 'black' })
+          $notifier.showMessage({
+            content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
+            color: 'info',
+            title: 'عدم ارتباط',
+            icon: 'mdi-alert-outline'
+          })
           return Promise.resolve(false)
         }
       }

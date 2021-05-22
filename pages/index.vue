@@ -58,7 +58,6 @@ export default {
     LoadingAnimation
   },
   data() {
-
     return {
       homepage: {},
       instructions: {},

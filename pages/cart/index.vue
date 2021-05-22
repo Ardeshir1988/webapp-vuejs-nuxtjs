@@ -66,22 +66,42 @@ export default {
       await this.$store.dispatch('cart/update_cart_stock')
     },
     async continueCheckout() {
+      if(this.cartList.length === 0) {
+        this.$notifier.showMessage({
+          content: 'متاسفانه سبد خرید شما خالی می باشد.',
+          color: 'info',
+          title: 'انتخاب کالا',
+          icon: 'mdi-alert-outline'
+        })
+      }
+      else{
         this.$repositories.product.checkCartProductsAvailability({ 'products': this.cartList })
           .then(res => {
             if (res !== false) {
               if (res.data.ready) {
-                if(this.$storage.getCookie('token')  !== null && this.$storage.getCookie('token')  !== undefined) {
+                if (this.$storage.getCookie('token') !== null && this.$storage.getCookie('token') !== undefined) {
                   this.$router.push('/checkout')
-                }else {
-                  this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+                } else {
+                  this.$notifier.showMessage({
+                    content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید',
+                    color: 'info',
+                    title: 'توجه',
+                    icon: 'mdi-alert-outline'
+                  })
                   this.$router.push('/account')
                 }
               } else {
                 this.$store.dispatch('cart/update_cart_stock')
-                  this.$notifier.showMessage({ content: 'برای ثبت سفارش تمامی اجناس می بایست سبز باشند', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+                this.$notifier.showMessage({
+                  content: 'برای ثبت سفارش تمامی اجناس می بایست سبز باشند',
+                  color: 'info',
+                  title: 'توجه',
+                  icon: 'mdi-alert-outline'
+                })
               }
             }
           })
+      }
     }
   }
 }

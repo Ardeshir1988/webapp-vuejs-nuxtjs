@@ -1,164 +1,118 @@
 <template>
-  <div>
-  <v-bottom-sheet v-if="sheet" fullscreen class="bottom-sheet" scrollable v-model="sheet">
-    <div class="address-data">
-      <div class="btn-close">
-        <v-btn @click="close" icon depressed>
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </div>
-      <v-textarea
-        label="جزییات آدرس"
-        outlined
-        reverse
-        dense
-        color="accent"
-        v-model="addressDetails"
-        placeholder="خیابان لواسانی ... پلاک ۲ واحد ۵"
-      ></v-textarea>
-
-      <v-text-field
-        label="عنوان آدرس (اختیاری)"
-        placeholder=" مانند: خانه, شرکت"
-        outlined
-        dense
-        color="accent"
-        v-model="addressTitle"
-        reverse
-      ></v-text-field>
-
-      <v-text-field
-        label="تلفن (اختیاری)"
-        color="accent"
-        dense
-        outlined
-        v-model="addressNumber"
-        reverse
-      ></v-text-field>
-    </div>
-    <div class="btn-container">
-      <v-btn @click="saveAddress" class="btn-primary" depressed height="40" color="accent">
-        ثبت آدرس
+  <div dir='rtl'>
+    <Header class="fix-header" title="آدرس "  />
+    <v-textarea
+      style='padding-top:5vw;'
+      reverse
+      label=' آدرس  - لطفا به صورت کامل وارد شود.'
+      v-model='addressDetails'
+      class='txt-field'
+      rows='2'
+      readonly
+      filled
+    ></v-textarea>
+    <v-text-field
+      label='عنوان آدرس (اختیاری)'
+      reverse
+      v-model='addressTitle'
+      class='txt-field'
+      readonly
+      filled
+    ></v-text-field>
+    <v-text-field
+      label='تلفن (اختیاری)'
+      reverse
+      v-model='addressNumber'
+      class='txt-field'
+      readonly
+      filled
+    ></v-text-field>
+    <mapbox
+      id='map'
+      style='height: 35vh'
+      :access-token='accessToken'
+      :map-options='mapOptions'
+      @map-init='mapInit'
+    />
+    <v-icon id='coordinates' class='coordinates'>mdi-map-marker</v-icon>
+    <v-container class='btn-container'>
+      <v-btn @click='close' class='btn-primary' depressed height='40' color='accent'>
+        بستن
       </v-btn>
-    </div>
-  </v-bottom-sheet>
-    <CustomerAddress v-else :marker-loc="latLng" :center="center" @changelocation="changeLatLng" @selectlocation="selectLocation" />
+    </v-container>
+
   </div>
 </template>
-
 <script>
-import CustomerAddress from '@/components/address/CustomerAddress'
-
+import Mapbox from 'mapbox-gl-vue'
 export default {
-  middleware:'auth',
+  components: { Mapbox },
+  middleware: 'auth',
   name: 'index',
-  components: { CustomerAddress },
-  head:{
-    title:'آدرس ها'
+  head: {
+    title: 'آدرس',
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css'
+      }
+    ]
   },
   data() {
     return {
-      sheet:false,
-      center: { lat: 35.8011681, lng: 51.4643361 },
-      latLng: { lat: 0, lng: 0 },
       addressId: null,
       addressDetails: '',
       addressNumber: '',
       addressTitle: '',
-      checkout: Boolean
+      accessToken: 'pk.eyJ1IjoibWF4YXNhZGkiLCJhIjoiY2tsOTlmaHp6MzhlNzJvcW9kNDZteXU0MiJ9.g3otWgJ_s9jL8HZhiAD48Q',
+      mapOptions: {
+        style: 'mapbox://styles/maxasadi/ckl99m0bc0bl517jxsh5d6lcq',
+        center: [51.4643361, 35.8011681],
+        zoom: 16,
+        maxBounds: [
+          [51.35994940453976, 35.654004054394755], // Southwest coordinates
+          [51.57013030718764, 35.877585830317105] // Northeast coordinates
+        ]
+      }
     }
   },
   methods: {
-    close(){
+    mapInit: function(map) {
+      this.map = map
+      if (mapboxgl.getRTLTextPluginStatus() !== 'loaded') {
+      mapboxgl.setRTLTextPlugin(
+        'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+        null,
+        true // Lazy load the plugin
+      )}
+    },
+    close() {
       this.sheet = false
     },
-    selectLocation(){
-      if (this.latLng==={ lat: 0, lng: 0 }){
-        this.$notifier.showMessage({ content: 'موقعیت مکانی را انتخاب کنید', color: 'black' })
-      }else {
-        this.sheet = true
-      }
-    },
-    changeLatLng(latlng) {
-      this.latLng = latlng
-    },
-    saveAddress() {
-      if (this.latLng.lat !== 0 && this.latLng.lng !== 0) {
-        if (this.addressDetails !== '') {
-          const ad = {
-            id: this.addressId,
-            title: this.addressTitle,
-            number: this.addressNumber,
-            details: this.addressDetails,
-            latLong: this.latLng.lat + ',' + this.latLng.lng,
-          }
-          if (ad.id === null)
-            this.$repositories.customer
-              .saveAddress(ad)
-              .then(res => {
-                if (res !== false) {
-                  if(this.checkout){
-                    this.$repositories.customer.changeSelectedAddress(res.data.id).then( response => {
-                    if (response !==false) {
-                      this.$router.push('/checkout')
-                    }})
-                  }else{
-                  this.$router.push('/address') }
-                }
-              })
-          else
-            this.$notifier.showMessage({ content: 'ویرایش آدرس امکانپذیر نیست, لطفا آدرس جدید ثبت کنید', color: 'black' })
-        } else {
-            this.$notifier.showMessage({ content: 'جزییات آدرس را وارد کنید', color: 'black' })
-        }
-      } else {
-        this.$notifier.showMessage({ content: 'آدرس را روی نقشه مشخص کنید', color: 'black' })
-      }
-    }
   },
-  async asyncData({ $repositories, route }) {
-    if (route.params.id === 'new' || route.params.id === 'new_check_out') {
-      let tempCheckout = false
-      if(route.params.id === 'new_check_out') {
-        tempCheckout = true
-      }
-      return {
-        checkout: tempCheckout,
-        sheet:false,
-        center: { lat: 35.8011681, lng: 51.4643361 },
-        latLng: { lat: 0, lng: 0 },
-        addressId: null,
-        addressDetails: '',
-        addressNumber: '',
-        addressTitle: ''
-      }
-    }
-    else {
-      const res = await $repositories.customer.getAddressById(route.params.id)
-      if (res !== false) {
-        const latlng = {
-          lat: parseFloat(res.data.latLong.split(',')[0]),
-          lng: parseFloat(res.data.latLong.split(',')[1])
-        }
-        return {
-          center: latlng,
-          latLng: latlng,
-          addressId: res.data.id,
-          addressDetails: res.data.details,
-          addressNumber: res.data.number,
-          addressTitle: res.data.title
-        }
-      }
+
+  async fetch() {
+    const res = await this.$repositories.customer.getAddressById(this.$route.params.id)
+    if (res !== false) {
+      const lngLat = [parseFloat(res.data.latLong.split(',')[1]),
+        parseFloat(res.data.latLong.split(',')[0])]
+
+      new mapboxgl.Marker().setLngLat(lngLat).addTo(this.map)
+      this.map.setCenter(lngLat)
+      this.addressId = res.data.id
+      this.addressDetails = res.data.details
+      this.addressNumber = res.data.number
+      this.addressTitle = res.data.title
     }
   }
+
+
 }
 </script>
 
 <style scoped>
+
 .btn-container {
-  position: fixed;
-  position: -webkit-sticky;
-  bottom: 56px;
   display: flex;
   width: 100%;
   z-index: 7;
@@ -175,16 +129,22 @@ export default {
   font-family: 'IranSansMobileBold', sans-serif;
 }
 
-.address-data {
-  margin: 3vh 2vh 2vh;
-  direction: rtl;
+.txt-field {
+  margin-right: 5vw;
+  margin-left: 5vw;
 }
-.btn-close {
-  text-align: left;
-  margin-right: 0;
-  margin-bottom: 2vh;
-}
-.bottom-sheet {
-  height: 100%;
+
+.coordinates {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 18px;
+  border-radius: 3px;
+  display: none;
 }
 </style>

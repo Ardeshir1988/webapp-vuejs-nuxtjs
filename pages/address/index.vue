@@ -58,7 +58,7 @@ export default {
         })
     },
     newAddress() {
-      this.$router.push('/address/new')
+      this.$router.push('/address/new/')
     },
     editAddress(addressId) {
       this.$router.push('/address/' + addressId)
@@ -78,10 +78,13 @@ export default {
       if (res.data.length === 1 && res.data[0].selected === false){
        const selectSingleAddress =await $repositories.customer.changeSelectedAddress(res.data[0].id)
         if (selectSingleAddress !==false){
-          return { addresses: res.data[0].selected = true }
+          return { addresses: res.data[0].selected = true
+          ,
+            reload: false}
         }
       }else
-        return { addresses: res.data }
+        return { addresses: res.data ,
+          reload: false}
     } else
       return { reload: true }
   },

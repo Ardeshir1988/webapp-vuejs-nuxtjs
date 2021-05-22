@@ -161,7 +161,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$router.push('/address/new_check_out')
+          this.$router.push('/address/new/new_check_out')
         } else {
           this.$repositories.order.getPaymentToken((this.cartAmount + this.deliveryType) - this.balance, 'ORDER')
             .then(paymentTokenRes => {
@@ -200,7 +200,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$router.push('/address/new_check_out')
+          this.$router.push('/address/new/new_check_out')
         } else {
           const order = {
             customerAddressId: this.getSelectedAddress.id,

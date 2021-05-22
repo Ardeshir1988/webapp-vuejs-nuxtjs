@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'server',
@@ -15,7 +16,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -127,7 +129,7 @@ export default {
       dev: false,
       cacheId: 'ir.hyperjet',
       directoryIndex: '/',
-      revision: 1.1,
+      revision: 1.2,
       runtimeCaching: [
 
         {
@@ -262,5 +264,11 @@ export default {
     },
   ],
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {}
+  build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        mapboxgl: 'mapbox-gl'
+      })
+    ],
+  }
 }

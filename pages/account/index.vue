@@ -1,11 +1,10 @@
 <template>
   <div>
-    <Header class="header" title="حساب کاربری" />
-<!--    <Register :login="login" v-if="register" class="register-container" />-->
-    <RegisterMobile :loading="loading" v-if="registerMobile" @regmobile="sendMobileDto" />
-    <VerifyOtp v-if="otp" @changemobile="changeMobile" @sendotp="verifyOtp" :mobile="mobile" />
-    <RegisteredCustomer :customer-info="customer" v-if="isCustomer" />
-    <AccountGridOptions :registered="isCustomer" class="account-grid-options" :support-tel="supportTel"/>
+    <Header class='header' title='حساب کاربری' />
+    <RegisterMobile :loading='loading' v-if='registerMobile' @regmobile='sendMobileDto' />
+    <VerifyOtp v-if='otp' @changemobile='changeMobile' @sendotp='verifyOtp' :mobile='mobile' />
+    <RegisteredCustomer :customer-info='customer' v-if='isCustomer' />
+    <AccountGridOptions :registered='isCustomer' class='account-grid-options' :support-tel='supportTel' />
   </div>
 </template>
 
@@ -21,8 +20,8 @@ import Pushe from 'pushe-webpush'
 export default {
   name: 'index.vue',
   components: { RegisteredCustomer, VerifyOtp, RegisterMobile, Header, Register, AccountGridOptions },
-  head:{
-    title:'حساب کاربری'
+  head: {
+    title: 'حساب کاربری'
   },
   data() {
     return {
@@ -32,10 +31,10 @@ export default {
       loading: false,
       mobile: '',
       customer: {},
-      supportTel:''
+      supportTel: ''
     }
   },
-  async mounted(){
+  async mounted() {
     this.supportTel = await this.$store.getters['instruction/getSysInstruction'].supportTel
   },
   methods: {
@@ -45,8 +44,8 @@ export default {
       if (res !== false) {
         this.$storage.setUniversal('token', res.data.token)
         this.$storage.setUniversal('mobile', this.mobile)
-        this.$storage.setCookie('token',  res.data.token, { maxAge: 60 * 60 * 24 * 100} )
-        this.$storage.setCookie('mobile', this.mobile, { maxAge: 60 * 60 * 24 * 100} )
+        this.$storage.setCookie('token', res.data.token, { maxAge: 60 * 60 * 24 * 100 })
+        this.$storage.setCookie('mobile', this.mobile, { maxAge: 60 * 60 * 24 * 100 })
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
@@ -65,7 +64,7 @@ export default {
         mobile: mobile,
         device: this.$ua.deviceType() + '-' + this.$ua.browser(),
         version: '1',
-        customerChannel:'WEB'
+        customerChannel: 'WEB'
       })
       if (res !== false) {
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
@@ -82,9 +81,9 @@ export default {
     }
   },
   async asyncData({ $repositories, app }) {
-    if (app.$storage.getLocalStorage('token')  !== null) {
+    if (app.$storage.getLocalStorage('token') !== null) {
       let responseData = await $repositories.customer.getCustomerProfile()
-      if (responseData !== false ){
+      if (responseData !== false) {
         Pushe.setCustomId(responseData.data.pushId)
         return {
           customer: {
@@ -94,17 +93,19 @@ export default {
           },
           otp: false,
           registerMobile: false,
-          isCustomer: true
+          isCustomer: true,
+        }
+      } else{
+        return {
+
         }
       }
-      else
-        return {}
     } else {
       return {
         customer: {},
         otp: false,
         registerMobile: true,
-        isCustomer: false
+        isCustomer: false,
       }
     }
   },
