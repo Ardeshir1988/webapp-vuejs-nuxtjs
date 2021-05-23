@@ -20,7 +20,7 @@
           </v-row>
           <v-row @click="getOrderProducts">
             <v-col>
-              <v-img contain class="img-status" :src=require('~/assets/icon/order-delivered.svg')"
+              <v-img contain class="img-status" :src="require('~/assets/icon/order-delivered.svg')"
                      :class="getStateData('DELIVERED') !== '' ? '' :'img-disable'" />
               <div class="state-title">تحویل</div>
               <div class="state-time">{{ getStateData('DELIVERED') }}</div>

@@ -178,7 +178,7 @@ export default {
                       if(saveUnpaidOrder.data.success)
                       window.location.replace(this.paymentUrl + paymentTokenRes.data.msg)
                       else {
-                        this.$notifier.showMessage({ content: saveUnpaidOrder.data.reason, color: 'black' })
+                        this.$notifier.showMessage({ content: saveUnpaidOrder.data.reason, color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
                         this.$router.push('/cart')
                       }
                     }

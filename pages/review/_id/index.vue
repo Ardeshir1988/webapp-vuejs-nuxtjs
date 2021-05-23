@@ -119,7 +119,12 @@ export default {
     },
     submitReview() {
       if (this.reviewDto.customerFeeling === 'NOT_SELECTED')
-        this.$notifier.showMessage({ content: 'لطفا یکی از گزینه ها را انتخاب کنید', color: 'black' })
+        this.$notifier.showMessage({
+          content: 'لطفا یکی از گزینه ها را انتخاب کنید',
+          color: 'info',
+          title: 'توجه',
+          icon: 'mdi-alert-outline'
+        })
       else {
         this.loading = true
         this.$repositories.order.saveOrderReview(this.reviewDto)
