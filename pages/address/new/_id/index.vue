@@ -87,17 +87,23 @@ export default {
               .saveAddress(ad)
               .then(res => {
                 if (res !== false) {
+
                   if (this.checkout) {
                     this.$repositories.customer.changeSelectedAddress(res.data.id).then(response => {
                       if (response !== false) {
                         this.$router.push('/checkout')
                       }
                     })
+
                   } else {
                     this.$router.push('/address')
                   }
+                  this.addressTitle =''
+                  this.addressNumber =''
+                  this.addressDetails = ''
                 }
               })
+
         } else {
           this.$notifier.showMessage({
             content: 'لطفا آدرس را به صورت کامل وارد کنید.',
@@ -108,15 +114,12 @@ export default {
         }
       }
     },
-    async asyncData({ route }) {
-        if (route.params.id === 'new_check_out') {
-          return {
-            checkout:  true
-          }
-        }
-    },
+  },
+  async fetch() {
+    if (this.$route.params.id === 'new_check_out') {
+        this.checkout=  true
+    }
   }
-
 }
 </script>
 

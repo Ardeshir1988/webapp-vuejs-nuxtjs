@@ -25,7 +25,7 @@ export default {
   },
   methods:{
     gotoCategoryProduct(){
-      this.$router.push('/category/'+this.category.name+'?_id='+this.category.id)
+      this.$router.push('/category/'+this.category.name+'?id='+this.category.id)
     }
   }
 }

@@ -44,11 +44,11 @@ export default {
     '@nuxtjs/localforage',
     '@nuxtjs/universal-storage',
     'nuxt-user-agent',
-    'nuxt-leaflet',
-
+    'nuxt-leaflet'
     // With options
     // 'cookie-universal-nuxt'
   ],
+
   router: {
     middleware: ['ssr-cookie']
   },

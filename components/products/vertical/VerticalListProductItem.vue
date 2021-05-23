@@ -84,7 +84,7 @@ export default {
       this.$router.push('/product/' + this.product.id)
     },
     async setInStockNotification(){
-      if(this.$storage.getCookie('token')  !== null && this.$storage.getCookie('token')  !== undefined) {
+      if(this.$storage.getUniversal('token')  !== null && this.$storage.getUniversal('token')  !== undefined) {
         let responseData = await this.$repositories.customer.setNotifyInStock(this.product.id)
         if (responseData !== false) {
           this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید' , icon: 'mdi-check-circle-outline' })

@@ -36,6 +36,29 @@ export default {
   },
   async mounted() {
     this.supportTel = await this.$store.getters['instruction/getSysInstruction'].supportTel
+
+    if(this.isCustomer !== true && this.$storage.getUniversal('token') !== null ){
+    let responseData = await this.$repositories.customer.getCustomerProfile()
+    if (responseData !== false) {
+      Pushe.setCustomId(responseData.data.pushId)
+      this.customer = {
+        name: responseData.data.name,
+        mobile: responseData.data.mobile,
+        balance: responseData.data.balance
+      }
+      this.otp = false
+      this.registerMobile = false
+      this.isCustomer = true
+
+    } else {
+
+      this.customer = {}
+      this.otp = false
+      this.registerMobile = true
+      this.isCustomer = false
+
+    }}
+
   },
   methods: {
     async verifyOtp(otp) {
@@ -44,8 +67,6 @@ export default {
       if (res !== false) {
         this.$storage.setUniversal('token', res.data.token)
         this.$storage.setUniversal('mobile', this.mobile)
-        this.$storage.setCookie('token', res.data.token, { maxAge: 60 * 60 * 24 * 100 })
-        this.$storage.setCookie('mobile', this.mobile, { maxAge: 60 * 60 * 24 * 100 })
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
@@ -80,8 +101,12 @@ export default {
       this.otp = false
     }
   },
-  async asyncData({ $repositories, app }) {
-    if (app.$storage.getLocalStorage('token') !== null) {
+
+  async asyncData({ $repositories, app, $axios }) {
+
+    if(app.$storage.getUniversal('token') !== null ) {
+      $axios.defaults.headers.common = { 'Authorization': 'Bearer ' + app.$storage.getUniversal('token') }
+
       let responseData = await $repositories.customer.getCustomerProfile()
       if (responseData !== false) {
         Pushe.setCustomId(responseData.data.pushId)
@@ -95,12 +120,8 @@ export default {
           registerMobile: false,
           isCustomer: true,
         }
-      } else{
-        return {
-
-        }
       }
-    } else {
+      }else {
       return {
         customer: {},
         otp: false,

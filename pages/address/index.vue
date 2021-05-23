@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class='flex'>
     <RefreshUtil v-if="reload" />
     <div v-if="!reload">
+    <v-sheet  min-height='700' class='d-flex flex-column align-stretch '>
       <div>
         <Header class="fix-header" title="آدرس ها" />
         <div v-if="this.addresses.length<1" class="container">
@@ -10,19 +11,21 @@
           </div>
         </div>
         <div v-else>
-      <div>
+
         <AddressItem @editAddress="editAddress" @deleteAddress="deleteAddress" @selectAddress="selectAddress"
                      v-for="address in addresses"
                      :address="address" :key="address.id" />
-      </div>
         </div>
-      <div class="btn-container">
-        <v-btn @click="newAddress" class="btn-primary" depressed height="40" color="accent">
-          ثبت آدرس جدید
-        </v-btn>
-      </div>
-    </div>
 
+        <div style="height: 120px;">   </div>
+    </div>
+    </v-sheet>
+
+    <div class="btn-container mt-auto">
+      <v-btn @click="newAddress" class="btn-primary" depressed height="40" color="accent">
+        ثبت آدرس جدید
+      </v-btn>
+    </div>
     </div>
   </div>
 </template>
@@ -58,7 +61,7 @@ export default {
         })
     },
     newAddress() {
-      this.$router.push('/address/new/')
+      this.$router.push('/address/new/new')
     },
     editAddress(addressId) {
       this.$router.push('/address/' + addressId)
@@ -95,13 +98,14 @@ export default {
 </script>
 
 <style scoped>
+
 .btn-container {
   position: fixed;
   position: -webkit-sticky;
   bottom: 56px;
   display: flex;
   width: 100%;
-  z-index: 7;
+  z-index: 9;
   justify-content: center;
   align-items: center;
   color: #fff;

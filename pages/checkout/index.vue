@@ -150,7 +150,7 @@ export default {
   },
   methods: {
     getPaymentToken() {
-      if (this.$storage.getCookie('token') === undefined) {
+      if (this.$storage.getUniversal('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
         this.$router.push('/account')
       } else {
@@ -189,7 +189,7 @@ export default {
       }
     },
     checkout() {
-      if (this.$storage.getCookie('token') === undefined) {
+      if (this.$storage.getUniversal('token') === undefined) {
         this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
         this.$router.push('/account')
       } else {
@@ -200,7 +200,7 @@ export default {
           deliveryType = 'SCHEDULED'
 
         if (this.addresses === undefined || this.addresses.length === 0) {
-          this.$router.push('/address/new/new_check_out')
+          this.$router.push('/address/new/'+'new_check_out')
         } else {
           const order = {
             customerAddressId: this.getSelectedAddress.id,
@@ -232,7 +232,7 @@ export default {
   async asyncData({ $repositories, redirect, route, app, $notifier }) {
 
     const info = await $repositories.product.getInstructions()
-    if (app.$storage.getCookie('token') !== undefined) {
+    if (app.$storage.getUniversal('token') !== undefined) {
       const profile = await $repositories.customer.getCustomerProfile()
       const addressesRes = await $repositories.customer.getAddresses()
       if (addressesRes !== false && info !== false && profile !== false) {
@@ -246,7 +246,7 @@ export default {
           }
         }
         if(addressesRes.data === undefined || addressesRes.data.length === 0) {
-          redirect('/address/new_check_out')
+          redirect('/address/new/'+'new_check_out')
           }
         return {
           addresses: addressesRes.data,

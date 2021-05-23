@@ -1,5 +1,6 @@
 <template>
-  <div dir='rtl'>
+  <div class='v-main__wrap' style='padding: 0px;'>
+  <div dir='rtl'  >
     <Header class="fix-header" title="آدرس "  />
     <v-textarea
       style='padding-top:5vw;'
@@ -29,18 +30,21 @@
     ></v-text-field>
     <mapbox
       id='map'
-      style='height: 35vh'
+      style='height: 36vh'
       :access-token='accessToken'
       :map-options='mapOptions'
       @map-init='mapInit'
     />
     <v-icon id='coordinates' class='coordinates'>mdi-map-marker</v-icon>
-    <v-container class='btn-container'>
+    <div class='mt-auto '></div>
+
+
+  </div>
+    <div class='btn-container mt-auto'>
       <v-btn @click='close' class='btn-primary' depressed height='40' color='accent'>
         بستن
       </v-btn>
-    </v-container>
-
+    </div>
   </div>
 </template>
 <script>
@@ -113,9 +117,12 @@ export default {
 <style scoped>
 
 .btn-container {
+  position: fixed;
+  position: -webkit-sticky;
+  bottom: 56px;
   display: flex;
   width: 100%;
-  z-index: 7;
+  z-index: 9;
   justify-content: center;
   align-items: center;
   color: #fff;

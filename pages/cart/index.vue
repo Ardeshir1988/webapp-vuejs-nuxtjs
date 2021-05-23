@@ -79,7 +79,7 @@ export default {
           .then(res => {
             if (res !== false) {
               if (res.data.ready) {
-                if (this.$storage.getCookie('token') !== null && this.$storage.getCookie('token') !== undefined) {
+                if (this.$storage.getUniversal('token') !== null) {
                   this.$router.push('/checkout')
                 } else {
                   this.$notifier.showMessage({

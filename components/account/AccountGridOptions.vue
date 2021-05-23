@@ -82,8 +82,8 @@ export default {
         case 'op9': {
           this.$storage.removeUniversal('token')
           this.$storage.removeUniversal('mobile')
-          this.$axios.defaults.headers.common = { 'Authorization': 'Bearer ' + this.$storage.getCookie('token') }
-          $nuxt.refresh()
+          this.$axios.defaults.headers.common = {}
+            $nuxt.refresh()
           break
         }
       }
