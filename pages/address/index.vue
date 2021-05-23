@@ -81,7 +81,8 @@ export default {
       if (res.data.length === 1 && res.data[0].selected === false){
        const selectSingleAddress =await $repositories.customer.changeSelectedAddress(res.data[0].id)
         if (selectSingleAddress !==false){
-          return { addresses: res.data[0].selected = true
+          res.data[0].selected = true
+          return { addresses: res.data
           ,
             reload: false}
         }
