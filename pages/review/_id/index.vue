@@ -4,7 +4,7 @@
       {{ this.$route.params.id }} شماره سفارش
     </div>
     <div :class="selectDivider(this.reviewDto.customerFeeling)"></div>
-    <div class="review">آیا از نحوه سرویس دهی ما رضایت داشتید؟</div>
+    <div class="review">آیا از نحوه هایپرجت رضایت داشتید؟</div>
     <v-row no-gutters>
       <v-col class="left-col">
         <v-sheet outlined rounded @click="selectFeeling('BAD')">
@@ -46,7 +46,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="reviewDto.feedbackCheckPoint"
+        v-model="feedbackBad"
         label="تاخیر در تحویل"
         value="SHIPPING_DELAY"
       ></v-checkbox>
@@ -54,7 +54,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="reviewDto.feedbackCheckPoint"
+        v-model="feedbackBad"
         label="نحوه برخورد سفیر"
         value="COURIER_BEHAVIOUR"
       ></v-checkbox>
@@ -62,7 +62,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="reviewDto.feedbackCheckPoint"
+        v-model="feedbackBad"
         label="کیفیت اجناس"
         value="PRODUCT_QUALITY"
       ></v-checkbox>
@@ -70,10 +70,47 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="reviewDto.feedbackCheckPoint"
+        v-model="feedbackBad"
         label="پاسخگو نبودن پشتیبان"
         value="POOR_SUPPORT"
       ></v-checkbox>
+      <br/>
+    </div>
+    <div v-if="isGood">
+      <div class="review">کدام یک از موارد زیر می تواند باعث بهتر شدن هایپر جت شود؟</div>
+      <v-checkbox
+        dense
+        hide-details
+        class="feedback-checkbox"
+        v-model="feedbackGood"
+        label="بالا بردن سرعت سرویس دهی"
+        value="ّIMPROVE_SPEED"
+      ></v-checkbox>
+      <v-checkbox
+        dense
+        hide-details
+        class="feedback-checkbox"
+        v-model="feedbackGood"
+        label="بیشتر شدن تنوع کالا"
+        value="IMPROVE_DIVERSITY"
+      ></v-checkbox>
+      <v-checkbox
+        dense
+        hide-details
+        class="feedback-checkbox"
+        v-model="feedbackGood"
+        label="بهتر شدن کیفیت و تازگی کالاها"
+        value="IMPROVE_QUALITY"
+      ></v-checkbox>
+      <v-checkbox
+        dense
+        hide-details
+        class="feedback-checkbox"
+        v-model="feedbackGood"
+        label="موجود کردن کالاهای ارزان تر (با تخفیف بیشتر)"
+        value="IMPROVE_CHEAP_BRAND"
+      ></v-checkbox>
+      <br/>
     </div>
     <div class="btn-container">
       <v-btn :loading="loading" @click="submitReview" class="btn-primary" depressed height="40" color="accent">
@@ -94,6 +131,9 @@ export default {
     return {
       loading:false,
       isBad:false,
+      isGood: false,
+      feedbackBad:[],
+      feedbackGood:[],
       reviewDto: {
         orderTrackingNumber: this.$route.params.id,
         customerFeeling: 'NOT_SELECTED',
@@ -106,14 +146,17 @@ export default {
     selectFeeling(feeling) {
       if (feeling === 'GOOD'){
         this.isBad = false
+        this.isGood = true
         this.reviewDto.customerFeeling = 'GOOD'
       }
       else if (feeling === 'PERFECT'){
         this.isBad = false
+        this.isGood = true
         this.reviewDto.customerFeeling = 'PERFECT'
       }
       else{
         this.isBad = true
+        this.isGood = false
         this.reviewDto.customerFeeling = 'BAD'
       }
     },
@@ -126,6 +169,7 @@ export default {
           icon: 'mdi-alert-outline'
         })
       else {
+        this.reviewDto.feedbackCheckPoint = this.isBad ? this.feedbackBad : this.feedbackGood
         this.loading = true
         this.$repositories.order.saveOrderReview(this.reviewDto)
           .then(res => {
@@ -151,8 +195,8 @@ export default {
   async asyncData({ $repositories, route, redirect }) {
     const needOrderRes = await $repositories.order.needOrderReview(route.params.id)
     if (needOrderRes !== false) {
-      if (needOrderRes.data.result === false)
-        redirect('/')
+      // if (needOrderRes.data.result === false)
+      //   redirect('/')
     }
   }
 }
