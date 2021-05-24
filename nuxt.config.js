@@ -14,9 +14,9 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
+    // link: [
+      // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    // ],
 
   },
 
@@ -54,8 +54,8 @@ export default {
   },
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    // baseURL: process.env.API_BASE_URL || 'http://localhost:8090/'
-    baseURL: process.env.API_BASE_URL || 'https://api.hjet.ir/'
+    baseURL: process.env.API_BASE_URL || 'http://localhost:8090/'
+    // baseURL: process.env.API_BASE_URL || 'https://api.hjet.ir/'
   },
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
@@ -157,7 +157,7 @@ export default {
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
   ],
   link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
+    // { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
     // apple
 
     { rel:'apple-touch-icon', sizes:'180x180', href:'apple-icon-180.png' },

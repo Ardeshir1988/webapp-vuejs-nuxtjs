@@ -54,6 +54,7 @@ export default {
       }
     },
     loadMoreProducts() {
+      if (this.keyword !==''){
       this.$repositories.product.searchProducts(this.keyword, 30, this.page)
         .then((response) => {
           if (response.data.length > 1) {
@@ -64,7 +65,7 @@ export default {
           }
         }).catch((err) => {
         console.log(err)
-      })
+      }) }
     },
     getProductsByKeyword() {
       this.products = []
