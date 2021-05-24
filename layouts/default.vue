@@ -44,7 +44,7 @@
 import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
 import Snackbar from '@/components/snackbar/Snackbar'
-import Pushe from "pushe-webpush";
+
 
 export default {
   components: { Snackbar },
@@ -63,12 +63,6 @@ export default {
   },
   async mounted() {
 
-    Pushe.init("6g0372xq3q71lo3g");
-    Pushe.subscribe();
-    Pushe.addEventListener(Pushe.EVENTS.NOTIFICATION_RECEIVED, function(data) {
-      console.log("listener")
-      console.log(data);
-    });
     await this.$store.dispatch('cart/init_cart')
 
   },

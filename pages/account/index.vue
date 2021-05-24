@@ -15,7 +15,6 @@ import Header from '@/components/header/Header'
 import RegisterMobile from '@/components/account/RegisterMobile'
 import VerifyOtp from '@/components/account/VerifyOtp'
 import RegisteredCustomer from '@/components/account/RegisteredCustomer'
-import Pushe from 'pushe-webpush'
 
 export default {
   name: 'index.vue',
@@ -40,7 +39,6 @@ export default {
     if(this.isCustomer !== true && this.$storage.getUniversal('token') !== null ){
     let responseData = await this.$repositories.customer.getCustomerProfile()
     if (responseData !== false) {
-      Pushe.setCustomId(responseData.data.pushId)
       this.customer = {
         name: responseData.data.name,
         mobile: responseData.data.mobile,
@@ -70,7 +68,6 @@ export default {
         this.$axios.setHeader('Authorization', 'Bearer ' + res.data.token)
         const resCustomer = await this.$repositories.customer.getCustomerProfile()
         if (resCustomer !== false) {
-          Pushe.setCustomId(resCustomer.data.pushId)
           this.customer = resCustomer.data
           this.loading = false
           this.otp = false
@@ -109,7 +106,6 @@ export default {
 
       let responseData = await $repositories.customer.getCustomerProfile()
       if (responseData !== false) {
-        Pushe.setCustomId(responseData.data.pushId)
         return {
           customer: {
             name: responseData.data.name,

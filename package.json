@@ -23,7 +23,6 @@
     "nuxt": "^2.14.6",
     "nuxt-leaflet": "^0.0.25",
     "nuxt-user-agent": "^1.2.2",
-    "pushe-webpush": "^1.0.8",
     "pwa-asset-generator": "^4.1.1",
     "vue2-leaflet": "^2.6.0"
   },

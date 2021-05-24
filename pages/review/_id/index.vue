@@ -142,6 +142,21 @@ export default {
       }
     }
   },
+  async mounted() {
+    const needOrderRes = await this.$repositories.order.needOrderReview(this.$route.params.id)
+    if (needOrderRes !== false) {
+
+      if (needOrderRes.data.result === false){
+        this.$notifier.showMessage({
+          content: 'قبلا نظرسنجی برای این سفارش ثبت گردیده است.',
+          color: 'info',
+          title: 'تکرار نظر سنجی',
+          icon: 'mdi-alert-outline'
+        })
+        this.$router.push('/')
+      }
+    }
+  },
   methods: {
     selectFeeling(feeling) {
       if (feeling === 'GOOD'){
@@ -192,12 +207,12 @@ export default {
         return 'divider-bad'
     }
   },
-  async asyncData({ $repositories, route, redirect }) {
-    const needOrderRes = await $repositories.order.needOrderReview(route.params.id)
-    if (needOrderRes !== false) {
-      // if (needOrderRes.data.result === false)
-      //   redirect('/')
-    }
+
+  async asyncData() {
+
+  },
+  async fetch({ $repositories, route, redirect, $notifier }) {
+
   }
 }
 </script>
