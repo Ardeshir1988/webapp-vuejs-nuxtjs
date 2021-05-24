@@ -54,7 +54,7 @@ export default {
       }
     },
     loadMoreProducts() {
-      if (this.keyword !==''){
+      if (this.keyword!=="" && this.keyword.length !== 0 && this.keyword){
       this.$repositories.product.searchProducts(this.keyword, 30, this.page)
         .then((response) => {
           if (response.data.length > 1) {
@@ -64,10 +64,12 @@ export default {
 
           }
         }).catch((err) => {
-        console.log(err)
-      }) }
+
+      })
+      }
     },
     getProductsByKeyword() {
+      if (this.keyword!=="" && this.keyword.length !== 0 && this.keyword){
       this.products = []
       this.page = 0
       this.scrollPosition= 0
@@ -80,8 +82,9 @@ export default {
 
           }
         }).catch((err) => {
-        console.log(err)
+
       })
+      }
     }
   },
   data() {
