@@ -38,26 +38,37 @@ export default {
       types: [],
       selectedType: { id: 'ALL' },
       page: 0,
-      scrollPosition:0
+      scrollPosition:0,
+      categoryId: ''
     }
   },
   watch: {
     selectedType: '$fetch'
   },
   async fetch() {
-    const productList = await this.$repositories.product.getProductsByCategoryIdAndTypeId(this.$route.query.id, this.selectedType.id, this.page)
-    const typeList = await this.$repositories.product.getTypesByCategoryId(this.$route.query.id)
-    if (productList.status === 200 && productList.data) {
-      this.products = productList.data
-    } else {
-      // Handle error here
+
+
+    if(this.$route.query.id !== undefined) {
+      this.categoryId = this.$route.query.id
+    }else{
+      this.categoryId = this.$route.query.categoryId
     }
-    if (typeList.status === 200 && typeList.data) {
-      typeList.data.unshift({ id: 'ALL', name: 'همه' })
-      this.types = typeList.data
-    } else {
-      // Handle error here
+    if(this.$route.query.typeId !== undefined) {
+      this.selectedType.id = this.$route.query.typeId
     }
+
+      const productList = await this.$repositories.product.getProductsByCategoryIdAndTypeId(this.categoryId , this.selectedType.id, this.page)
+      const typeList = await this.$repositories.product.getTypesByCategoryId(this.categoryId )
+      if (productList.status === 200 && productList.data) {
+        this.products = productList.data
+      } else {
+
+      }
+      if (typeList.status === 200 && typeList.data) {
+        typeList.data.unshift({ id: 'ALL', name: 'همه' })
+        this.types = typeList.data
+      } else {
+      }
   },
   methods: {
     handleScroll () {
@@ -69,7 +80,7 @@ export default {
     },
     getDataPage() {
       this.page++
-      this.$repositories.product.getProductsByCategoryIdAndTypeId(this.$route.query.id, this.selectedType.id, this.page)
+      this.$repositories.product.getProductsByCategoryIdAndTypeId(this.categoryId, this.selectedType.id, this.page)
         .then((response) => {
           if (response.data.length > 1) {
             response.data.forEach((item) => this.products.push(item))
