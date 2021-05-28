@@ -1,6 +1,6 @@
 <template>
   <v-img
-    :src='bannersUrl[0]'
+    :src='imageUrl + this.banners[0]'
     style='margin: 3vw'
   >
     <v-card
@@ -13,9 +13,9 @@
                   height='100%'
       >
         <v-carousel-item
-          v-for='(item,i) in bannersUrl'
+          v-for='(item,i) in this.banners'
           :key='i'
-          :src='item'
+          :src='imageUrl + item'
         >
         </v-carousel-item>
       </v-carousel>
@@ -28,12 +28,18 @@ import { FILES_URL } from '~/constants'
 
 export default {
   name: 'Banner',
-  props: { banners: Array },
+  props: { banners: {} },
   computed: {
-    bannersUrl: function() {
-      return this.banners.map(value => FILES_URL + value)
+    imageUrl: function() {
+      return FILES_URL
     }
   }
+  // computed: {
+  //   bannersUrl: function() {
+  //     if(this.props.banners !== undefined )
+  //     return this.props.banners.map(value => FILES_URL + value)
+  //   }
+  // }
 }
 </script>
 <style scoped>

@@ -33,9 +33,12 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@aceforth/nuxt-optimized-images',
   ],
-
+  optimizedImages: {
+    optimizeImages: true
+  },
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -44,7 +47,8 @@ export default {
     '@nuxtjs/localforage',
     '@nuxtjs/universal-storage',
     'nuxt-user-agent',
-    'nuxt-leaflet'
+    'nuxt-leaflet',
+
     // With options
     // 'cookie-universal-nuxt'
   ],

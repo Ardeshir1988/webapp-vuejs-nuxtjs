@@ -9,6 +9,9 @@ export default ($axios) => ({
   getInstructions(){
     return $axios.get('/home-page/instructions')
   },
+  getShortenLink(shortenLink){
+    return $axios.get(`/home-page/get-short-Link/${shortenLink}`)
+  },
   getProductsByCategoryIdAndTypeId(categoryId, typeId, from) {
     return $axios.get(`${resource}/category/${categoryId}?type-id=${typeId}&size=30&from=${from}`)
   },

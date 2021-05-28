@@ -13,8 +13,8 @@ export default ($axios) => ({
   getAddressById(addressId) {
     return $axios.get(`${resource}/address/${addressId}`)
   },
-  updateAddress(address) {
-    return $axios.put(`${resource}/address`, address)
+  saveCustomerLog(details) {
+    return $axios.post(`${resource}/customer_log/${details}`)
   },
   saveAddress(address) {
     return $axios.post(`${resource}/address`, address)
