@@ -14,10 +14,20 @@ self.addEventListener('install', (event) => {
       .open(`static-${version}`)
       .then((cache) =>
         cache.addAll([
-          '/',
-          '/script-f93bca2c.js',
-          '/styles-a837cb1e.css',
-          '/cats-0e9a2ef4.jpg',
+          '/'
+        ]),
+      ),
+  );
+});
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches
+      .open(`static-${version}`)
+      .then((cache) =>
+        cache.addAll([
+          new Request('/styles.css', { cache: 'no-cache' }),
+          new Request('/script.js', { cache: 'no-cache' }),
         ]),
       ),
   );
