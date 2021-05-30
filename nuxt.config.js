@@ -134,7 +134,7 @@ export default {
       dev: false,
       cacheId: 'ir.hyperjet',
       directoryIndex: '/',
-      revision: 1.1002,
+      revision: 1.1003,
       runtimeCaching: [
 
         {
