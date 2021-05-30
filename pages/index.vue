@@ -4,7 +4,7 @@
     <loading-animation v-if="!ready"/>
     <RefreshUtil v-if="reload" />
     <div v-if="!reload && ready">
-      <Banner v-if="instructions.topBannerPermission" :banners="topBanners"/>
+      <Banner v-if="instructions.topBannerPermission" :banners="homepage.topBanners"/>
       <SectionSeparator class="section-separator"
                         section-name="محصولات جدید"
                         :section-icon="require('~/assets/icon/storefront-24px.svg')"
@@ -15,7 +15,7 @@
                         :section-icon="require('~/assets/icon/category-24px.svg')"
                         section-link-url="/category" />
       <CategoryList :categories="homepage.categories" />
-      <Banner v-if="instructions.bottomBannerPermission" class="section-separator" :banners="bottomBanners" />
+      <Banner v-if="instructions.bottomBannerPermission" class="section-separator" :banners="homepage.bottomBanners" />
 
       <SectionSeparator v-if="instructions.businessPartnerPermission" class="section-separator"
                         section-name="شرکای تجاری"
@@ -42,7 +42,7 @@ import CategoryList from '@/components/category/CategoryList'
 import BusinessPartnerList from '@/components/partner/BusinessPartnerList'
 import RefreshUtil from '@/components/utils/RefreshUtil'
 import LoadingAnimation from '@/components/utils/LoadingAnimation'
-import { mapGetters } from 'vuex'
+
 export default {
   head:{
     title:'هایپرجت ، هوشمندانه ترین راه خرید نیاز های روزانه شما'
@@ -57,28 +57,32 @@ export default {
     Banner,
     LoadingAnimation
   },
-  computed: {
-    // mix the getters into computed with object spread operator
-    ...mapGetters({
-      instructions: 'instruction/getSysInstruction'
-    }) ,
-    ...mapGetters({
-      homepage: 'instruction/getHomeInstruction'
-    }),
-    ...mapGetters({
-      topBanners: 'instruction/getTopBanners'
-    }),
-    ...mapGetters({
-      bottomBanners: 'instruction/getBottomBanners'
-    })
-,
-    ...mapGetters({
-      ready: 'instruction/getHomeStateReady'
-    })
-,
-    ...mapGetters({
-      reload: 'instruction/getHomeStateReload'
-    })
+  data() {
+    return {
+      homepage: {},
+      instructions: {},
+      reload: false,
+      ready: false
+    }
+  },
+  async beforeCreate() {
+    console.log('beforeCreate index')
+    let responseData =  await this.$repositories.product.homepage()
+    let resInstruction = await this.$repositories.product.getInstructions()
+    if (responseData === false || resInstruction === false){
+       this.reload = true
+      this.ready = true
+    }
+    else {
+      this.homepage = responseData.data
+      this.instructions = resInstruction.data
+      await this.$store.dispatch('instruction/load_home_instruction', responseData.data)
+      await this.$store.dispatch('instruction/load_sys_instruction', resInstruction.data)
+      this.ready = true
+    }
+  },
+
+  async asyncData({ $repositories, app, store}) {
 
   }
 }
