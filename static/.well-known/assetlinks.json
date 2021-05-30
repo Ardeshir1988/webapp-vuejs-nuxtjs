@@ -1,11 +1,9 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
-    "site": "hyperjet.ir",
     "namespace": "android_app",
     "package_name": "ir.app.hyperjet",
     "sha256_cert_fingerprints":
-    ["5A:36:63:4B:44:00:29:A5:F5:55:9F:07:5D:F8:F8:E0:AF:A3:FD:F2:D0:2C:34:53:BA:F1:31:94:42:16:B4:AD"]
+    ["08:70:D2:3E:21:AC:F3:86:8F:EE:2E:9F:91:05:17:AA:E0:FB:7F:C6:EB:5B:8A:F3:01:0A:E8:75:AD:87:8F:BA"]
   }
 }]
-
