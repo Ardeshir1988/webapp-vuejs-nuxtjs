@@ -82,11 +82,6 @@ export default {
     }
     // window.location.reload(true)
   },
-
-  async asyncData({ $repositories, app, store}) {
-
-
-  }
 }
 </script>
 <style scoped>
