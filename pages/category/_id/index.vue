@@ -48,10 +48,12 @@ export default {
   async fetch() {
 
 
+console.log(this.$route.params)
+
     if(this.$route.query.id !== undefined) {
       this.categoryId = this.$route.query.id
     }else{
-      this.categoryId = this.$route.query.categoryId
+      this.categoryId = this.$route.params.id
     }
     if(this.$route.query.typeId !== undefined) {
       this.selectedType.id = this.$route.query.typeId
