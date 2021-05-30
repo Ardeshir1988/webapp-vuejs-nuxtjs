@@ -80,16 +80,12 @@ export default {
       await this.$store.dispatch('instruction/load_sys_instruction', resInstruction.data)
       this.ready = true
     }
+    // window.location.reload(true)
   },
 
   async asyncData({ $repositories, app, store}) {
-    if ('serviceWorker' in navigator) {
-      caches.keys().then(function(cacheNames) {
-        cacheNames.forEach(function(cacheName) {
-          caches.delete(cacheName);
-        });
-      });
-    }
+
+
   }
 }
 </script>

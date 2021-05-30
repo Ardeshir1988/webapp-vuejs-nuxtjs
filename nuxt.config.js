@@ -130,6 +130,7 @@ export default {
       orientation: "portrait"
     },
     workbox: {
+      skipWaiting: true,
       nuxtAssetsRuntime: false,
       debug: false,
       dev: false,

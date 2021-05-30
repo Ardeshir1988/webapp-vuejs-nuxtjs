@@ -30,22 +30,8 @@ self.addEventListener('install', (event) => {
   );
 });
 
-if ('serviceWorker' in navigator) {
-  await this.setState({ loadingMessage: 'Updating Your Experience' })
-  navigator.serviceWorker.getRegistrations().then(function(registrations) {
-    registrations.map(r => {
-      r.unregister()
-    })
-  })
-  await AsyncStorage.setItem('appVersion', this.state.serverAppVersion)
-  window.location.reload(true)
-}
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function (registrations) {
-      for (let registration of registrations) {
-        registration.update()
-      }
-    })
-  }
+
+
+
 
