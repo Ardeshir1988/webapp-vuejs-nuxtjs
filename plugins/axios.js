@@ -17,6 +17,7 @@ export default function({ $axios, redirect, $notifier, app }) {
         const device = app.$ua.deviceType() + '-' + app.$ua.browser()
         return $axios.put('/register/renew-token', { mobile: mobile, device: device, customerChannel: "WEB" })
           .then(res => {
+            app.$storage.removeUniversal('token')
             app.$storage.setUniversal('token', res.data.token)
             err.config.headers['Authorization'] = 'Bearer ' + res.data.token
             $axios.defaults.headers.common = { 'Authorization': 'Bearer ' + res.data.token}
