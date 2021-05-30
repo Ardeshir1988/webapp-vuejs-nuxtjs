@@ -4,6 +4,11 @@ if ('serviceWorker' in navigator) {
       console.log('Service worker:', worker)
     }
   });
+
+
+
+
+
 }
 
 const version = '1.1';
@@ -20,4 +25,15 @@ self.addEventListener('install', (event) => {
       ),
   );
 });
+
+if ('serviceWorker' in navigator) {
+  await this.setState({ loadingMessage: 'Updating Your Experience' })
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    registrations.map(r => {
+      r.unregister()
+    })
+  })
+  await AsyncStorage.setItem('appVersion', this.state.serverAppVersion)
+  window.location.reload(true)
+}
 
