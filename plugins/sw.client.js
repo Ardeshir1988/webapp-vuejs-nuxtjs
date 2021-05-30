@@ -5,3 +5,20 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+
+const version = '1.1';
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches
+      .open(`static-${version}`)
+      .then((cache) =>
+        cache.addAll([
+          '/',
+          '/script-f93bca2c.js',
+          '/styles-a837cb1e.css',
+          '/cats-0e9a2ef4.jpg',
+        ]),
+      ),
+  );
+});
