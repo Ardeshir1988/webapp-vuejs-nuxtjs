@@ -14,18 +14,6 @@ self.addEventListener('install', (event) => {
       .open(`static-${version}`)
       .then((cache) =>
         cache.addAll([
-          '/'
-        ]),
-      ),
-  );
-});
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches
-      .open(`static-${version}`)
-      .then((cache) =>
-        cache.addAll([
           new Request('/styles.css', { cache: 'no-cache' }),
           new Request('/script.js', { cache: 'no-cache' }),
         ]),

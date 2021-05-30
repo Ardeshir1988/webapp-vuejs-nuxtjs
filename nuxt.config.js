@@ -130,6 +130,7 @@ export default {
       orientation: "portrait"
     },
     workbox: {
+      nuxtAssetsRuntime: false,
       debug: false,
       dev: false,
       cacheId: 'ir.hyperjet',
@@ -151,7 +152,7 @@ export default {
           }]
         }
       ],
-      cacheAssets: true, // for /*
+      cacheAssets: false, // for /*
       offline: false, // for /_nuxt/*
       cachingExtensions: '@/plugins/workbox-range-request.js'
     }

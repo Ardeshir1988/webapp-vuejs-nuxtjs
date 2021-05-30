@@ -80,6 +80,8 @@ export default {
       await this.$store.dispatch('instruction/load_sys_instruction', resInstruction.data)
       this.ready = true
     }
+
+
   },
 
   async asyncData({ $repositories, app, store}) {
