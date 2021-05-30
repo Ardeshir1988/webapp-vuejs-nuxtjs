@@ -153,6 +153,7 @@ export default {
       ],
       cacheAssets: true, // for /*
       // offline: true // for /_nuxt/*
+      cachingExtensions: '@/plugins/workbox-range-request.js'
     }
   },
   meta: [
