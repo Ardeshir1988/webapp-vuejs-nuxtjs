@@ -1,14 +1,18 @@
 if ('serviceWorker' in navigator) {
+  caches.keys().then(function(cacheNames) {
+    cacheNames.forEach(function(cacheName) {
+      caches.delete(cacheName);
+    });
+  });
+}
+
+
+if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     for (const worker of registrations) {
       console.log('Service worker:', worker)
     }
   });
-
-
-
-
-
 }
 
 const version = '1.1';
@@ -36,7 +40,6 @@ if ('serviceWorker' in navigator) {
   await AsyncStorage.setItem('appVersion', this.state.serverAppVersion)
   window.location.reload(true)
 }
-
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function (registrations) {
