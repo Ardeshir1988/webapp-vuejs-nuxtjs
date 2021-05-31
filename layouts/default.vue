@@ -5,7 +5,7 @@
 <!--        <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'],max: '3' }" />-->
 <!--      </v-container>-->
     </v-main>
-<!--    <Snackbar> </Snackbar>-->
+    <Snackbar> </Snackbar>
     <v-bottom-navigation
       color="primary"
       style="z-index: 10"
@@ -18,17 +18,17 @@
       <v-btn min-width="55" icon to="/account">
         <v-icon style="margin: auto">mdi-menu</v-icon>
       </v-btn>
-<!--      <v-btn min-width="55" icon to="/cart">-->
-<!--        <v-badge-->
-<!--          v-if="cartCount>0"-->
-<!--          bordered-->
-<!--          overlap-->
-<!--          color="pink"-->
-<!--          :content="engDigitToPersianDigit(cartCount)">-->
-<!--          <v-icon style="margin: auto">mdi-cart</v-icon>-->
-<!--        </v-badge>-->
-<!--        <v-icon style="margin: auto" v-if="cartCount<=0">mdi-cart</v-icon>-->
-<!--      </v-btn>-->
+      <v-btn min-width="55" icon to="/cart">
+        <v-badge
+          v-if="cartCount>0"
+          bordered
+          overlap
+          color="pink"
+          :content="engDigitToPersianDigit(cartCount)">
+          <v-icon style="margin: auto">mdi-cart</v-icon>
+        </v-badge>
+        <v-icon style="margin: auto" v-if="cartCount<=0">mdi-cart</v-icon>
+      </v-btn>
       <v-btn min-width="55" icon to="/search">
         <v-icon style="margin: auto">mdi-magnify</v-icon>
       </v-btn>
@@ -41,14 +41,14 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
-// import Snackbar from '@/components/snackbar/Snackbar'
-//
+import Snackbar from '@/components/snackbar/Snackbar'
+
 
 export default {
 
-  // components: { Snackbar },
+  components: { Snackbar },
 
   async beforeCreate() {
 
@@ -62,12 +62,12 @@ export default {
       isDisable: true
     }
   },
-  // async mounted() {
-  //   // await this.$store.dispatch('cart/init_cart')
-  //
-  // },
+  async mounted() {
+    await this.$store.dispatch('cart/init_cart')
+
+  },
   computed: {
-    // ...mapGetters({ cartCount: 'cart/cartProductsCount' })
+    ...mapGetters({ cartCount: 'cart/cartProductsCount' })
   },
   methods: {
     engDigitToPersianDigit: function(val) {
@@ -92,7 +92,7 @@ export default {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
 
-      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+      setTimeout(() => this.$nuxt.$loading.finish(), 1)
     })
   }
 }
