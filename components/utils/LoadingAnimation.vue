@@ -1,23 +1,23 @@
 <template>
   <div class="refresh-page">
     <div class="refresh-content">
-      <lottie-animation
-        ref="anim"
-        :animationData="require('@/assets/hyperjet-loading.json')"
-        :loop="true"
-        :autoPlay="true"
-      />
+<!--      <lottie-animation-->
+<!--        ref="anim"-->
+<!--        :animationData="require('@/assets/hyperjet-loading.json')"-->
+<!--        :loop="true"-->
+<!--        :autoPlay="true"-->
+<!--      />-->
     </div>
   </div>
 </template>
 
 <script>
-import LottieAnimation from 'lottie-web-vue'
+// import LottieAnimation from 'lottie-web-vue'
 
 export default {
-  components: {
-    LottieAnimation
-  },
+  // components: {
+  //   LottieAnimation
+  // },
   name: 'LoadingAnimation',
   layout: 'empty',
   methods: {

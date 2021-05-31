@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-main>
-<!--      <v-container class="container">-->
-<!--        <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'],max: '3' }" />-->
-<!--      </v-container>-->
+      <v-container class="container">
+        <nuxt keep-alive :keep-alive-props="{ exclude: ['modal'],max: '3' }" />
+      </v-container>
     </v-main>
     <Snackbar> </Snackbar>
     <v-bottom-navigation
@@ -62,11 +62,8 @@ export default {
       isDisable: true
     }
   },
-  async mounted() {
-    await this.$store.dispatch('cart/init_cart')
 
-  },
-  computed: {
+   computed: {
     ...mapGetters({ cartCount: 'cart/cartProductsCount' })
   },
   methods: {
@@ -88,10 +85,11 @@ export default {
       this.isDisable = this.isRootURL()
     }
   },
-  fetch(ctx) {
+  async fetch(ctx) {
+    await this.$store.dispatch('cart/init_cart')
+
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
-
       setTimeout(() => this.$nuxt.$loading.finish(), 1)
     })
   }
