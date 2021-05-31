@@ -36,11 +36,11 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     '@nuxtjs/vuetify',
-    '@aceforth/nuxt-optimized-images'
+    // '@aceforth/nuxt-optimized-images'
   ],
-  optimizedImages: {
-    optimizeImages: true
-  },
+  // optimizedImages: {
+  //   optimizeImages: true
+  // },
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/axios',
@@ -98,7 +98,10 @@ export default {
       purpose: 'maskable'
     },
     meta: [
-      { name: 'apple-mobile-web-app-capable', content: 'yes' }
+      { name: 'mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-touch-fullscreen', content: 'yes' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
     ],
     workbox: {
       dev: true,
