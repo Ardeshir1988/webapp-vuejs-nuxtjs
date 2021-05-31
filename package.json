@@ -26,7 +26,6 @@
     "vue2-leaflet": "^2.6.0"
   },
   "devDependencies": {
-    "@aceforth/nuxt-optimized-images": "^1.4.0",
     "@nuxt/types": "^2.14.7",
     "@nuxtjs/localforage": "^1.1.0",
     "@nuxtjs/vuetify": "^1.11.3",
