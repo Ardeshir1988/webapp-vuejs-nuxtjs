@@ -22,17 +22,12 @@ export default {
     name: 'layout',
     mode: 'out-in'
   },
-
-  loading: {
-    color: '#8629FD',
-    height: '4px'
-  },
+  loading: false,
+  loadingIndicator: false,
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js'],
-
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
-
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     '@nuxtjs/vuetify',
@@ -53,9 +48,6 @@ export default {
     // With options
     // 'cookie-universal-nuxt'
   ],
-  router: {
-    middleware: ['ssr-cookie']
-  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
@@ -80,70 +72,69 @@ export default {
       }
     }
   },
-  pwa: {
-    manifest: {
-      name: 'Hyper Jet',
-      short_name: 'Hyper Jet',
-      lang: 'en',
-      description: 'Hyper Jet online shopping',
-      background_color: '#FFFFFF',
-      ogImage: 'icon.png',
-      ogUrl: 'icon.png',
-      start_url: '/',
-      display: 'fullscreen',
-      orientation: 'portrait'
-    },
-    icon: {
-      source: "icon.png",
-      purpose: 'maskable'
-    },
-    meta: [
-      { name: 'mobile-web-app-capable', content: 'yes' },
-      { name: 'apple-touch-fullscreen', content: 'yes' },
-      { name: 'apple-mobile-web-app-capable', content: 'yes' },
-      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
-    ],
-    workbox: {
-      dev: false,
-      enabled: false,
-
-      // Config
-      skipWaiting: true,
-      // offlineAnalytics: false,
-
-      // Precache
-      // preCaching: [],
-      cacheOptions: {
-        cacheId: "ir.hyperjet",
-        directoryIndex: '/',
-        revision: 1.001
-      },
-      cleanupOutdatedCaches: true,
-
-      // Offline
-      offline: false,
-
-      // Runtime Caching
-      runtimeCaching: [{
-        urlPattern: 'https://api.hjet.ir/files/.*',
-        handler: 'CacheFirst',
-        method: 'GET',
-        strategyOptions: {
-          cacheableResponse: {statuses: [0, 200]},
-          cacheName: 'hyperjet-image-cash'
-        },
-        strategyPlugins: [{
-          use: 'Expiration',
-          config: {
-            maxEntries: 1000,
-            maxAgeSeconds: 90*24*60*60,
-          }
-        }]
-      }],
-      cacheAssets: false,
-    }
-
-  },
+  // pwa: {
+  //   manifest: {
+  //     name: 'Hyper Jet',
+  //     short_name: 'Hyper Jet',
+  //     lang: 'en',
+  //     description: 'Hyper Jet online shopping',
+  //     background_color: '#FFFFFF',
+  //     ogImage: 'icon.png',
+  //     ogUrl: 'icon.png',
+  //     start_url: '/',
+  //     display: 'fullscreen',
+  //     orientation: 'portrait'
+  //   },
+  //   icon: {
+  //     source: "icon.png",
+  //     purpose: 'maskable'
+  //   },
+  //   meta: [
+  //     { name: 'mobile-web-app-capable', content: 'yes' },
+  //     { name: 'apple-touch-fullscreen', content: 'yes' },
+  //     { name: 'apple-mobile-web-app-capable', content: 'yes' },
+  //     { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
+  //   ],
+  //   workbox: {
+  //     dev: false,
+  //     enabled: false,
+  //
+  //     // Config
+  //     // skipWaiting: true,
+  //     // offlineAnalytics: false,
+  //
+  //     // Precache
+  //     // preCaching: [],
+  //     cacheOptions: {
+  //       cacheId: "ir.hyperjet",
+  //       directoryIndex: '/',
+  //       revision: 1.004
+  //     },
+  //
+  //     // Offline
+  //     offline: true,
+  //
+  //     // Runtime Caching
+  //     runtimeCaching: [{
+  //       urlPattern: 'https://api.hjet.ir/files/.*',
+  //       handler: 'CacheFirst',
+  //       method: 'GET',
+  //       strategyOptions: {
+  //         cacheableResponse: {statuses: [0, 200]},
+  //         cacheName: 'hyperjet-image-cash'
+  //       },
+  //       strategyPlugins: [{
+  //         use: 'Expiration',
+  //         config: {
+  //           maxEntries: 1000,
+  //           maxAgeSeconds: 90*24*60*60,
+  //         }
+  //       }]
+  //     }],
+  //     cacheAssets: true,
+  //   }
+  //
+  // },
 
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
