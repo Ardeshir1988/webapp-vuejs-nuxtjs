@@ -20,7 +20,6 @@ export default {
     ],
 
   },
-
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['~/assets/styles/main.css'
   ],
@@ -28,13 +27,12 @@ export default {
     name: 'layout',
     mode: 'out-in'
   },
-  loadingIndicator: {
-    name: 'rotating-plane',
+  loading: {
     color: '#8629FD',
-    background: 'white'
+    height: '4px'
   },
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [ '~/plugins/sw.client.js','~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js'],
+  plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js',  '~/plugins/sw.client.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -136,8 +134,8 @@ export default {
       orientation: 'portrait'
     },
     workbox: {
-      dev: false,
-      enabled: false,
+      dev: true,
+      enabled: true,
 
       // Config
       skipWaiting: true,
@@ -148,10 +146,10 @@ export default {
       cacheOptions: {
         cacheId: "ir.hyperjet",
         directoryIndex: '/',
-        revision: 1.02
+        revision: 1.001
       },
       cachingExtensions: '@/plugins/workbox-range-request.js',
-      // cleanupOutdatedCaches: true,
+      cleanupOutdatedCaches: true,
 
       // Offline
       offline: true,
