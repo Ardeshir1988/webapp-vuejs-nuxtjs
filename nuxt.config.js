@@ -88,8 +88,8 @@ export default {
       lang: 'en',
       description: 'Hyper Jet online shopping',
       background_color: '#FFFFFF',
-      ogImage: '~/static/icons/icon.png',
-      ogUrl: '~/static/icons/icon.png',
+      ogImage: 'icon.png',
+      ogUrl: 'icon.png',
       start_url: '/',
       display: 'fullscreen',
       orientation: 'portrait'
