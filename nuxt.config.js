@@ -148,16 +148,16 @@ export default {
         directoryIndex: '/',
         revision: 1.001
       },
-      cachingExtensions: '@/plugins/workbox-range-request.js',
       cleanupOutdatedCaches: true,
 
       // Offline
-      offline: true,
+      offline: false,
 
       // Runtime Caching
       runtimeCaching: [{
         urlPattern: 'https://api.hjet.ir/files/.*',
         handler: 'CacheFirst',
+        method: 'GET',
         strategyOptions: {
           cacheableResponse: {statuses: [0, 200]},
           cacheName: 'hyperjet-image-cash'
