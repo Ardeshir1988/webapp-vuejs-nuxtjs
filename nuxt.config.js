@@ -5,7 +5,6 @@ export default {
   ssr: true,
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
-  dev: process.env.NODE_ENV !== 'development', //define the development or production mode
   debug: false,
   head: {
     titleTemplate: '%s - HyperJet',
@@ -17,7 +16,7 @@ export default {
     ]
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['~/assets/styles/main.css', 'material-design-icons-iconfont/dist/material-design-icons.css'
+  css: ['~/assets/styles/main.css'
   ],
   layoutTransition: {
     name: 'layout',
@@ -138,7 +137,7 @@ export default {
           }
         }]
       }],
-      cacheAssets: true,
+      cacheAssets: false,
     }
 
   },
