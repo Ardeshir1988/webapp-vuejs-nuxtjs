@@ -47,6 +47,9 @@ import Snackbar from '@/components/snackbar/Snackbar'
 
 
 export default {
+
+
+
   components: { Snackbar },
 
   async beforeCreate() {
@@ -63,6 +66,20 @@ export default {
   },
   async mounted() {
 
+    const workbox = await window.$workbox;
+    if (workbox) {
+      workbox.addEventListener('installed', (event) => {
+        // If we don't do this we'll be displaying the notification after the initial installation, which isn't perferred.
+        if (event.isUpdate) {
+
+          // whatever logic you want to use to notify the user that they need to refresh the page.
+          caches.keys().then(function(names) {
+            for (let name of names) caches.delete(name)
+          })
+          window.location.reload(true)
+        }
+      })
+    }
     await this.$store.dispatch('cart/init_cart')
 
   },

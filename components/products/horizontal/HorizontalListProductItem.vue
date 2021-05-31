@@ -3,7 +3,7 @@
 
     <div class="measureAndImg" @click="gotoProduct">
       <p class="measure">{{ engDigitToPersianDigit(product.measure) }}</p>
-      <v-img class="img-product" contain height="100" :src="imageUrl" />
+      <v-img class="img-product" contain height="100" :src="imageUrl"  />
     </div>
 
     <div class="productName">{{ product.name }}</div>
