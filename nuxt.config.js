@@ -104,8 +104,8 @@ export default {
       { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
     ],
     workbox: {
-      dev: true,
-      enabled: true,
+      dev: false,
+      enabled: false,
 
       // Config
       skipWaiting: true,
