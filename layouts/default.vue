@@ -8,17 +8,17 @@
     <Snackbar> </Snackbar>
     <v-bottom-navigation
       color="primary"
-      style="z-index: 1015"
+      style="z-index: 10"
       horizontal
       app
       grow>
-      <v-btn  icon :disabled="isDisable" @click="back">
+      <v-btn min-width="55" icon :disabled="isDisable" @click="back">
         <v-icon style="margin: auto">mdi-arrow-left</v-icon>
       </v-btn>
-      <v-btn  icon to="/account">
+      <v-btn min-width="55" icon to="/account">
         <v-icon style="margin: auto">mdi-menu</v-icon>
       </v-btn>
-      <v-btn  icon to="/cart">
+      <v-btn min-width="55" icon to="/cart">
         <v-badge
           v-if="cartCount>0"
           bordered
@@ -29,10 +29,10 @@
         </v-badge>
         <v-icon style="margin: auto" v-if="cartCount<=0">mdi-cart</v-icon>
       </v-btn>
-      <v-btn  icon to="/search">
+      <v-btn min-width="55" icon to="/search">
         <v-icon style="margin: auto">mdi-magnify</v-icon>
       </v-btn>
-      <v-btn  icon to="/">
+      <v-btn min-width="55" icon to="/">
         <v-icon style="margin: auto">mdi-home</v-icon>
       </v-btn>
     </v-bottom-navigation>
