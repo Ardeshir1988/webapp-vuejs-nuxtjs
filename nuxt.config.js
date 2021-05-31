@@ -32,7 +32,7 @@ export default {
     height: '4px'
   },
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js',  '~/plugins/sw.client.js'],
+  plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -177,7 +177,7 @@ export default {
     { name: 'apple-mobile-web-app-capable', content: 'yes' }
   ],
   link: [
-    // { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
+    { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
     // apple
 
     { rel: 'apple-touch-icon', sizes: '180x180', href: 'apple-icon-180.png' },
