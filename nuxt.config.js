@@ -1,8 +1,8 @@
 const webpack = require('webpack')
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
-  ssr: false,
+  target: 'server',
+  ssr: true,
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   dev: process.env.NODE_ENV !== 'development', //define the development or production mode
@@ -75,7 +75,7 @@ export default {
   pwa: {
     manifest: {
       name: 'Hyper Jet',
-      short_name: 'Hyper Jet',
+      short_name: 'Hyper Jet ',
       lang: 'en',
       description: 'Hyper Jet online shopping',
       background_color: '#FFFFFF',
