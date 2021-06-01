@@ -25,7 +25,6 @@
 import Mapbox from 'mapbox-gl-vue'
 import { mdiMapMarker, mdiAlertOutline } from '@mdi/js'
 
-
 export default {
   components: {  Mapbox},
   name: 'CustomerAddress',
@@ -36,9 +35,6 @@ export default {
         rel: 'stylesheet',
         href: 'https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css'
       }
-    ],
-    script:[
-      {src:'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'}
     ]
   },
   data() {

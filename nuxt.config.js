@@ -1,4 +1,4 @@
-
+const webpack = require('webpack')
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'server',
@@ -31,8 +31,9 @@ export default {
   components: true,
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
-    // ['@nuxtjs/vuetify', {treeShake: true}],
-    '@nuxtjs/vuetify',
+
+    ['@nuxtjs/vuetify', {treeShake: true}],
+    // '@nuxtjs/vuetify',
     '@aceforth/nuxt-optimized-images'
   ],
   optimizedImages: {
@@ -40,15 +41,14 @@ export default {
   },
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/localforage',
     '@nuxtjs/universal-storage',
     'nuxt-user-agent',
+    'nuxt-leaflet',
 
-    // With options
-    // 'cookie-universal-nuxt'
+
   ],
   // ,
   // defaultAssets: undefined,
@@ -60,7 +60,7 @@ export default {
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    // treeShake: true,
+    treeShake: true,
     theme: {
       themes: {
         light: {
@@ -146,7 +146,14 @@ export default {
     // analyze:true,
     // extractCSS: {
     //   ignoreOrder: true
-    // }
+    // },
+
+    plugins: [
+      new webpack.ProvidePlugin({
+        mapboxgl: 'mapbox-gl'
+      })
+    ],
+
 
   }
 }

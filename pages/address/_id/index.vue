@@ -47,17 +47,18 @@
     </div>
   </div>
 </template>
-
 <script>
 
 import Mapbox from 'mapbox-gl-vue'
-
 import { mdiMapMarker } from '@mdi/js'
 
+
 export default {
+
   components: { Mapbox },
   // middleware: 'auth',
   name: 'index',
+
   head: {
     title: 'آدرس',
     link: [
@@ -66,10 +67,7 @@ export default {
         href: 'https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css'
       }
     ]
-    ,
-    script:[
-      {src:'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'}
-    ]
+
   },
   data() {
     return {
@@ -103,6 +101,7 @@ export default {
     close() {
       this.sheet = false
     },
+
   },
 
   async fetch() {
