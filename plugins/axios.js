@@ -4,12 +4,12 @@ export default function({ $axios, redirect, $notifier, app }) {
   })
   $axios.onError(err => {
     if (err.response === undefined) {
-      $notifier.showMessage({
-        content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
-        color: 'info',
-        title: 'عدم ارتباط',
-        icon: this.mdiAlertOutline
-      })
+      // $notifier.showMessage({
+      //   content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
+      //   color: 'info',
+      //   title: 'عدم ارتباط',
+      //   icon: this.mdiAlertOutline
+      // })
       return Promise.resolve(false)
     } else {
       if (err.response.status === 401) {
@@ -25,20 +25,20 @@ export default function({ $axios, redirect, $notifier, app }) {
           })
       } else {
         if (err.response.data.message !== '') {
-          $notifier.showMessage({
-            content: err.response.data.message,
-            color: 'error',
-            title: 'خطا',
-            icon: this.mdiAlertCircleOutline
-          })
+          // $notifier.showMessage({
+          //   content: err.response.data.message,
+          //   color: 'error',
+          //   title: 'خطا',
+          //   icon: this.mdiAlertCircleOutline
+          // })
           return Promise.resolve(false)
         } else {
-          $notifier.showMessage({
-            content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
-            color: 'info',
-            title: 'عدم ارتباط',
-            icon: this.mdiAlertOutline
-          })
+          // $notifier.showMessage({
+          //   content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
+          //   color: 'info',
+          //   title: 'عدم ارتباط',
+          //   icon: this.mdiAlertOutline
+          // })
           return Promise.resolve(false)
         }
       }

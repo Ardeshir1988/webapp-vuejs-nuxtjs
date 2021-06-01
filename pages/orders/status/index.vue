@@ -36,7 +36,7 @@ import PersianUtil from '@/utils/PersianUtil'
 
 export default {
   name: 'index',
-  middleware: 'auth',
+  // middleware: 'auth',
   components: { OrderStatus },
   head:{
     title:'وضعبت سفارش'

@@ -1,7 +1,7 @@
 <template>
   <div class='flex'>
-    <RefreshUtil v-if="reload" />
-    <div v-if="!reload">
+
+    <div >
     <v-sheet  min-height='700' class='d-flex flex-column align-stretch '>
       <div>
         <Header class="fix-header" title="آدرس ها" />
@@ -32,15 +32,13 @@
 
 <script>
 import AddressItem from '@/components/address/AddressItem'
-import RefreshUtil from '@/components/utils/RefreshUtil'
 
 export default {
-  middleware:'auth',
   name: 'index',
   head:{
     title:'آدرس'
   },
-  components: { RefreshUtil, AddressItem },
+  components: { AddressItem },
   data() {
     return {
       reload: false,

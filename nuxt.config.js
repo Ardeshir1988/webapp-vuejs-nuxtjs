@@ -6,7 +6,7 @@ export default {
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
 
-  debug: false,
+  debug: true,
   head: {
     titleTemplate: '%s - HyperJet',
     title: '',
@@ -23,15 +23,16 @@ export default {
     name: 'layout',
     mode: 'out-in'
   },
-  loading: false,
-  loadingIndicator: false,
+  // loading: false,
+  // loadingIndicator: false,
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js'],
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
-    ['@nuxtjs/vuetify', {treeShake: true}],
+    // ['@nuxtjs/vuetify', {treeShake: true}],
+    '@nuxtjs/vuetify',
     '@aceforth/nuxt-optimized-images'
   ],
   optimizedImages: {
@@ -59,7 +60,7 @@ export default {
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    treeShake: true,
+    // treeShake: true,
     theme: {
       themes: {
         light: {
@@ -100,8 +101,8 @@ export default {
       { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
     ],
     workbox: {
-      dev: false,
-      enabled: false,
+      dev: true,
+      enabled: true,
 
       // Config
       skipWaiting: true,
@@ -143,7 +144,9 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // analyze:true,
-    extractCSS: true,
+    // extractCSS: {
+    //   ignoreOrder: true
+    // }
 
   }
 }

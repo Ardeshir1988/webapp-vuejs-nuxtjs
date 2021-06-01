@@ -14,7 +14,7 @@ import TransactionList from '@/components/transaction/TransactionList'
 
 export default {
   name: 'index',
-  middleware:'auth',
+  // middleware:'auth',
   head:{
     title:'سفارش ها و تراکنش ها'
   },

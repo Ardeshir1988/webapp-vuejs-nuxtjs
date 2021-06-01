@@ -46,8 +46,9 @@
 <script>
 import CustomerAddress from '@/components/address/CustomerAddress'
 import { mdiClose, mdiAlertCircleOutline } from '@mdi/js'
+
 export default {
-  middleware: 'auth',
+  // middleware: 'auth',
   name: 'index',
   components: { CustomerAddress },
   head: {

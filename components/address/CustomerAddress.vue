@@ -21,10 +21,13 @@
 </template>
 
 <script>
+
 import Mapbox from 'mapbox-gl-vue'
 import { mdiMapMarker, mdiAlertOutline } from '@mdi/js'
+
+
 export default {
-  components: { Mapbox },
+  components: {  Mapbox},
   name: 'CustomerAddress',
   props: { },
   head: {

@@ -1,14 +1,14 @@
 <template>
-  <div class="refresh-page">
-    <div class="refresh-content">
+<!--  <div class="refresh-page">-->
+<!--    <div class="refresh-content">-->
 <!--      <lottie-animation-->
 <!--        ref="anim"-->
 <!--        :animationData="require('@/assets/hyperjet-loading.json')"-->
 <!--        :loop="true"-->
 <!--        :autoPlay="true"-->
 <!--      />-->
-    </div>
-  </div>
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>
