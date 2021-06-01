@@ -13,10 +13,10 @@
       app
       grow>
       <v-btn min-width="55" icon :disabled="isDisable" @click="back">
-        <v-icon style="margin: auto">mdi-arrow-left</v-icon>
+        <v-icon style="margin: auto">{{ mdiArrowLeft }}</v-icon>
       </v-btn>
       <v-btn min-width="55" icon to="/account">
-        <v-icon style="margin: auto">mdi-menu</v-icon>
+        <v-icon style="margin: auto">{{ mdiMenu }}</v-icon>
       </v-btn>
       <v-btn min-width="55" icon to="/cart">
         <v-badge
@@ -25,15 +25,15 @@
           overlap
           color="pink"
           :content="engDigitToPersianDigit(cartCount)">
-          <v-icon style="margin: auto">mdi-cart</v-icon>
+          <v-icon style="margin: auto">{{ mdiCart }}</v-icon>
         </v-badge>
-        <v-icon style="margin: auto" v-if="cartCount<=0">mdi-cart</v-icon>
+        <v-icon style="margin: auto" v-if="cartCount<=0">{{ mdiCart }}</v-icon>
       </v-btn>
       <v-btn min-width="55" icon to="/search">
-        <v-icon style="margin: auto">mdi-magnify</v-icon>
+        <v-icon style="margin: auto">{{ mdiMagnify }}</v-icon>
       </v-btn>
       <v-btn min-width="55" icon to="/">
-        <v-icon style="margin: auto">mdi-home</v-icon>
+        <v-icon style="margin: auto">{{mdiHome}}</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app>
@@ -44,12 +44,10 @@
 import { mapGetters } from 'vuex'
 import PersianUtil from '@/utils/PersianUtil'
 import Snackbar from '@/components/snackbar/Snackbar'
-
+import { mdiHome, mdiMagnify, mdiCart  ,mdiMenu, mdiArrowLeft } from '@mdi/js'
 
 export default {
-
   components: { Snackbar },
-
   async beforeCreate() {
 
   },
@@ -59,6 +57,11 @@ export default {
   },
   data() {
     return {
+      mdiHome: mdiHome,
+      mdiMagnify: mdiMagnify,
+      mdiCart: mdiCart,
+      mdiMenu: mdiMenu,
+      mdiArrowLeft: mdiArrowLeft,
       isDisable: true
     }
   },

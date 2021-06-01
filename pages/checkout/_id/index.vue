@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-sheet rounded outlined class="new-order">
-      <v-icon style="margin: 1vh" color="accent" x-large>mdi-check-circle</v-icon>
+      <v-icon style="margin: 1vh" color="accent" x-large>{{mdiCheckCircle}}</v-icon>
       <div style="margin: 1vh">سفارش شما با موفقیت ثبت گردید</div>
       <div class="tracking-number">شماره سفارش</div>
       <div class="tracking-number">{{ order.trackingNumber }}</div>
@@ -17,12 +17,12 @@
         <v-col class="left-col">
           {{ getDeliveryType }}
           :نحوه ارسال
-          <v-icon>mdi-truck-outline</v-icon>
+          <v-icon>{{mdiTruckOutline}}</v-icon>
         </v-col>
         <v-col class="right-col">
           آدرس:
           {{address.title}}
-          <v-icon>mdi-map-marker</v-icon>
+          <v-icon>{{mdiMapMarker}}</v-icon>
         </v-col>
       </v-row>
       <v-row no-gutters class="address-details" style="direction: rtl">
@@ -40,8 +40,16 @@
 </template>
 
 <script>
+import { mdiCheckCircle, mdiTruckOutline, mdiMapMarker } from '@mdi/js'
 export default {
   name: 'index',
+  data(){
+    return{
+      mdiCheckCircle: mdiCheckCircle,
+      mdiTruckOutline: mdiTruckOutline,
+      mdiMapMarker: mdiMapMarker
+    }
+  },
   async mounted() {
     await this.$store.dispatch('cart/delete_cart')
   },

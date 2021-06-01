@@ -3,7 +3,7 @@
 
     <div class="btn-close">
       <v-btn @click="close" icon depressed>
-        <v-icon>mdi-close</v-icon>
+        <v-icon>{{ mdiClose }}</v-icon>
       </v-btn>
     </div>
     <div class="item-list">
@@ -49,11 +49,17 @@
 import OrderProductItem from '@/components/order/OrderProductItem'
 import Header from '@/components/header/Header'
 import PersianUtil from '@/utils/PersianUtil'
+import { mdiClose } from '@mdi/js'
 
 export default {
   name: 'OrderDetails',
   props: { orderDetails: Object },
   components: { Header, OrderProductItem },
+  data(){
+    return{
+      mdiClose: mdiClose
+    }
+  },
   methods: {
     close() {
       this.$emit('close')

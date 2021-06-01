@@ -6,13 +6,13 @@
     </div>
     <div style="direction: rtl">
       <v-btn rounded depressed class="btn" @click="customerData">
-        <v-icon size="24" class="icon-btn" color="secondary">mdi-pencil</v-icon>
+        <v-icon size="24" class="icon-btn" color="secondary">{{mdiPencilOutline}}</v-icon>
       </v-btn>
     </div>
     <v-sheet style="margin: 4vh 1.5vh 1.5vh;" rounded outlined>
       <v-row no-gutters class="row-customer-balance">
         <v-col cols="1">
-          <v-icon>mdi-wallet</v-icon>
+          <v-icon>{{mdiWallet}}</v-icon>
         </v-col>
         <v-col>
           اعتبار کاربر
@@ -27,12 +27,15 @@
 
 <script>
 import PersianUtil from '@/utils/PersianUtil'
+import {mdiPencilOutline,  mdiWallet } from '@mdi/js'
 
 export default {
   name: 'RegisteredCustomer',
   props: { customerInfo: Object },
   data() {
     return {
+      mdiWallet: mdiWallet,
+      mdiPencilOutline: mdiPencilOutline,
       name: this.customerInfo.name == null ? '' : this.customerInfo.name
     }
   },

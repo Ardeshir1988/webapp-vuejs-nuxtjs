@@ -35,7 +35,7 @@
       :map-options='mapOptions'
       @map-init='mapInit'
     />
-    <v-icon id='coordinates' class='coordinates'>mdi-map-marker</v-icon>
+    <v-icon id='coordinates' class='coordinates'>{{mdiMapMarker}}</v-icon>
     <div class='mt-auto '></div>
 
 
@@ -49,6 +49,7 @@
 </template>
 <script>
 import Mapbox from 'mapbox-gl-vue'
+import { mdiMapMarker } from '@mdi/js'
 export default {
   components: { Mapbox },
   middleware: 'auth',
@@ -64,6 +65,7 @@ export default {
   },
   data() {
     return {
+      mdiMapMarker: mdiMapMarker,
       addressId: null,
       addressDetails: '',
       addressNumber: '',

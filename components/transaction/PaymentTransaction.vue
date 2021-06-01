@@ -4,7 +4,7 @@
       <v-col cols="11">
         <v-sheet class="sheet-order-transaction" rounded outlined>
           <v-btn disabled depressed icon class="transaction-icon">
-            <v-icon>mdi-dots-horizontal</v-icon>
+            <v-icon>{{mdiDotsHorizontal}}</v-icon>
           </v-btn>
           <div class="content">
             <v-row no-gutters style="margin-top: 1vh">
@@ -21,7 +21,7 @@
       </v-col>
 
       <v-col cols="1" class="transaction-icon">
-        <v-icon color="accent">mdi-cash</v-icon>
+        <v-icon color="accent">{{mdiCash}}</v-icon>
       </v-col>
     </v-row>
   </div>
@@ -29,10 +29,17 @@
 
 <script>
 import PersianUtil from '@/utils/PersianUtil'
+import { mdiDotsHorizontal, mdiCash } from '@mdi/js'
 
 export default {
   name: 'PaymentTransaction',
   props: { transaction: Object },
+  data() {
+    return {
+      mdiCash: mdiCash,
+      mdiDotsHorizontal: mdiDotsHorizontal
+    }
+  },
   computed: {
     getPaymentType() {
       switch (this.transaction.paymentType) {

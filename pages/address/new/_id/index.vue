@@ -4,7 +4,7 @@
       <div dir='rtl'>
         <div class='btn-close'>
           <v-btn @click='close' icon depressed>
-            <v-icon>mdi-close</v-icon>
+            <v-icon>{{mdiClose}}</v-icon>
           </v-btn>
         </div>
         <v-textarea
@@ -45,7 +45,7 @@
 
 <script>
 import CustomerAddress from '@/components/address/CustomerAddress'
-
+import { mdiClose } from '@mdi/js'
 export default {
   middleware: 'auth',
   name: 'index',
@@ -55,6 +55,7 @@ export default {
   },
   data() {
     return {
+      mdiClose: mdiClose,
       sheet: false,
       latLng: { lat: 0, lng: 0 },
       addressId: null,
@@ -109,7 +110,7 @@ export default {
             content: 'لطفا آدرس را به صورت کامل وارد کنید.',
             color: 'error',
             title: 'خطا',
-            icon: 'mdi-alert-circle-outline'
+            icon: 'alert-circle-outline'
           })
         }
       }

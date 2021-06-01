@@ -1,10 +1,11 @@
-// const webpack = require('webpack')
+
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'server',
   ssr: true,
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
+
   debug: false,
   head: {
     titleTemplate: '%s - HyperJet',
@@ -31,24 +32,25 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     ['@nuxtjs/vuetify', {treeShake: true}],
-    // '@aceforth/nuxt-optimized-images'
+    '@aceforth/nuxt-optimized-images'
   ],
-  // optimizedImages: {
-  //   optimizeImages: true
-  // },
+  optimizedImages: {
+    optimizeImages: true
+  },
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/localforage',
     '@nuxtjs/universal-storage',
     'nuxt-user-agent',
-    'nuxt-leaflet',
 
     // With options
     // 'cookie-universal-nuxt'
   ],
-
+  // ,
+  // defaultAssets: undefined,
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     // baseURL: process.env.API_BASE_URL || 'http://localhost:8090/'
@@ -72,6 +74,7 @@ export default {
         }
       }
     }
+    , defaultAssets: undefined
   },
   pwa: {
     manifest: {
@@ -137,15 +140,10 @@ export default {
 
   },
 
-
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    analyze:true,
+    // analyze:true,
     extractCSS: true,
-    plugins: [
-      // new webpack.ProvidePlugin({
-      //   mapboxgl: 'mapbox-gl'
-      // })
-    ]
+
   }
 }

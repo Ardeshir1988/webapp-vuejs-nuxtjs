@@ -10,16 +10,22 @@
     </v-sheet>
     <nuxt-link style="text-decoration: none; color: inherit;" to="/address">
       <v-btn rounded depressed class="btn-edit-address">انتخاب آدرس
-        <v-icon right dark>mdi-map-marker</v-icon>
+        <v-icon right dark>{{ mdiMapMarker }}</v-icon>
       </v-btn>
     </nuxt-link>
   </div>
 </template>
 
 <script>
+import { mdiMapMarker } from '@mdi/js'
+
 export default {
   name: 'CheckoutAddress',
   props: { address: Object },
+  data() {
+    return {
+      mdiMapMarker: mdiMapMarker}
+  },
   computed: {
     existAddress() {
       return this.address.details !== undefined

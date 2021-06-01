@@ -18,7 +18,7 @@
         </v-col>
         <v-col class="search-btn">
           <v-btn icon @click="getProductsByKeyword()">
-            <v-icon color="primary">mdi-magnify</v-icon>
+            <v-icon color="primary">{{mdiMagnify}}</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mdiMagnify } from '@mdi/js'
 import VerticalProductList from '@/components/products/vertical/VerticalProductList'
 
 export default {
@@ -89,6 +90,7 @@ export default {
   },
   data() {
     return {
+      mdiMagnify: mdiMagnify,
       products: [],
       page: 0,
       scrollPosition: 0,

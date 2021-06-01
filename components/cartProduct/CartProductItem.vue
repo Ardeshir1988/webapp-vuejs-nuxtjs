@@ -36,7 +36,7 @@
                class="btn-decrease" block small depressed
                color="white">
           <v-icon size="22" color="black">
-            mdi-minus
+            {{mdiMinus}}
           </v-icon>
         </v-btn>
         <v-divider></v-divider>
@@ -47,7 +47,7 @@
           <v-btn icon v-on:click="deleteProduct($props.cartProduct)" class="btn-increase" block small depressed
                  color="white">
             <v-icon size="24" color="warning">
-              mdi-delete-sweep
+              {{mdiDeleteSweep}}
             </v-icon>
           </v-btn>
         </div>
@@ -56,7 +56,7 @@
                block small depressed
                color="white">
           <v-icon size="22" color="black">
-            mdi-plus
+            {{ mdiPlus }}
           </v-icon>
         </v-btn>
       </div>
@@ -73,10 +73,17 @@
 <script>
 import { FILES_URL } from '@/constants'
 import PersianUtil from '@/utils/PersianUtil'
-
+import { mdiMinus, mdiDeleteSweep, mdiPlus } from '@mdi/js'
 export default {
   name: 'CartProductItem',
   props: { cartProduct: Object },
+  data() {
+    return {
+      mdiMinus: mdiMinus,
+      mdiDeleteSweep: mdiDeleteSweep,
+      mdiPlus: mdiPlus,
+    }
+  },
   computed: {
     imageUrl: function() {
       return FILES_URL + this.cartProduct.picture

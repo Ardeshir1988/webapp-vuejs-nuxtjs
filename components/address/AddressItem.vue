@@ -20,13 +20,13 @@
       <div class="address-item-operations">
         <v-btn @click="editAddress" class="op" icon depressed block>
           <v-icon size="24" dense color="secondary">
-            mdi-eye
+            {{ mdiEye }}
           </v-icon>
         </v-btn>
         <v-divider />
         <v-btn @click="deleteAddress" class="op" icon depressed block>
           <v-icon size="24" dense color="error">
-            mdi-delete-sweep
+            {{ mdiDeleteSweep }}
           </v-icon>
         </v-btn>
       </div>
@@ -36,11 +36,15 @@
 </template>
 
 <script>
+import { mdiEye , mdiDeleteSweep } from '@mdi/js'
+
 export default {
   name: 'AddressItem',
   props: { address: Object },
   data() {
     return {
+      mdiEye: mdiEye,
+      mdiDeleteSweep: mdiDeleteSweep,
       selected: this.address.selected
     }
   },

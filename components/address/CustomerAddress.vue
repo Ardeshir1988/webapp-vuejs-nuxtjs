@@ -11,7 +11,7 @@
       }"
       @map-load='mapLoad'
     />
-    <v-icon id='coordinates' class='coordinates'>mdi-map-marker</v-icon>
+    <v-icon id='coordinates' class='coordinates'>{{ mdiMapMarker }}</v-icon>
     <div class='btn-container'>
       <v-btn @click='selectLocation' class='btn-primary' depressed color='accent'>
         ثبت مکان منتخب
@@ -22,7 +22,7 @@
 
 <script>
 import Mapbox from 'mapbox-gl-vue'
-
+import { mdiMapMarker } from '@mdi/js'
 export default {
   components: { Mapbox },
   name: 'CustomerAddress',
@@ -33,10 +33,14 @@ export default {
         rel: 'stylesheet',
         href: 'https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css'
       }
+    ],
+    script:[
+      {src:'https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'}
     ]
   },
   data() {
     return {
+      mdiMapMarker: mdiMapMarker,
       accessToken: 'pk.eyJ1IjoibWF4YXNhZGkiLCJhIjoiY2tsOTlmaHp6MzhlNzJvcW9kNDZteXU0MiJ9.g3otWgJ_s9jL8HZhiAD48Q',
       mapOptions: {
         style: 'mapbox://styles/maxasadi/ckl99m0bc0bl517jxsh5d6lcq',
@@ -75,7 +79,7 @@ export default {
           content: 'مکان انتخاب شده خارج از محدوده سرویس دهی هایپر جت می باشد.',
           color: 'primary',
           title: 'متاسفانه',
-          icon: 'mdi-alert-outline'
+          icon: 'alert-outline'
         })
       } else {
         this.$emit('selectLocation', this.map.getCenter())

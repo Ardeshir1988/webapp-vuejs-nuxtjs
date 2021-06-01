@@ -53,14 +53,14 @@
             <v-col cols="7">
               <div class="delivery-type">
                 <v-row>
-                  <v-icon>mdi-truck-outline</v-icon>
+                  <v-icon>{{mdiTruckOutline}}</v-icon>
                   <div style="margin-right: 1vw">نحوه ارسال :</div>
                   <div style="margin-right: 1vw">{{ getDeliveryType(this.order.deliveryType) }}</div>
                 </v-row>
               </div>
               <div class="address">
                 <v-row>
-                  <v-icon>mdi-map-marker</v-icon>
+                  <v-icon>{{mdiMapMarker}}</v-icon>
                   <div style="margin-right: 1vw">آدرس :</div>
                   <div style="margin-right: 1vw">{{ this.order.customerAddress.title }}</div>
                 </v-row>
@@ -88,6 +88,7 @@
 import PersianUtil from '@/utils/PersianUtil'
 import OrderDetails from '@/components/order/OrderDetails'
 import { FILES_URL } from '@/constants'
+import { mdiTruckOutline,  mdiMapMarker} from '@mdi/js'
 
 export default {
   name: 'OrderStatus',
@@ -112,6 +113,8 @@ export default {
   },
   data() {
     return {
+      mdiTruckOutline: mdiTruckOutline,
+      mdiMapMarker: mdiMapMarker,
       sheet: false,
       orderDetails: {}
     }

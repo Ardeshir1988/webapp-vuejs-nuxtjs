@@ -4,7 +4,7 @@
       <v-col cols="11">
         <v-sheet class="sheet-order-transaction" rounded outlined>
           <v-btn @click="getOrderDetails" depressed icon class="transaction-icon">
-            <v-icon>mdi-dots-horizontal</v-icon>
+            <v-icon>{{mdiDotsHorizontal}}</v-icon>
           </v-btn>
           <div class="content">
             <v-row no-gutters style="margin-top: 1vh">
@@ -21,7 +21,7 @@
       </v-col>
 
       <v-col cols="1" class="transaction-icon">
-        <v-icon color="warning">mdi-cart</v-icon>
+        <v-icon color="warning">{{mdiCart}}</v-icon>
       </v-col>
     </v-row>
     <v-bottom-sheet fullscreen class="bottom-sheet" scrollable v-model="sheet">
@@ -33,6 +33,7 @@
 <script>
 import PersianUtil from '~/utils/PersianUtil'
 import OrderDetails from '~/components/order/OrderDetails'
+import { mdiCart, mdiDotsHorizontal } from '@mdi/js'
 
 export default {
   name: 'ReturnedOrderTransaction',
@@ -40,6 +41,8 @@ export default {
   props: { transaction: Object },
   data() {
     return {
+      mdiDotsHorizontal: mdiDotsHorizontal,
+      mdiCart: mdiCart,
       sheet: false,
       transactionDetail: {}
     }

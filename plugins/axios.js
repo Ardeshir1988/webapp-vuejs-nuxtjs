@@ -8,7 +8,7 @@ export default function({ $axios, redirect, $notifier, app }) {
         content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
         color: 'info',
         title: 'عدم ارتباط',
-        icon: 'mdi-alert-outline'
+        icon: 'alert-outline'
       })
       return Promise.resolve(false)
     } else {
@@ -29,7 +29,7 @@ export default function({ $axios, redirect, $notifier, app }) {
             content: err.response.data.message,
             color: 'error',
             title: 'خطا',
-            icon: 'mdi-alert-circle-outline'
+            icon: 'alert-circle-outline'
           })
           return Promise.resolve(false)
         } else {
@@ -37,7 +37,7 @@ export default function({ $axios, redirect, $notifier, app }) {
             content: 'متاسفانه نرم افزار قادر به برقراری ارتباط با سرور نمی باشد.',
             color: 'info',
             title: 'عدم ارتباط',
-            icon: 'mdi-alert-outline'
+            icon: 'alert-outline'
           })
           return Promise.resolve(false)
         }
