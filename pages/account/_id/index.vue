@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { mdiCheckCircleOutline } from '@mdi/js'
 export default {
   name: 'index',
   head:{
@@ -43,6 +44,7 @@ export default {
   },
   data(){
     return{
+      mdiCheckCircleOutline: mdiCheckCircleOutline,
       loading:false
     }
   },
@@ -52,7 +54,7 @@ export default {
       .then(res=>{
         if (res !== false){
           this.$notifier.showMessage({ content: 'اطلاعات شما ثبت گردید.',
-            color: 'success', title: 'موفقیت آمیز' , icon: 'mdi-check-circle-outline' })
+            color: 'success', title: 'موفقیت آمیز' , icon: this.mdiCheckCircleOutline })
           this.$router.push('/account')
         }
       })

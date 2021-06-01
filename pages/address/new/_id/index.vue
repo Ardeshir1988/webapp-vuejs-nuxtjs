@@ -45,7 +45,7 @@
 
 <script>
 import CustomerAddress from '@/components/address/CustomerAddress'
-import { mdiClose } from '@mdi/js'
+import { mdiClose, mdiAlertCircleOutline } from '@mdi/js'
 export default {
   middleware: 'auth',
   name: 'index',
@@ -55,6 +55,7 @@ export default {
   },
   data() {
     return {
+      mdiAlertCircleOutline: mdiAlertCircleOutline,
       mdiClose: mdiClose,
       sheet: false,
       latLng: { lat: 0, lng: 0 },
@@ -110,7 +111,7 @@ export default {
             content: 'لطفا آدرس را به صورت کامل وارد کنید.',
             color: 'error',
             title: 'خطا',
-            icon: 'alert-circle-outline'
+            icon: this.mdiAlertCircleOutline
           })
         }
       }

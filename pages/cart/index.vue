@@ -31,12 +31,18 @@
 <script>
 import CartProductList from '@/components/cartProduct/CartProductList'
 import PersianUtil from '@/utils/PersianUtil'
+import { mdiAlertOutline} from '@mdi/js'
 
 export default {
   name: 'index.vue',
   components: { CartProductList },
   head:{
     title:'سبد خرید'
+  },
+  data(){
+    return {
+      mdiAlertOutline: mdiAlertOutline
+    }
   },
   computed: {
     cartList: function() {
@@ -71,7 +77,7 @@ export default {
           content: 'متاسفانه سبد خرید شما خالی می باشد.',
           color: 'info',
           title: 'انتخاب کالا',
-          icon: 'mdi-alert-outline'
+          icon: this.mdiAlertOutline
         })
       }
       else{
@@ -86,7 +92,7 @@ export default {
                     content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید',
                     color: 'info',
                     title: 'توجه',
-                    icon: 'mdi-alert-outline'
+                    icon: this.mdiAlertOutline
                   })
                   this.$router.push('/account')
                 }
@@ -96,7 +102,7 @@ export default {
                   content: 'برای ثبت سفارش تمامی اجناس می بایست سبز باشند',
                   color: 'info',
                   title: 'توجه',
-                  icon: 'mdi-alert-outline'
+                  icon: this.mdiAlertOutline
                 })
               }
             }

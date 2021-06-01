@@ -20,7 +20,7 @@ export default {
       message: '',
       color: '',
       title: '',
-      icon: ''
+      icon: undefined
     }
   },
   created () {

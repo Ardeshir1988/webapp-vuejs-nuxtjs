@@ -77,13 +77,16 @@ import { FILES_URL } from '@/constants'
 import SectionSeparator from '@/components/separator/SectionSeparator'
 import HorizontalProductList from '@/components/products/horizontal/HorizontalProductList'
 import RefreshUtil from '@/components/utils/RefreshUtil'
-import { mdiMinus , mdiPlus} from '@mdi/js'
+import { mdiMinus , mdiPlus, mdiAlertCircleOutline , mdiAlertOutline, mdiCheckCircleOutline} from '@mdi/js'
 
 export default {
   name: 'index',
   components: { RefreshUtil, HorizontalProductList, SectionSeparator },
   data() {
     return {
+      mdiAlertCircleOutline: mdiAlertCircleOutline,
+      mdiAlertOutline: mdiAlertOutline,
+      mdiCheckCircleOutline: mdiCheckCircleOutline,
       mdiPlus: mdiPlus,
       mdiMinus: mdiMinus,
       product: {},
@@ -138,12 +141,12 @@ export default {
       if(this.$storage.getUniversal('token')  !== null && this.$storage.getUniversal('token')  !== undefined) {
         let responseData = await this.$repositories.customer.setNotifyInStock(this.product.id)
         if (responseData !== false) {
-          this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید.' , icon: 'check-circle-outline' })
+          this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید.' , icon: this.mdiCheckCircleOutline })
         }else{
-          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید.', color: 'error', title: 'خطا' , icon: 'alert-circle-outline' })
+          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید.', color: 'error', title: 'خطا' , icon: this.mdiAlertCircleOutline })
         }
       }else {
-        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید.', color: 'info', title: 'توجه' , icon: 'alert-outline' })
+        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید.', color: 'info', title: 'توجه' , icon: this.mdiAlertOutline })
       }
     }
   }

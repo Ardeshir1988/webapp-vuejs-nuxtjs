@@ -109,6 +109,7 @@ import AddressItem from '@/components/address/AddressItem'
 import PersianUtil from '@/utils/PersianUtil'
 import CheckoutAddress from '@/components/address/CheckoutAddress'
 import { mapGetters } from 'vuex'
+import { mdiAlertOutline, mdiAlertCircleOutline} from '@mdi/js'
 
 export default {
   name: 'index',
@@ -121,6 +122,8 @@ export default {
   },
   data() {
     return {
+      mdiAlertCircleOutline: mdiAlertCircleOutline,
+      mdiAlertOutline: mdiAlertOutline,
       addresses: [],
       addressId: '',
       deliveryType: 0,
@@ -151,7 +154,7 @@ export default {
   methods: {
     getPaymentToken() {
       if (this.$storage.getUniversal('token') === undefined) {
-        this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+        this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: this.mdiAlertOutline })
         this.$router.push('/account')
       } else {
         let deliveryType = ''
@@ -178,7 +181,7 @@ export default {
                       if(saveUnpaidOrder.data.success)
                       window.location.replace(this.paymentUrl + paymentTokenRes.data.msg)
                       else {
-                        this.$notifier.showMessage({ content: saveUnpaidOrder.data.reason, color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+                        this.$notifier.showMessage({ content: saveUnpaidOrder.data.reason, color: 'info', title: 'توجه' , icon: this.mdiAlertOutline })
                         this.$router.push('/cart')
                       }
                     }
@@ -190,7 +193,7 @@ export default {
     },
     checkout() {
       if (this.$storage.getUniversal('token') === undefined) {
-        this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: 'mdi-alert-outline' })
+        this.$notifier.showMessage({ content: 'لطفا، برای ثبت سفارش ابتدا ثبت نام نمایید', color: 'info', title: 'توجه' , icon: this.mdiAlertOutline })
         this.$router.push('/account')
       } else {
         let deliveryType = ''
@@ -214,7 +217,7 @@ export default {
                   this.$storage.setCookie('order', { orderDetail: orderRes.data, address: this.getSelectedAddress} , { maxAge: 60 * 15 })
                   this.$router.push('/checkout/done')
                 } else {
-                  this.$notifier.showMessage({ content: orderRes.data.reason, color: 'error', title: 'خطا' , icon: 'mdi-alert-circle-outline' })
+                  this.$notifier.showMessage({ content: orderRes.data.reason, color: 'error', title: 'خطا' , icon: this.mdiAlertCircleOutline })
                   this.$router.push('/cart')
                 }
               }

@@ -60,7 +60,7 @@
 <script>
 import { FILES_URL } from '@/constants'
 import PersianUtil from '@/utils/PersianUtil'
-import { mdiMinus, mdiPlus } from '@mdi/js'
+import { mdiMinus, mdiPlus, mdiAlertCircleOutline , mdiAlertOutline, mdiCheckCircleOutline } from '@mdi/js'
 export default {
   name: 'HorizontalProductItem',
   props: { product: Object },
@@ -68,6 +68,9 @@ export default {
     return {
       mdiMinus: mdiMinus,
       mdiPlus: mdiPlus,
+      mdiAlertCircleOutline: mdiAlertCircleOutline,
+      mdiAlertOutline: mdiAlertOutline,
+      mdiCheckCircleOutline: mdiCheckCircleOutline
     }
   },
   computed: {
@@ -98,12 +101,12 @@ export default {
       if(this.$storage.getUniversal('token')  !== null && this.$storage.getUniversal('token')  !== undefined) {
         let responseData = await this.$repositories.customer.setNotifyInStock(this.product.id)
         if (responseData !== false) {
-          this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید.' , icon: 'check-circle-outline' })
+          this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید.' , icon: this.mdiCheckCircleOutline })
         }else{
-          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید.', color: 'error', title: 'خطا' , icon: 'alert-circle-outline' })
+          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید.', color: 'error', title: 'خطا' , icon: this.mdiAlertCircleOutline })
         }
       }else {
-        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید.', color: 'info', title: 'توجه' , icon: 'alert-outline' })
+        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید.', color: 'info', title: 'توجه' , icon: this.mdiAlertOutline })
       }
     }
   }

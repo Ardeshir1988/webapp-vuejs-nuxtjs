@@ -1,7 +1,7 @@
 export const state = () => ({
   content: '',
   color: '',
-  icon: '',
+  icon: undefined,
   title: ''
 })
 

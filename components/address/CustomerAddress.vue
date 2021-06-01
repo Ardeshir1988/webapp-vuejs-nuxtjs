@@ -22,7 +22,7 @@
 
 <script>
 import Mapbox from 'mapbox-gl-vue'
-import { mdiMapMarker } from '@mdi/js'
+import { mdiMapMarker, mdiAlertOutline } from '@mdi/js'
 export default {
   components: { Mapbox },
   name: 'CustomerAddress',
@@ -41,6 +41,7 @@ export default {
   data() {
     return {
       mdiMapMarker: mdiMapMarker,
+      mdiAlertOutline: mdiAlertOutline,
       accessToken: 'pk.eyJ1IjoibWF4YXNhZGkiLCJhIjoiY2tsOTlmaHp6MzhlNzJvcW9kNDZteXU0MiJ9.g3otWgJ_s9jL8HZhiAD48Q',
       mapOptions: {
         style: 'mapbox://styles/maxasadi/ckl99m0bc0bl517jxsh5d6lcq',
@@ -79,7 +80,7 @@ export default {
           content: 'مکان انتخاب شده خارج از محدوده سرویس دهی هایپر جت می باشد.',
           color: 'primary',
           title: 'متاسفانه',
-          icon: 'alert-outline'
+          icon: this.mdiAlertOutline
         })
       } else {
         this.$emit('selectLocation', this.map.getCenter())

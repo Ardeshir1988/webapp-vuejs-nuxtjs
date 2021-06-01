@@ -121,6 +121,8 @@
 </template>
 
 <script>
+import { mdiAlertOutline} from '@mdi/js'
+
 export default {
   name: 'index',
   middleware: 'auth',
@@ -129,6 +131,7 @@ export default {
   },
   data() {
     return {
+      mdiAlertOutline: mdiAlertOutline,
       loading:false,
       isBad:false,
       isGood: false,
@@ -151,7 +154,7 @@ export default {
           content: 'قبلا نظرسنجی برای این سفارش ثبت گردیده است.',
           color: 'info',
           title: 'تکرار نظر سنجی',
-          icon: 'mdi-alert-outline'
+          icon: this.mdiAlertOutline
         })
         this.$router.push('/')
       }
@@ -181,7 +184,7 @@ export default {
           content: 'لطفا یکی از گزینه ها را انتخاب کنید',
           color: 'info',
           title: 'توجه',
-          icon: 'mdi-alert-outline'
+          icon: this.mdiAlertOutline
         })
       else {
         this.reviewDto.feedbackCheckPoint = this.isBad ? this.feedbackBad : this.feedbackGood

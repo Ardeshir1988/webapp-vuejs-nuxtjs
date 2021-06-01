@@ -9,17 +9,20 @@
       type="number"
       placeholder="0912 XXX XX XX"
       v-model="mobile"
-      prepend-inner-icon="mdi-phone" />
+      :prepend-inner-icon="mdiPhone" />
     <v-btn :loading="getLocalLoading" @click="sendOtp" class="primary btn-register">دریافت کد تایید</v-btn>
   </v-sheet>
 </template>
 
 <script>
+import {mdiPhone } from '@mdi/js'
+
 export default {
   name: 'RegisterMobile',
   props: { loading: Boolean },
   data() {
     return {
+      mdiPhone: mdiPhone,
       mobile: '',
     }
   },
