@@ -125,7 +125,7 @@ import { mdiAlertOutline} from '@mdi/js'
 
 export default {
   name: 'index',
-  middleware: 'auth',
+  // middleware: 'auth',
   head:{
     title:'نظر سنجی'
   },

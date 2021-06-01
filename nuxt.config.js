@@ -6,7 +6,7 @@ export default {
   // target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
 
-  debug: true,
+  debug: false,
   head: {
     titleTemplate: '%s - HyperJet',
     title: '',
@@ -101,8 +101,8 @@ export default {
       { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }
     ],
     workbox: {
-      dev: true,
-      enabled: true,
+      dev: false,
+      enabled: false,
 
       // Config
       skipWaiting: true,
