@@ -85,8 +85,8 @@ export default {
       lang: 'en',
       description: 'Hyper Jet online shopping',
       background_color: '#FFFFFF',
-      ogImage: 'icon.png',
-      ogUrl: 'icon.png',
+      // ogImage: 'icon.png',
+      // ogUrl: 'icon.png',
       start_url: '/',
       display: 'fullscreen',
       orientation: 'portrait',
@@ -165,10 +165,10 @@ export default {
         }
       ]
     },
-    icon: {
-      source: "icon.png",
-      purpose: ['maskable', 'apple-touch-icon']
-    },
+    // icon: {
+    //   source: "icon.png",
+    //   purpose: ['maskable', 'apple-touch-icon']
+    // },
     meta: [
       { name: 'mobile-web-app-capable', content: 'yes' },
       { name: 'apple-touch-fullscreen', content: 'yes' },
