@@ -1,8 +1,11 @@
 <template>
 
-  <div>
+  <div >
     <!--    <RefreshUtil v-if="reload" />-->
-    <div>
+
+    <loading v-if= '!homeReady || !instReady'/>
+
+      <div v-else>
       <Banner v-if='instructions.topBannerPermission' :banners='topBanners' />
       <SectionSeparator class='section-separator'
                         section-name='حراج'
@@ -32,9 +35,11 @@
       <!--                        section-link-url="" />-->
       <!--      <BusinessPartnerList v-if="instructions.businessPartnerPermission" :business-partners="homepage.businessPartners" />-->
 
-      <div class='null-div'></div>
-    </div>
+        </div>
+
+    <div class='null-div'></div>
   </div>
+
 </template>
 
 <script>
@@ -44,7 +49,7 @@ import HorizontalProductList from '@/components/products/horizontal/HorizontalPr
 import CategoryList from '@/components/category/CategoryList'
 // import BusinessPartnerList from '@/components/partner/BusinessPartnerList'
 // import RefreshUtil from '@/components/utils/RefreshUtil'
-// import LoadingAnimation from '@/components/utils/LoadingAnimation'
+import Loading from '@/components/utils/Loading'
 
 import { mapGetters } from 'vuex'
 
@@ -53,15 +58,15 @@ export default {
     title: 'هایپرجت ، هوشمندانه ترین راه خرید نیاز های روزانه شما'
   },
   components: {
-    //   RefreshUtil,
-    //   BusinessPartnerList,
     CategoryList,
     HorizontalProductList,
     SectionSeparator,
-    Banner
-    //   LoadingAnimation
+    Banner,
+    Loading
   },
   computed: {
+
+
     // mix the getters into computed with object spread operator
     ...mapGetters({
       instructions: 'instruction/getSysInstruction'
@@ -74,24 +79,23 @@ export default {
     }),
     ...mapGetters({
       bottomBanners: 'instruction/getBottomBanners'
+    }),
+    ...mapGetters({
+      homeReady: 'instruction/getHomeReady'
+    }) ,
+    ...mapGetters({
+      instReady: 'instruction/getInstReady'
     })
-// ,
-//     ...mapGetters({
-//       ready: 'instruction/getHomeStateReady'
-//     })
-// ,
-//     ...mapGetters({
-//       reload: 'instruction/getHomeStateReload'
-//     })
-
   }
 }
 </script>
 <style scoped>
+
 .section-separator {
   margin-top: 1vh;
   margin-bottom: 1vh;
 }
+
 
 .null-div {
   height: 1vh;

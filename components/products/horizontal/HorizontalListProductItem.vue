@@ -101,12 +101,12 @@ export default {
       if(this.$storage.getUniversal('token')  !== null && this.$storage.getUniversal('token')  !== undefined) {
         let responseData = await this.$repositories.customer.setNotifyInStock(this.product.id)
         if (responseData !== false) {
-          this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید.' , icon: this.mdiCheckCircleOutline })
+          this.$notifier.showMessage({ content: 'پس از موجود شدن، به شما اطلاع رسانی خواهد شد.', color: 'success', title: 'درخواست شما ثبت گردید.' , icon: 'check-circle-outline' })
         }else{
-          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید.', color: 'error', title: 'خطا' , icon: this.mdiAlertCircleOutline })
+          this.$notifier.showMessage({ content: 'متاسفانه در خواست شما ثبت نگردید.', color: 'error', title: 'خطا' , icon: 'alert-circle-outline' })
         }
       }else {
-        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید.', color: 'info', title: 'توجه' , icon: this.mdiAlertOutline })
+        this.$notifier.showMessage({ content: 'لطفا ابتدا ثبت نام نمایید.', color: 'info', title: 'توجه' , icon: 'alert-outline' })
       }
     }
   }

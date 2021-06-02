@@ -8,12 +8,15 @@ export default (ctx, inject) => {
 
   inject('repositories', createRepository(ctx.$axios))
 
-  // if( ctx.app.$storage.getUniversal('token') !== null && ctx.app.$storage.getUniversal('token') !== undefined)
-  //   ctx.$repositories.customer.saveCustomerLog("WEBAPP")
-  //
+
+  if( ctx.app.$storage.getUniversal('token') !== null && ctx.app.$storage.getUniversal('token') !== undefined)
+    ctx.$repositories.customer.saveCustomerLog("WEBAPP") .catch(function (error) {
+    })
+
   ctx.$repositories.product.getInstructions().then( res => {
-    if (res !== false)
+    if (res !== false){
       ctx.store.dispatch('instruction/load_sys_instruction', res.data)
+    }
   })
 
   ctx.$repositories.product.homepage().then( res => {
@@ -21,13 +24,4 @@ export default (ctx, inject) => {
       ctx.store.dispatch('instruction/load_home_instruction', res.data)
     }
   })
-
-
-
-
-
-
-
-
-
 }

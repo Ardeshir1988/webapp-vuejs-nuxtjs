@@ -1,4 +1,5 @@
 <template>
+
   <div class="horizontal-list">
     <div v-for="product in products">
       <HorizontalProductItem :product="product" :key="product.id" />

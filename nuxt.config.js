@@ -23,7 +23,10 @@ export default {
     name: 'layout',
     mode: 'out-in'
   },
-  // loading: false,
+  loading: {
+    color: '#8629FD',
+    height: '3px'
+  },
   // loadingIndicator: false,
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ['~/plugins/repositories.js', '~/plugins/notifier.js', '~/plugins/axios.js'],
@@ -34,7 +37,7 @@ export default {
 
     ['@nuxtjs/vuetify', {treeShake: true}],
     // '@nuxtjs/vuetify',
-    '@aceforth/nuxt-optimized-images'
+    '@aceforth/nuxt-optimized-images',
   ],
   optimizedImages: {
     optimizeImages: true
@@ -47,8 +50,6 @@ export default {
     '@nuxtjs/universal-storage',
     'nuxt-user-agent',
     'nuxt-leaflet',
-
-
   ],
   // ,
   // defaultAssets: undefined,
@@ -88,11 +89,85 @@ export default {
       ogUrl: 'icon.png',
       start_url: '/',
       display: 'fullscreen',
-      orientation: 'portrait'
+      orientation: 'portrait',
+      icons: [
+        {
+          src: "/icons/android-chrome-192x192.png",
+          sizes: "192x192",
+          type: "image/png"
+        },
+        {
+          src: "/icons/android-chrome-512x512.png",
+          sizes: "512x512",
+          type: "image/png"
+        },
+        {
+          src: "/icons/android-chrome-maskable-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          "purpose": "maskable"
+        },
+        {
+          src: "/icons/android-chrome-maskable-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          "purpose": "maskable"
+        },
+        {
+          src: "/icons/apple-touch-icon-60x60.png",
+          sizes: "60x60",
+          type: "image/png"
+        },
+        {
+          src: "/icons/apple-touch-icon-76x76.png",
+          sizes: "76x76",
+          type: "image/png"
+        },
+        {
+          src: "/icons/apple-touch-icon-120x120.png",
+          sizes: "120x120",
+          type: "image/png"
+        },
+        {
+          src: "/icons/apple-touch-icon-152x152.png",
+          sizes: "152x152",
+          type: "image/png"
+        },
+        {
+          src: "/icons/apple-touch-icon-180x180.png",
+          sizes: "180x180",
+          type: "image/png"
+        },
+        {
+          src: "/icons/apple-touch-icon.png",
+          sizes: "180x180",
+          type: "image/png"
+        },
+        {
+          src: "/icons/favicon-16x16.png",
+          sizes: "16x16",
+          type: "image/png"
+        },
+        {
+          src: "/icons/favicon-32x32.png",
+          sizes: "32x32",
+          type: "image/png"
+        },
+        {
+          src: "/icons/msapplication-icon-144x144.png",
+          sizes: "144x144",
+          type: "image/png"
+        },
+        {
+          src: "/icons/mstile-150x150.png",
+          sizes: "150x150",
+          type: "image/png"
+        }
+      ]
     },
     icon: {
       source: "icon.png",
-      purpose: 'maskable'
+      purpose: ['maskable', 'apple-touch-icon']
     },
     meta: [
       { name: 'mobile-web-app-capable', content: 'yes' },
@@ -117,7 +192,7 @@ export default {
       },
 
       // Offline
-      offline: true,
+      offline: false,
 
       // Runtime Caching
       runtimeCaching: [{
@@ -138,9 +213,7 @@ export default {
       }],
       cacheAssets: true,
     }
-
   },
-
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // analyze:true,

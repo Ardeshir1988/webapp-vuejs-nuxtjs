@@ -34,12 +34,6 @@ export default {
       return FILES_URL
     }
   }
-  // computed: {
-  //   bannersUrl: function() {
-  //     if(this.props.banners !== undefined )
-  //     return this.props.banners.map(value => FILES_URL + value)
-  //   }
-  // }
 }
 </script>
 <style scoped>

@@ -3,21 +3,19 @@ export const state = () => ({
   sysInstructions: {},
   topBanners: Array,
   bottomBanners: Array,
-  reload: false,
-  ready: false
+  homeReady: false,
+  instReady: false
 })
 export const mutations = {
   UPDATE_HOME_INSTRUCTION(state, homeInstruction) {
     state.homepageInstruction = homeInstruction
     state.topBanners = homeInstruction.topBanners
     state.bottomBanners = homeInstruction.bottomBanners
+    state.homeReady = true
   },
   UPDATE_SYS_INSTRUCTION(state, sysInstruction) {
     state.sysInstructions = sysInstruction
-  },
-  UPDATE_HOME_STATE(state, status) {
-    state.reload = status.reload
-    state.ready = status.ready
+    state.instReady = true
   }
 }
 
@@ -28,9 +26,6 @@ export const actions = {
   },
   async load_sys_instruction({ commit }, sysInstruction) {
       commit('UPDATE_SYS_INSTRUCTION',sysInstruction)
-  },
-  async load_home_state({ commit }, status) {
-      commit('UPDATE_HOME_STATE', status)
   }
 }
 
@@ -47,10 +42,10 @@ export const getters = {
   getSysInstruction: (state) => {
     return state.sysInstructions
   },
-  getHomeStateReady: (state) => {
-    return state.ready
+  getHomeReady: (state) => {
+    return state.homeReady
   },
-  getHomeStateReload: (state) => {
-    return state.reload
+  getInstReady: (state) => {
+    return state.instReady
   }
 }
