@@ -88,87 +88,47 @@ export default {
       // ogImage: 'icon.png',
       // ogUrl: 'icon.png',
       start_url: '/',
-      display: 'fullscreen',
-      orientation: 'portrait',
       icons: [
         {
-          src: "/icons/android-chrome-192x192.png",
-          sizes: "192x192",
-          type: "image/png"
+          src: '/icons/ic_hjet_64.png',
+          sizes: '64x64',
+          type: 'image/png'
         },
         {
-          src: "/icons/android-chrome-512x512.png",
-          sizes: "512x512",
-          type: "image/png"
+          src: '/icons/ic_hjet_120.png',
+          sizes: '120x120',
+          type: 'image/png'
         },
         {
-          src: "/icons/android-chrome-maskable-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-          "purpose": "maskable"
+          src: '/icons/ic_hjet_144.png',
+          sizes: '144x144',
+          type: 'image/png'
         },
         {
-          src: "/icons/android-chrome-maskable-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          "purpose": "maskable"
+          src: '/icons/ic_hjet_152.png',
+          sizes: '152x152',
+          type: 'image/png'
         },
         {
-          src: "/icons/apple-touch-icon-60x60.png",
-          sizes: "60x60",
-          type: "image/png"
+          src: '/icons/ic_hjet_192.png',
+          sizes: '192x192',
+          type: 'image/png'
         },
         {
-          src: "/icons/apple-touch-icon-76x76.png",
-          sizes: "76x76",
-          type: "image/png"
+          src: '/icons/ic_hjet_384.png',
+          sizes: '384x384',
+          type: 'image/png'
         },
         {
-          src: "/icons/apple-touch-icon-120x120.png",
-          sizes: "120x120",
-          type: "image/png"
-        },
-        {
-          src: "/icons/apple-touch-icon-152x152.png",
-          sizes: "152x152",
-          type: "image/png"
-        },
-        {
-          src: "/icons/apple-touch-icon-180x180.png",
-          sizes: "180x180",
-          type: "image/png"
-        },
-        {
-          src: "/icons/apple-touch-icon.png",
-          sizes: "180x180",
-          type: "image/png"
-        },
-        {
-          src: "/icons/favicon-16x16.png",
-          sizes: "16x16",
-          type: "image/png"
-        },
-        {
-          src: "/icons/favicon-32x32.png",
-          sizes: "32x32",
-          type: "image/png"
-        },
-        {
-          src: "/icons/msapplication-icon-144x144.png",
-          sizes: "144x144",
-          type: "image/png"
-        },
-        {
-          src: "/icons/mstile-150x150.png",
-          sizes: "150x150",
-          type: "image/png"
+          src: '/icons/ic_hjet_512.png',
+          sizes: '512x512',
+          type: 'image/png'
         }
-      ]
+      ],
+      display: 'fullscreen',
+      orientation: 'portrait',
     },
-    // icon: {
-    //   source: "icon.png",
-    //   purpose: ['maskable', 'apple-touch-icon']
-    // },
+
     meta: [
       { name: 'mobile-web-app-capable', content: 'yes' },
       { name: 'apple-touch-fullscreen', content: 'yes' },
@@ -214,6 +174,67 @@ export default {
       cacheAssets: true,
     }
   },
+  meta: [
+    { name: 'apple-mobile-web-app-capable', content: 'yes' }
+  ],
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
+    // apple
+
+    { rel:'apple-touch-icon', sizes:'180x180', href:'apple-icon-180.png' },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-2048-2732.jpg',
+      media:'(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1668-2388.jpg',
+      media:'(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1536-2048.jpg',
+      media:'(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1668-2224.jpg',
+      media:'(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1620-2160.jpg',
+      media:'(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1284-2778.jpg',
+      media:'(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1170-2532.jpg',
+      media:'(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1125-2436.jpg',
+      media:'(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1242-2688.jpg',
+      media:'(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-828-1792.jpg',
+      media:'(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-1242-2208.jpg',
+      media:'(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-750-1334.jpg',
+      media:'(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+    {
+      rel:'apple-touch-startup-image', href:'/static/apple-splash-640-1136.jpg',
+      media:'(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+    },
+  ],
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     // analyze:true,
