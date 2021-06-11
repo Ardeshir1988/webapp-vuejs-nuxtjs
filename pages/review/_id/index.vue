@@ -46,7 +46,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackBad"
+        v-model="feedback"
         label="تاخیر در تحویل"
         value="SHIPPING_DELAY"
       ></v-checkbox>
@@ -54,7 +54,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackBad"
+        v-model="feedback"
         label="نحوه برخورد سفیر"
         value="COURIER_BEHAVIOUR"
       ></v-checkbox>
@@ -62,7 +62,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackBad"
+        v-model="feedback"
         label="کیفیت اجناس"
         value="PRODUCT_QUALITY"
       ></v-checkbox>
@@ -70,19 +70,19 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackBad"
+        v-model="feedback"
         label="پاسخگو نبودن پشتیبان"
         value="POOR_SUPPORT"
       ></v-checkbox>
       <br/>
     </div>
-    <div v-if="isGood">
+    <div v-else>
       <div class="review">کدام یک از موارد زیر می تواند باعث بهتر شدن هایپر جت شود؟</div>
       <v-checkbox
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackGood"
+        v-model="feedback"
         label="بالا بردن سرعت سرویس دهی"
         value="ّIMPROVE_SPEED"
       ></v-checkbox>
@@ -90,7 +90,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackGood"
+        v-model="feedback"
         label="بیشتر شدن تنوع کالا"
         value="IMPROVE_DIVERSITY"
       ></v-checkbox>
@@ -98,7 +98,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackGood"
+        v-model="feedback"
         label="بهتر شدن کیفیت و تازگی کالاها"
         value="IMPROVE_QUALITY"
       ></v-checkbox>
@@ -106,7 +106,7 @@
         dense
         hide-details
         class="feedback-checkbox"
-        v-model="feedbackGood"
+        v-model="feedback"
         label="موجود کردن کالاهای ارزان تر (با تخفیف بیشتر)"
         value="IMPROVE_CHEAP_BRAND"
       ></v-checkbox>
@@ -134,9 +134,7 @@ export default {
       mdiAlertOutline: mdiAlertOutline,
       loading:false,
       isBad:false,
-      isGood: false,
-      feedbackBad:[],
-      feedbackGood:[],
+      feedback:[],
       reviewDto: {
         orderTrackingNumber: this.$route.params.id,
         customerFeeling: 'NOT_SELECTED',
@@ -164,17 +162,14 @@ export default {
     selectFeeling(feeling) {
       if (feeling === 'GOOD'){
         this.isBad = false
-        this.isGood = true
         this.reviewDto.customerFeeling = 'GOOD'
       }
       else if (feeling === 'PERFECT'){
         this.isBad = false
-        this.isGood = true
         this.reviewDto.customerFeeling = 'PERFECT'
       }
       else{
         this.isBad = true
-        this.isGood = false
         this.reviewDto.customerFeeling = 'BAD'
       }
     },
@@ -187,7 +182,7 @@ export default {
           icon: this.mdiAlertOutline
         })
       else {
-        this.reviewDto.feedbackCheckPoint = this.isBad ? this.feedbackBad : this.feedbackGood
+        this.reviewDto.feedbackCheckPoint = this.feedback
         this.loading = true
         this.$repositories.order.saveOrderReview(this.reviewDto)
           .then(res => {

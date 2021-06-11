@@ -17,8 +17,7 @@ export default {
     ]
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['~/assets/styles/main.css'
-  ],
+  css: ['~/assets/styles/main.css'],
   layoutTransition: {
     name: 'layout',
     mode: 'out-in'
